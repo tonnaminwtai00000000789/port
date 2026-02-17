@@ -1,0 +1,33 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - API_URL=/api
+      - INTERNAL_API_URL=http://backend:4000
+    depends_on:
+      - backend
+    networks:
+      - portfolio-network
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - DATABASE_URL=postgresql://postgres:fnckpuehkkqhxivyyoagfuck999@db.fnckpuehkkqhxivyyoag.supabase.co:5432/postgres
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge
