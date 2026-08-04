@@ -158,11 +158,16 @@ export function AdminDashboard() {
     try {
       if (isSupabaseConfigured()) {
         const formattedWorks = worksData.map((work) => {
-          const { id, ...rest } = work;
-          if (typeof id === "number" && id > 1000000000) {
-            return rest;
+          const { url, id, ...cleanWork } = work;
+          const projectUrl = url || (cleanWork.links && cleanWork.links[0]?.url) || "";
+          const payload: any = {
+            ...cleanWork,
+            links: projectUrl ? [{ url: projectUrl, type: "website" }] : cleanWork.links || [],
+          };
+          if (typeof id === "number" && id < 1000000000) {
+            payload.id = id;
           }
-          return work;
+          return payload;
         });
         const { error } = await supabase.from("works").upsert(formattedWorks);
         if (error) throw error;
