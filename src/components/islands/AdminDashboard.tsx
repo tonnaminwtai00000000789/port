@@ -112,13 +112,42 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { id, ...payload } = heroData || {};
+        const { id, displayName, display_name, firstName, first_name, lastName, last_name, profileImage, profile_image, birthDate, birth_date, startDate, start_date, webringUrl, webring_url, ...rest } = heroData || {};
+        
+        const snakePayload: any = {
+          ...rest,
+          display_name: displayName || display_name || "",
+          first_name: firstName || first_name || "",
+          last_name: lastName || last_name || "",
+          profile_image: profileImage || profile_image || "",
+          birth_date: birthDate || birth_date || "",
+          start_date: startDate || start_date || "",
+          webring_url: webringUrl || webring_url || null,
+        };
+
+        const camelPayload: any = {
+          ...rest,
+          displayName: displayName || display_name || "",
+          firstName: firstName || first_name || "",
+          lastName: lastName || last_name || "",
+          profileImage: profileImage || profile_image || "",
+          birthDate: birthDate || birth_date || "",
+          startDate: startDate || start_date || "",
+          webringUrl: webringUrl || webring_url || null,
+        };
+
         if (id && typeof id === "number" && id < 1000000000) {
-          const { error } = await supabase.from("hero").update(payload).eq("id", id);
-          if (error) throw error;
+          const { error } = await supabase.from("hero").update(snakePayload).eq("id", id);
+          if (error) {
+            const { error: err2 } = await supabase.from("hero").update(camelPayload).eq("id", id);
+            if (err2) throw error;
+          }
         } else {
-          const { error } = await supabase.from("hero").insert(payload);
-          if (error) throw error;
+          const { error } = await supabase.from("hero").insert(snakePayload);
+          if (error) {
+            const { error: err2 } = await supabase.from("hero").insert(camelPayload);
+            if (err2) throw error;
+          }
         }
       }
       showNotification("success", "บันทึกข้อมูล Hero Section เรียบร้อยแล้ว!");
@@ -134,13 +163,30 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { id, ...payload } = aboutData || {};
+        const { id, fullName, full_name, statusLink, status_link, ...rest } = aboutData || {};
+        const snakePayload: any = {
+          ...rest,
+          full_name: fullName || full_name || "",
+          status_link: statusLink || status_link || null,
+        };
+        const camelPayload: any = {
+          ...rest,
+          fullName: fullName || full_name || "",
+          statusLink: statusLink || status_link || null,
+        };
+
         if (id && typeof id === "number" && id < 1000000000) {
-          const { error } = await supabase.from("about_me").update(payload).eq("id", id);
-          if (error) throw error;
+          const { error } = await supabase.from("about_me").update(snakePayload).eq("id", id);
+          if (error) {
+            const { error: err2 } = await supabase.from("about_me").update(camelPayload).eq("id", id);
+            if (err2) throw error;
+          }
         } else {
-          const { error } = await supabase.from("about_me").insert(payload);
-          if (error) throw error;
+          const { error } = await supabase.from("about_me").insert(snakePayload);
+          if (error) {
+            const { error: err2 } = await supabase.from("about_me").insert(camelPayload);
+            if (err2) throw error;
+          }
         }
       }
       showNotification("success", "บันทึกข้อมูล About Me เรียบร้อยแล้ว!");

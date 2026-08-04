@@ -3,7 +3,18 @@ import { supabase, isSupabaseConfigured, type HeroRow, type AboutMeRow, type Tec
 export async function getHeroData(): Promise<HeroRow | null> {
   try {
     const { data, error } = await supabase.from('hero').select('*').limit(1).single();
-    if (data && !error) return data as HeroRow;
+    if (data && !error) {
+      return {
+        ...data,
+        displayName: data.displayName || data.display_name || '',
+        firstName: data.firstName || data.first_name || '',
+        lastName: data.lastName || data.last_name || '',
+        profileImage: data.profileImage || data.profile_image || '',
+        birthDate: data.birthDate || data.birth_date || '',
+        startDate: data.startDate || data.start_date || '',
+        webringUrl: data.webringUrl || data.webring_url || null,
+      } as HeroRow;
+    }
   } catch (e) {
     console.error('Supabase getHeroData error:', e);
   }
@@ -13,7 +24,13 @@ export async function getHeroData(): Promise<HeroRow | null> {
 export async function getAboutMeData(): Promise<AboutMeRow | null> {
   try {
     const { data, error } = await supabase.from('about_me').select('*').limit(1).single();
-    if (data && !error) return data as AboutMeRow;
+    if (data && !error) {
+      return {
+        ...data,
+        fullName: data.fullName || data.full_name || '',
+        statusLink: data.statusLink || data.status_link || null,
+      } as AboutMeRow;
+    }
   } catch (e) {
     console.error('Supabase getAboutMeData error:', e);
   }

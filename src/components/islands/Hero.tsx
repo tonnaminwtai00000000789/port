@@ -97,9 +97,9 @@ export function Hero({ data }: { data: HeroData }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="font-display text-5xl sm:text-7xl font-extrabold text-[#0f172a] leading-none tracking-tight"
+              className="font-display text-md sm:text-7xl font-extrabold text-[#0f172a] leading-none tracking-tight"
             >
-              <span className="text-[#60a5fa]">T</span>onnam
+              <span className="text-[#60a5fa]">{data.displayName}</span>
             </motion.h1>
 
             <motion.p
