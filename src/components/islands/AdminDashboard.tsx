@@ -635,7 +635,7 @@ export function AdminDashboard() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
                       <label className="block text-[10px] font-bold text-[#0f172a] mb-1">ชื่อโปรเจกต์</label>
                       <input
@@ -645,6 +645,22 @@ export function AdminDashboard() {
                         onChange={(e) => {
                           const updated = [...worksData];
                           updated[idx].title = e.target.value;
+                          setWorksData(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#0f172a] mb-1">URL เว็บไซต์โปรเจกต์ (Project URL)</label>
+                      <input
+                        type="text"
+                        placeholder="https://myproject.com"
+                        value={work.url || (work.links && work.links[0]?.url) || ""}
+                        onChange={(e) => {
+                          const updated = [...worksData];
+                          const newUrl = e.target.value;
+                          updated[idx].url = newUrl;
+                          updated[idx].links = [{ url: newUrl, type: "website" }];
                           setWorksData(updated);
                         }}
                         className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold"

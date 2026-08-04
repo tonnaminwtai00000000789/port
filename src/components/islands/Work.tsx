@@ -19,10 +19,11 @@ export interface WorkItem {
   image: string;
   year: string;
   size: "large" | "small";
-  watermark: string | null;
-  tags: WorkTag[];
-  links: WorkLink[];
-  order: number;
+  watermark?: string | null;
+  url?: string; // Direct Project URL fallback
+  tags?: WorkTag[];
+  links?: WorkLink[];
+  order?: number;
 }
 
 export function Work({ data }: { data: WorkItem[] }) {
@@ -30,6 +31,12 @@ export function Work({ data }: { data: WorkItem[] }) {
 
   const largeWorks = data.filter((w) => w.size === "large");
   const smallWorks = data.filter((w) => w.size === "small");
+
+  const getTargetUrl = (work: WorkItem) => {
+    if (work.url) return work.url;
+    if (work.links && work.links.length > 0) return work.links[0].url;
+    return null;
+  };
 
   return (
     <section id="works" className="py-10">
@@ -52,110 +59,160 @@ export function Work({ data }: { data: WorkItem[] }) {
       {/* Large Projects Showcase */}
       {largeWorks.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {largeWorks.map((work, idx) => (
-            <motion.div
-              key={work.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 * idx }}
-              className="card-paper overflow-hidden bg-white border-1.5 border-[#0f172a] flex flex-col justify-between"
-            >
-              <div className="aspect-[16/10] overflow-hidden relative border-b-1.5 border-[#0f172a]">
-                <img
-                  src={work.image}
-                  alt={work.title}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading="lazy"
-                />
-                <span className="absolute top-2 right-2 px-2.5 py-0.5 bg-[#0f172a] text-white text-[10px] font-mono font-bold border border-white">
-                  {work.year}
-                </span>
-              </div>
+          {largeWorks.map((work, idx) => {
+            const primaryUrl = getTargetUrl(work);
+            return (
+              <motion.div
+                key={work.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 * idx }}
+                className="card-paper overflow-hidden bg-white border-1.5 border-[#0f172a] flex flex-col justify-between group"
+              >
+                {/* Project Banner Image - Clickable if URL exists */}
+                {primaryUrl ? (
+                  <a
+                    href={primaryUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="aspect-[16/10] overflow-hidden relative border-b-1.5 border-[#0f172a] block"
+                  >
+                    <img
+                      src={work.image}
+                      alt={work.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-2 right-2 px-2.5 py-0.5 bg-[#0f172a] text-white text-[10px] font-mono font-bold border border-white">
+                      {work.year}
+                    </span>
+                  </a>
+                ) : (
+                  <div className="aspect-[16/10] overflow-hidden relative border-b-1.5 border-[#0f172a]">
+                    <img
+                      src={work.image}
+                      alt={work.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-2 right-2 px-2.5 py-0.5 bg-[#0f172a] text-white text-[10px] font-mono font-bold border border-white">
+                      {work.year}
+                    </span>
+                  </div>
+                )}
 
-              <div className="p-5 flex flex-col justify-between flex-1 space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-extrabold text-[#0f172a]">
-                    {work.title}
-                  </h3>
-                  <p className="text-[#475569] text-xs leading-relaxed">
-                    {work.description}
-                  </p>
-
-                  {work.tags && work.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 pt-1">
-                      {work.tags.map((tag, tagIdx) => (
-                        <span key={tagIdx} className="tag-badge">
-                          {tag.label}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex items-center gap-2 pt-2">
-                  {work.links?.map((link, linkIdx) => (
-                    <motion.a
-                      key={linkIdx}
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-3 py-1.5 bg-[#0f172a] text-white hover:bg-[#2563eb] text-xs font-bold transition-colors inline-flex items-center gap-1 border border-[#0f172a]"
-                    >
-                      {link.type === "website" ? (
-                        <>
-                          เปิดเว็บไซต์ <ExternalLink className="w-3 h-3" />
-                        </>
+                <div className="p-5 flex flex-col justify-between flex-1 space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-extrabold text-[#0f172a]">
+                      {primaryUrl ? (
+                        <a
+                          href={primaryUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="hover:text-[#2563eb] transition-colors inline-flex items-center gap-1.5"
+                        >
+                          {work.title} <ArrowUpRight className="w-4 h-4 text-[#2563eb] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </a>
                       ) : (
-                        <>
-                          ดูซอร์สโค้ด <Github className="w-3 h-3" />
-                        </>
+                        work.title
                       )}
-                    </motion.a>
-                  ))}
+                    </h3>
+                    <p className="text-[#475569] text-xs leading-relaxed">
+                      {work.description}
+                    </p>
+
+                    {work.tags && work.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 pt-1">
+                        {work.tags.map((tag, tagIdx) => (
+                          <span key={tagIdx} className="tag-badge">
+                            {tag.label}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Links Row */}
+                  <div className="flex flex-wrap items-center gap-2 pt-2">
+                    {work.links && work.links.length > 0 ? (
+                      work.links.map((link, linkIdx) => (
+                        <motion.a
+                          key={linkIdx}
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          href={link.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-3 py-1.5 bg-[#0f172a] text-white hover:bg-[#2563eb] text-xs font-bold transition-colors inline-flex items-center gap-1 border border-[#0f172a]"
+                        >
+                          {link.type === "website" ? (
+                            <>
+                              เปิดเว็บไซต์ <ExternalLink className="w-3 h-3 text-[#60a5fa]" />
+                            </>
+                          ) : (
+                            <>
+                              ดูซอร์สโค้ด <Github className="w-3 h-3 text-[#60a5fa]" />
+                            </>
+                          )}
+                        </motion.a>
+                      ))
+                    ) : primaryUrl ? (
+                      <motion.a
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                        href={primaryUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-3 py-1.5 bg-[#0f172a] text-white hover:bg-[#2563eb] text-xs font-bold transition-colors inline-flex items-center gap-1 border border-[#0f172a]"
+                      >
+                        เปิดเว็บไซต์ <ExternalLink className="w-3 h-3 text-[#60a5fa]" />
+                      </motion.a>
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       )}
 
       {/* Small Projects */}
       {smallWorks.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {smallWorks.map((work, idx) => (
-            <motion.div
-              key={work.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 * idx }}
-              className="card-paper p-4 bg-white border-1.5 border-[#0f172a] flex items-center gap-3"
-            >
-              <div className="w-12 h-12 border border-[#0f172a] shrink-0 overflow-hidden">
-                <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-xs font-bold text-[#0f172a] truncate">
-                  {work.title}
-                </h4>
-                <p className="text-[10px] text-[#475569] truncate mb-1">{work.description}</p>
-                {work.links?.map((link, linkIdx) => (
-                  <a
-                    key={linkIdx}
-                    href={link.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[10px] font-bold text-[#2563eb] hover:underline inline-flex items-center gap-0.5"
-                  >
-                    เปิดดู <ArrowUpRight className="w-2.5 h-2.5" />
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+          {smallWorks.map((work, idx) => {
+            const primaryUrl = getTargetUrl(work);
+            return (
+              <motion.div
+                key={work.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 * idx }}
+                className="card-paper p-4 bg-white border-1.5 border-[#0f172a] flex items-center gap-3"
+              >
+                <div className="w-12 h-12 border border-[#0f172a] shrink-0 overflow-hidden">
+                  <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-xs font-bold text-[#0f172a] truncate">
+                    {work.title}
+                  </h4>
+                  <p className="text-[10px] text-[#475569] truncate mb-1">{work.description}</p>
+                  {primaryUrl && (
+                    <a
+                      href={primaryUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[10px] font-bold text-[#2563eb] hover:underline inline-flex items-center gap-0.5"
+                    >
+                      เปิดดู <ArrowUpRight className="w-2.5 h-2.5" />
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       )}
     </section>
