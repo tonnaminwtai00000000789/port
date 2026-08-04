@@ -88,7 +88,7 @@ export function Hero({ data }: { data: HeroData }) {
             >
               <span className="slant inline-flex px-3 py-1 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
                 <span className="unslant inline-flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#0f172a]" /> Digital Craftsman
+                  <Code className="w-3.5 h-3.5 text-[#0f172a]" /> Fullstack Builder
                 </span>
               </span>
             </motion.div>
