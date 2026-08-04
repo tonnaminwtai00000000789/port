@@ -11,5 +11,31 @@ export default defineConfig({
   integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      rolldownOptions: {},
+    },
+    customLogger: {
+      warn(msg, options) {
+        if (msg.includes('esbuildOptions') || msg.includes('vite:react-babel')) {
+          return;
+        }
+        console.warn(msg, options);
+      },
+      warnOnce(msg, options) {
+        if (msg.includes('esbuildOptions') || msg.includes('vite:react-babel')) {
+          return;
+        }
+        console.warn(msg, options);
+      },
+      info(msg) {
+        console.info(msg);
+      },
+      error(msg, options) {
+        console.error(msg, options);
+      },
+      clearScreen() {},
+      hasErrorLogged() { return false; },
+      hasWarned: false,
+    },
   },
 });
