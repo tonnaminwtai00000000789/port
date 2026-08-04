@@ -5343,21 +5343,18 @@ var renderers = [Object.assign({
 		"scripts": [],
 		"styles": [],
 		"routeData": {
-			"route": "/blog/[slug]",
+			"route": "/blog",
 			"isIndex": false,
 			"type": "page",
-			"pattern": "^\\/blog\\/([^/]+?)\\/?$",
+			"pattern": "^\\/blog\\/?$",
 			"segments": [[{
 				"content": "blog",
 				"dynamic": false,
 				"spread": false
-			}], [{
-				"content": "slug",
-				"dynamic": true,
-				"spread": false
 			}]],
-			"params": ["slug"],
-			"component": "src/pages/blog/[slug].astro",
+			"params": [],
+			"component": "src/pages/blog.astro",
+			"pathname": "/blog",
 			"prerender": false,
 			"fallbackRoutes": [],
 			"distURL": [],
@@ -5371,18 +5368,71 @@ var renderers = [Object.assign({
 		"scripts": [],
 		"styles": [],
 		"routeData": {
-			"route": "/blog",
+			"route": "/blogs/[slug]",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/blogs\\/([^/]+?)\\/?$",
+			"segments": [[{
+				"content": "blogs",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "slug",
+				"dynamic": true,
+				"spread": false
+			}]],
+			"params": ["slug"],
+			"component": "src/pages/blogs/[slug].astro",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/blogs",
 			"isIndex": true,
 			"type": "page",
-			"pattern": "^\\/blog\\/?$",
+			"pattern": "^\\/blogs\\/?$",
 			"segments": [[{
-				"content": "blog",
+				"content": "blogs",
 				"dynamic": false,
 				"spread": false
 			}]],
 			"params": [],
-			"component": "src/pages/blog/index.astro",
-			"pathname": "/blog",
+			"component": "src/pages/blogs/index.astro",
+			"pathname": "/blogs",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/works",
+			"isIndex": false,
+			"type": "page",
+			"pattern": "^\\/works\\/?$",
+			"segments": [[{
+				"content": "works",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/works.astro",
+			"pathname": "/works",
 			"prerender": false,
 			"fallbackRoutes": [],
 			"distURL": [],
@@ -5415,18 +5465,22 @@ var renderers = [Object.assign({
 //#endregion
 //#region \0virtual:astro:pages
 var _page0 = () => import("./chunks/node_Be7cpUVY.mjs");
-var _page1 = () => import("./chunks/_slug__B5jOakgI.mjs");
-var _page2 = () => import("./chunks/index_x54JL6tn.mjs");
-var _page3 = () => import("./chunks/index_1DAelpRa.mjs");
+var _page1 = () => import("./chunks/blog_0tWQeHW_.mjs");
+var _page2 = () => import("./chunks/_slug__BnGJ59KY.mjs");
+var _page3 = () => import("./chunks/index_CaAXVFer.mjs");
+var _page4 = () => import("./chunks/works_9vuKj2I0.mjs");
+var _page5 = () => import("./chunks/index_CTMX3PX5.mjs");
 var pageMap = /* @__PURE__ */ new Map([
 	["node_modules/astro/dist/assets/endpoint/node.js", _page0],
-	["src/pages/blog/[slug].astro", _page1],
-	["src/pages/blog/index.astro", _page2],
-	["src/pages/index.astro", _page3]
+	["src/pages/blog.astro", _page1],
+	["src/pages/blogs/[slug].astro", _page2],
+	["src/pages/blogs/index.astro", _page3],
+	["src/pages/works.astro", _page4],
+	["src/pages/index.astro", _page5]
 ]);
 //#endregion
 //#region \0virtual:astro:manifest
-var _manifest = deserializeManifest({"rootDir":"file:///D:/client/","cacheDir":"file:///D:/client/node_modules/.astro/","outDir":"file:///D:/client/dist/","srcDir":"file:///D:/client/src/","publicDir":"file:///D:/client/public/","buildClientDir":"file:///D:/client/dist/client/","buildServerDir":"file:///D:/client/dist/server/","adapterName":"@astrojs/node","assetsDir":"_astro","routes":[{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"type":"page","component":"_server-islands.astro","params":["name"],"segments":[[{"content":"_server-islands","dynamic":false,"spread":false}],[{"content":"name","dynamic":true,"spread":false}]],"pattern":"^\\/_server-islands\\/([^/]+?)\\/?$","prerender":false,"isIndex":false,"fallbackRoutes":[],"route":"/_server-islands/[name]","origin":"internal","distURL":[],"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/_image","component":"node_modules/astro/dist/assets/endpoint/node.js","params":[],"pathname":"/_image","pattern":"^\\/_image\\/?$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"type":"endpoint","prerender":false,"fallbackRoutes":[],"distURL":[],"isIndex":false,"origin":"internal","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.uVhsDapO.css"}],"routeData":{"route":"/blog/[slug]","isIndex":false,"type":"page","pattern":"^\\/blog\\/([^/]+?)\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}],[{"content":"slug","dynamic":true,"spread":false}]],"params":["slug"],"component":"src/pages/blog/[slug].astro","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.uVhsDapO.css"}],"routeData":{"route":"/blog","isIndex":true,"type":"page","pattern":"^\\/blog\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blog/index.astro","pathname":"/blog","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.uVhsDapO.css"}],"routeData":{"route":"/","isIndex":true,"type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}}],"serverLike":true,"middlewareMode":"classic","base":"/","trailingSlash":"ignore","compressHTML":"jsx","componentMetadata":[["D:/client/src/pages/blog/[slug].astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/blog/index.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/index.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value==\"object\"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};\"requestIdleCallback\"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var n=(a,t)=>{let i=async()=>{await(await a())()};if(t.value){let e=matchMedia(t.value);e.matches?i():e.addEventListener(\"change\",i,{once:!0})}};(self.Astro||(self.Astro={})).media=n;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value==\"object\"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"astro/entrypoints/prerender":"prerender-entry.CyMRU2dn.mjs","\u0000noop-middleware":"virtual_astro_middleware.mjs","\u0000virtual:astro:server-island-manifest":"chunks/_virtual_astro_server-island-manifest_C1Q2srgE.mjs","\u0000virtual:astro:session-driver":"chunks/_virtual_astro_session-driver_DS5V7T-N.mjs","\u0000virtual:astro:actions/noop-entrypoint":"chunks/noop-entrypoint_Z3zFhrGC.mjs","D:/client/node_modules/@astrojs/react/dist/vnode-children.js":"chunks/vnode-children_B6vVcKTz.mjs","@astrojs/node/server.js":"entry.mjs","\u0000virtual:astro:page:src/pages/blog/[slug]@_@astro":"chunks/_slug__B5jOakgI.mjs","\u0000virtual:astro:page:src/pages/index@_@astro":"chunks/index_1DAelpRa.mjs","\u0000virtual:astro:page:src/pages/blog/index@_@astro":"chunks/index_x54JL6tn.mjs","\u0000virtual:astro:page:node_modules/astro/dist/assets/endpoint/node@_@js":"chunks/node_Be7cpUVY.mjs","D:/client/node_modules/astro/dist/assets/services/sharp.js":"chunks/sharp_CVzCRqOn.mjs","D:/client/src/components/islands/Aboutme.tsx":"_astro/Aboutme.BzJ8PdFJ.js","D:/client/src/components/islands/BlogsSection.tsx":"_astro/BlogsSection.ClbNbj1a.js","D:/client/src/components/islands/Contact.tsx":"_astro/Contact.zuy2banM.js","D:/client/src/components/islands/HeaderNav.tsx":"_astro/HeaderNav.CQJMGezf.js","D:/client/src/components/islands/Hero.tsx":"_astro/Hero.CQgymzVd.js","D:/client/src/components/islands/TechStack.tsx":"_astro/TechStack.o2V9os5u.js","D:/client/src/components/islands/Work.tsx":"_astro/Work.C6fSHZX7.js","@astrojs/react/client.js":"_astro/client.BgYHxDGX.js","astro:scripts/before-hydration.js":""},"inlinedScripts":[],"assets":["/favicon.ico","/_astro/Aboutme.BzJ8PdFJ.js","/_astro/BlogsSection.ClbNbj1a.js","/_astro/client.BgYHxDGX.js","/_astro/Contact.zuy2banM.js","/_astro/createLucideIcon.rNjjpPAP.js","/_astro/HeaderNav.CQJMGezf.js","/_astro/Hero.CQgymzVd.js","/_astro/jsx-runtime.Bmd7iEuj.js","/_astro/map-pin.DVGKXFQy.js","/_astro/react.ADnQu87e.js","/_astro/TechStack.o2V9os5u.js","/_astro/Work.C6fSHZX7.js","/_astro/data.uVhsDapO.css"],"buildFormat":"directory","checkOrigin":true,"actionBodySizeLimit":1048576,"serverIslandBodySizeLimit":1048576,"allowedDomains":[],"key":"ignlr/q3h/lL3xlO1AdGPEqNCj5LJjHFlzmrIXM2dDY=","sessionConfig":{"driver":"unstorage/drivers/fs-lite","options":{"base":"D:\\client\\node_modules\\.astro\\sessions"}},"image":{},"devToolbar":{"enabled":false,"debugInfoOutput":""},"logLevel":"info","shouldInjectCspMetaTags":false});
+var _manifest = deserializeManifest({"rootDir":"file:///D:/client/","cacheDir":"file:///D:/client/node_modules/.astro/","outDir":"file:///D:/client/dist/","srcDir":"file:///D:/client/src/","publicDir":"file:///D:/client/public/","buildClientDir":"file:///D:/client/dist/client/","buildServerDir":"file:///D:/client/dist/server/","adapterName":"@astrojs/node","assetsDir":"_astro","routes":[{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"type":"page","component":"_server-islands.astro","params":["name"],"segments":[[{"content":"_server-islands","dynamic":false,"spread":false}],[{"content":"name","dynamic":true,"spread":false}]],"pattern":"^\\/_server-islands\\/([^/]+?)\\/?$","prerender":false,"isIndex":false,"fallbackRoutes":[],"route":"/_server-islands/[name]","origin":"internal","distURL":[],"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/_image","component":"node_modules/astro/dist/assets/endpoint/node.js","params":[],"pathname":"/_image","pattern":"^\\/_image\\/?$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"type":"endpoint","prerender":false,"fallbackRoutes":[],"distURL":[],"isIndex":false,"origin":"internal","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/blog","isIndex":false,"type":"page","pattern":"^\\/blog\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blog.astro","pathname":"/blog","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.pO9WDpAv.css"}],"routeData":{"route":"/blogs/[slug]","isIndex":false,"type":"page","pattern":"^\\/blogs\\/([^/]+?)\\/?$","segments":[[{"content":"blogs","dynamic":false,"spread":false}],[{"content":"slug","dynamic":true,"spread":false}]],"params":["slug"],"component":"src/pages/blogs/[slug].astro","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.pO9WDpAv.css"}],"routeData":{"route":"/blogs","isIndex":true,"type":"page","pattern":"^\\/blogs\\/?$","segments":[[{"content":"blogs","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blogs/index.astro","pathname":"/blogs","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.pO9WDpAv.css"}],"routeData":{"route":"/works","isIndex":false,"type":"page","pattern":"^\\/works\\/?$","segments":[[{"content":"works","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/works.astro","pathname":"/works","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.pO9WDpAv.css"}],"routeData":{"route":"/","isIndex":true,"type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}}],"serverLike":true,"middlewareMode":"classic","base":"/","trailingSlash":"ignore","compressHTML":"jsx","componentMetadata":[["D:/client/src/pages/blogs/[slug].astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/blogs/index.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/index.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/works.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value==\"object\"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};\"requestIdleCallback\"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var n=(a,t)=>{let i=async()=>{await(await a())()};if(t.value){let e=matchMedia(t.value);e.matches?i():e.addEventListener(\"change\",i,{once:!0})}};(self.Astro||(self.Astro={})).media=n;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value==\"object\"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"astro/entrypoints/prerender":"prerender-entry.CyMRU2dn.mjs","\u0000noop-middleware":"virtual_astro_middleware.mjs","\u0000virtual:astro:server-island-manifest":"chunks/_virtual_astro_server-island-manifest_C1Q2srgE.mjs","\u0000virtual:astro:session-driver":"chunks/_virtual_astro_session-driver_DS5V7T-N.mjs","\u0000virtual:astro:actions/noop-entrypoint":"chunks/noop-entrypoint_Z3zFhrGC.mjs","D:/client/node_modules/@astrojs/react/dist/vnode-children.js":"chunks/vnode-children_B6vVcKTz.mjs","@astrojs/node/server.js":"entry.mjs","\u0000virtual:astro:page:src/pages/blogs/[slug]@_@astro":"chunks/_slug__BnGJ59KY.mjs","\u0000virtual:astro:page:src/pages/blog@_@astro":"chunks/blog_0tWQeHW_.mjs","\u0000virtual:astro:page:src/pages/index@_@astro":"chunks/index_CTMX3PX5.mjs","\u0000virtual:astro:page:src/pages/blogs/index@_@astro":"chunks/index_CaAXVFer.mjs","\u0000virtual:astro:page:node_modules/astro/dist/assets/endpoint/node@_@js":"chunks/node_Be7cpUVY.mjs","D:/client/node_modules/astro/dist/assets/services/sharp.js":"chunks/sharp_CVzCRqOn.mjs","\u0000virtual:astro:page:src/pages/works@_@astro":"chunks/works_9vuKj2I0.mjs","D:/client/src/components/islands/Aboutme.tsx":"_astro/Aboutme.BzJ8PdFJ.js","D:/client/src/components/islands/BlogsSection.tsx":"_astro/BlogsSection.ClbNbj1a.js","D:/client/src/components/islands/Contact.tsx":"_astro/Contact.zuy2banM.js","D:/client/src/components/islands/HeaderNav.tsx":"_astro/HeaderNav.CQJMGezf.js","D:/client/src/components/islands/Hero.tsx":"_astro/Hero.CQgymzVd.js","D:/client/src/components/islands/TechStack.tsx":"_astro/TechStack.o2V9os5u.js","D:/client/src/components/islands/Work.tsx":"_astro/Work.C6fSHZX7.js","@astrojs/react/client.js":"_astro/client.BgYHxDGX.js","astro:scripts/before-hydration.js":""},"inlinedScripts":[],"assets":["/favicon.ico","/_astro/Aboutme.BzJ8PdFJ.js","/_astro/BlogsSection.ClbNbj1a.js","/_astro/client.BgYHxDGX.js","/_astro/Contact.zuy2banM.js","/_astro/createLucideIcon.rNjjpPAP.js","/_astro/HeaderNav.CQJMGezf.js","/_astro/Hero.CQgymzVd.js","/_astro/jsx-runtime.Bmd7iEuj.js","/_astro/map-pin.DVGKXFQy.js","/_astro/react.ADnQu87e.js","/_astro/TechStack.o2V9os5u.js","/_astro/Work.C6fSHZX7.js","/_astro/data.pO9WDpAv.css"],"buildFormat":"directory","checkOrigin":true,"actionBodySizeLimit":1048576,"serverIslandBodySizeLimit":1048576,"allowedDomains":[],"key":"rJbh4EZgWliWwKJZ/vybalTsDk6d+Wxdi0XiBLiEhIo=","sessionConfig":{"driver":"unstorage/drivers/fs-lite","options":{"base":"D:\\client\\node_modules\\.astro\\sessions"}},"image":{},"devToolbar":{"enabled":false,"debugInfoOutput":""},"logLevel":"info","shouldInjectCspMetaTags":false});
 var manifestRoutes = _manifest.routes;
 var manifest = Object.assign(_manifest, {
 	renderers,

@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
+import { getWorksData, getHeroData } from '../lib/data';
+
+const works = await getWorksData();
+const hero = await getHeroData();
+const displayName = hero?.displayName || 'tonnaminwtai0000789';
+---
+
+<Layout title={`${displayName} | Projects`}>
+  <div class="min-h-screen bg-dark-bg py-12 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div class="flex items-center gap-4 mb-20">
+        <a
+          href="/"
+          class="p-3 bg-dark-accent border border-dark-border rounded-full shadow hover:border-primary hover:text-primary transition-all text-gray-400"
+        >
+          <ArrowLeft className="w-6 h-6" />
+        </a>
+        <div>
+          <h2 class="text-sm font-bold text-primary tracking-wider uppercase mb-1">PROJECTS</h2>
+          <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">Recent Projects</h1>
+        </div>
+      </div>
+
+      <!-- Works Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {works.map((work, index) => (
+          <div class="group bg-dark-card border border-dark-border rounded-[32px] overflow-hidden hover:border-primary/50 transition-all duration-300 flex flex-col h-full hover:shadow-[0_0_40px_rgba(99,102,241,0.1)] relative">
+            <div class="aspect-video relative overflow-hidden">
+              <img
+                src={work.image}
+                alt={work.title}
+                loading={index < 2 ? 'eager' : 'lazy'}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent opacity-90" />
+
+              <div class="absolute top-4 right-4">
+                <span class="bg-black/50 backdrop-blur-md border border-white/10 text-white text-xs font-mono px-3 py-1 rounded-full">
+                  {work.year}
+                </span>
+              </div>
+            </div>
+
+            <div class="p-8 flex flex-col flex-grow relative z-10">
+              <div class="mb-6">
+                <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-primary transition-colors">
+                  {work.title}
+                </h2>
+                <p class="text-gray-400 font-light leading-relaxed mb-4">{work.description}</p>
+
+                {work.tags && work.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {work.tags.map((tag: any) => (
+                      <span class="text-xs px-3 py-1 bg-dark-accent border border-dark-border rounded-full text-gray-300">
+                        {tag.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div class="mt-auto flex gap-3 pt-4 border-t border-dark-border">
+                {work.links?.map((link: any) => (
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    class="px-5 py-2.5 bg-dark-accent border border-dark-border rounded-xl text-sm font-medium text-white hover:bg-primary hover:border-primary transition-all flex items-center gap-2"
+                  >
+                    {link.type === 'website' ? (
+                      <ExternalLink className="w-4 h-4" />
+                    ) : (
+                      <Github className="w-4 h-4" />
+                    )}
+                    {link.type === 'website' ? 'View Site' : 'View Code'}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {works.length === 0 && (
+        <div class="text-center py-20 bg-dark-card rounded-[32px] border border-dark-border">
+          <p class="text-xl text-gray-500">No works found.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>
