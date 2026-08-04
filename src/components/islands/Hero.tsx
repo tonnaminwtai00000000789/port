@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { MapPin, Clock, ArrowRight, Sparkles, Layers, ChevronDown } from "lucide-react";
+import { MapPin, Clock, ArrowRight, Sparkles, Code, Globe, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 export interface HeroData {
   id: number;
@@ -26,25 +27,6 @@ export function Hero({ data }: { data: HeroData }) {
   const [currentTime, setCurrentTime] = useState("");
   const [age, setAge] = useState(14);
   const [experience, setExperience] = useState(4);
-
-  // Mouse Parallax Effect Effect handler
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = e.clientX / window.innerWidth - 0.5;
-      const y = e.clientY / window.innerHeight - 0.5;
-      const layers = document.querySelectorAll(".hero-layer");
-      layers.forEach((layer) => {
-        const depth = parseFloat(layer.getAttribute("data-depth") || "10");
-        const px = (-x * depth).toFixed(1);
-        const py = (-y * depth).toFixed(1);
-        (layer as HTMLElement).style.setProperty("--px", `${px}px`);
-        (layer as HTMLElement).style.setProperty("--py", `${py}px`);
-      });
-    };
-
-    window.addEventListener("pointermove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("pointermove", handleMouseMove);
-  }, []);
 
   useEffect(() => {
     if (!data) return;
@@ -88,147 +70,211 @@ export function Hero({ data }: { data: HeroData }) {
   if (!data) return null;
 
   return (
-    <section className="relative min-h-[85vh] flex items-center overflow-hidden border-b-2 border-[#0f172a] bg-[#f8fafc] pt-24 pb-16">
-      {/* Background Slanted Bands (Flying Entrance & Breathe Animation) */}
-      <div className="hero-layer pointer-events-none absolute inset-y-0 right-0 hidden w-[45%] lg:block" data-depth="15">
-        <div
-          className="band slant absolute -top-[20%] right-[16%] h-[140%] w-24 bg-[#60a5fa]"
-          style={{ "--ed": "0s", "--bd": "0s" } as React.CSSProperties}
-        />
-        <div
-          className="band slant absolute -top-[20%] right-[6%] h-[140%] w-8 bg-[#0f172a]"
-          style={{ "--ed": "0.1s", "--bd": "0.8s" } as React.CSSProperties}
-        />
-        <div
-          className="band slant absolute -top-[20%] right-[1%] h-[140%] w-3 bg-[#bfdbfe]"
-          style={{ "--ed": "0.2s", "--bd": "1.6s" } as React.CSSProperties}
-        />
-      </div>
-
-      <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-12">
-        {/* Left Column: Hero Copy & Staggered Entrance */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="hero-in" style={{ "--d": "0.2s" } as React.CSSProperties}>
-            <span className="slant inline-flex px-3 py-1 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
-              <span className="unslant inline-flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#0f172a]" /> Digital Craftsman
-              </span>
-            </span>
-          </div>
-
-          <h1
-            className="hero-in font-display text-5xl sm:text-7xl font-extrabold tracking-tight text-[#0f172a] leading-none"
-            style={{ "--d": "0.4s" } as React.CSSProperties}
-          >
-            <span className="text-[#60a5fa]">T</span>onnam
-          </h1>
-
-          <p
-            className="hero-in font-display text-2xl sm:text-3xl font-extrabold leading-snug text-[#0f172a]"
-            style={{ "--d": "0.6s" } as React.CSSProperties}
-          >
-            ผมชอบสร้างสิ่งใหม่ๆ <br />
-            <span className="text-[#2563eb]">และชอบเห็นคนได้ใช้มัน</span>
-          </p>
-
-          <p
-            className="hero-in text-[#475569] text-sm sm:text-base leading-relaxed max-w-lg"
-            style={{ "--d": "0.8s" } as React.CSSProperties}
-          >
-            เริ่มจากการเขียนบอท Discord เล่นกับเพื่อนๆ วันนี้อยู่กับการเขียนโปรแกรมมาแล้ว <span className="num-badge">{experience}</span> ปี และตั้งใจสร้างสรรค์เว็บแอปพลิเคชันที่ตอบโจทย์ผู้ใช้จริง
-          </p>
-
-          <div
-            className="hero-in flex flex-wrap items-center gap-3 pt-2"
-            style={{ "--d": "1.0s" } as React.CSSProperties}
-          >
-            <a
-              href="#works"
-              className="btn-pop px-6 py-2.5 text-sm font-bold inline-flex items-center gap-2"
+    <section className="pt-24 pb-8 relative">
+      {/* Main Showcase Hero */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="card-paper p-6 sm:p-10 bg-white mb-6 border-1.5 border-[#0f172a]"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Left Hero Statement */}
+          <div className="lg:col-span-7 space-y-4">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              ดูสิ่งที่สร้างไว้ <ArrowRight className="w-4 h-4" />
-            </a>
-            <span className="slant inline-flex border border-[#0f172a] bg-white px-4 py-2 text-xs font-bold text-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
-              <span className="unslant inline-flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#2563eb]" /> {data.location}
+              <span className="slant inline-flex px-3 py-1 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
+                <span className="unslant inline-flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#0f172a]" /> Digital Craftsman
+                </span>
               </span>
-            </span>
-          </div>
+            </motion.div>
 
-          {/* Stats Counter */}
-          <div
-            className="hero-in grid grid-cols-3 gap-4 pt-6 border-t-2 border-dashed border-[#cbd5e1]"
-            style={{ "--d": "1.15s" } as React.CSSProperties}
-          >
-            <div>
-              <p className="font-display text-3xl sm:text-4xl font-extrabold text-[#2563eb]">
-                {experience}+
-              </p>
-              <p className="text-xs font-semibold text-[#475569] mt-0.5">ปีที่เขียนโค้ด</p>
-            </div>
-            <div>
-              <p className="font-display text-3xl sm:text-4xl font-extrabold text-[#0f172a]">
-                {age}
-              </p>
-              <p className="text-xs font-semibold text-[#475569] mt-0.5">อายุ (ปี)</p>
-            </div>
-            <div>
-              <p className="font-display text-3xl sm:text-4xl font-extrabold text-[#0f172a]">
-                100%
-              </p>
-              <p className="text-xs font-semibold text-[#475569] mt-0.5">ความตั้งใจ</p>
-            </div>
-          </div>
-        </div>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="font-display text-5xl sm:text-7xl font-extrabold text-[#0f172a] leading-none tracking-tight"
+            >
+              <span className="text-[#60a5fa]">T</span>onnam
+            </motion.h1>
 
-        {/* Right Column: Floating Interactive Showcase Cluster */}
-        <div className="lg:col-span-5 relative hidden lg:block h-[480px]">
-          {/* Card Back: Position Info */}
-          <div className="hero-layer absolute bottom-4 left-0 w-[68%]" data-depth="25">
-            <div className="card-in" style={{ "--d": "1.3s" } as React.CSSProperties}>
-              <div className="card-floating card-paper -rotate-6 p-4 bg-white">
-                <p className="text-[10px] font-mono font-bold text-[#2563eb] uppercase mb-1">องค์กรปัจจุบัน</p>
-                <div className="flex items-center gap-3">
-                  <img src={data.positions?.[0]?.logo} alt="logo" className="w-8 h-8 rounded-md border border-[#0f172a] object-cover" />
-                  <div>
-                    <p className="text-xs font-bold text-[#0f172a]">{data.positions?.[0]?.organization}</p>
-                    <p className="text-[10px] text-[#475569]">{data.positions?.[0]?.title}</p>
-                  </div>
-                </div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="font-display text-2xl sm:text-3xl font-extrabold leading-snug text-[#0f172a]"
+            >
+              ผมชอบสร้างสิ่งใหม่ๆ <br />
+              <span className="text-[#2563eb]">และชอบเห็นคนได้ใช้มัน</span>
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="text-[#475569] text-sm sm:text-base leading-relaxed max-w-lg"
+            >
+              เริ่มจากการเขียนบอท Discord เล่นกับเพื่อนๆ วันนี้อยู่กับการเขียนโปรแกรมมาแล้ว <span className="num-badge">{experience}</span> ปี และตั้งใจสร้างสรรค์เว็บแอปพลิเคชันที่ตอบโจทย์ผู้ใช้จริง
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="flex flex-wrap items-center gap-3 pt-2"
+            >
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                href="#works"
+                className="btn-pop px-6 py-2.5 text-sm font-bold inline-flex items-center gap-1.5"
+              >
+                ดูสิ่งที่สร้างไว้ <ArrowRight className="w-4 h-4" />
+              </motion.a>
+              <span className="slant inline-flex border border-[#0f172a] bg-[#f1f5f9] px-3.5 py-2 text-xs font-bold text-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
+                <span className="unslant inline-flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#2563eb]" /> {data.location}
+                </span>
+              </span>
+            </motion.div>
+
+            {/* Stats Counter */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="grid grid-cols-3 gap-4 pt-6 border-t-2 border-dashed border-[#cbd5e1]"
+            >
+              <div>
+                <p className="font-display text-3xl font-extrabold text-[#2563eb]">
+                  {experience}+
+                </p>
+                <p className="text-xs font-semibold text-[#475569] mt-0.5">ปีที่เขียนโค้ด</p>
               </div>
-            </div>
-          </div>
-
-          {/* Card Top Right: Live Clock & Location */}
-          <div className="hero-layer absolute top-2 right-0 w-[65%]" data-depth="18">
-            <div className="card-in" style={{ "--d": "1.2s" } as React.CSSProperties}>
-              <div className="card-floating card-paper rotate-6 p-4 bg-white">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-mono font-bold text-[#2563eb] uppercase">Bangkok Time</span>
-                  <Clock className="w-3.5 h-3.5 text-[#0f172a]" />
-                </div>
-                <p className="font-mono text-xl font-bold text-[#0f172a] tracking-tight">{currentTime || "--:--:--"}</p>
+              <div>
+                <p className="font-display text-3xl font-extrabold text-[#0f172a]">
+                  {age}
+                </p>
+                <p className="text-xs font-semibold text-[#475569] mt-0.5">อายุ (ปี)</p>
               </div>
-            </div>
+              <div>
+                <p className="font-display text-3xl font-extrabold text-[#0f172a]">
+                  100%
+                </p>
+                <p className="text-xs font-semibold text-[#475569] mt-0.5">ความตั้งใจ</p>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Card Center Main: Profile Showcase */}
-          <div className="hero-layer absolute top-1/2 left-1/2 w-[82%] -translate-x-1/2 -translate-y-1/2" data-depth="10">
-            <div className="card-in" style={{ "--d": "1.0s" } as React.CSSProperties}>
-              <div className="card-floating card-paper -rotate-2 overflow-hidden bg-white">
+          {/* Right Profile Column Showcase */}
+          <div className="lg:col-span-5 flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ scale: 1.02 }}
+              className="relative w-full max-w-xs"
+            >
+              <div className="slant absolute -bottom-2 -left-2 z-0 h-full w-full bg-[#60a5fa] border-1.5 border-[#0f172a]" />
+              <div className="relative z-10 overflow-hidden border-1.5 border-[#0f172a] bg-white">
                 <img
                   src={data.profileImage}
                   alt={data.displayName}
-                  className="aspect-[4/3] w-full object-cover"
+                  className="w-full aspect-[4/5] object-cover"
+                  loading="eager"
                 />
                 <div className="p-3 bg-[#0f172a] text-white flex items-center justify-between text-xs font-mono">
                   <span>TonnamInwtai00789</span>
                   <span className="text-[#60a5fa] font-bold">{data.emoji}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
+      </motion.div>
+
+      {/* Bio & Bangkok Time Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        {/* Bio & Currently at */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="md:col-span-7 card-paper p-6 bg-white border-1.5 border-[#0f172a]"
+        >
+          <h2 className="text-xl font-bold text-[#0f172a] mb-2 flex items-center gap-2">
+            สวัสดีครับ ผมชื่อ <span className="text-[#2563eb] font-extrabold">{data.nickname}</span> 👋
+          </h2>
+
+          <p className="text-[#475569] text-sm leading-relaxed mb-4 font-normal">
+            ผมอายุ <span className="num-badge">{age}</span> ปี ทำงานและสร้างสรรค์โปรเจกต์ซอฟต์แวร์จากกรุงเทพฯ ชอบทดลองเทคโนโลยีใหม่ๆ และพัฒนาเครื่องมือที่มีประโยชน์
+          </p>
+
+          <div className="space-y-2 pt-3 border-t-1.5 border-[#0f172a]">
+            <p className="text-xs font-extrabold text-[#0f172a] uppercase tracking-wider">กำลังทำอยู่ในปัจจุบัน</p>
+            {data.positions?.map((pos, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ x: 3 }}
+                className="flex items-center gap-3 p-2 border border-[#cbd5e1] hover:border-[#0f172a] transition-colors"
+              >
+                <img src={pos.logo} alt={pos.organization} className="w-8 h-8 object-cover border border-[#0f172a]" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-[#0f172a] truncate">{pos.title}</p>
+                  <a href={pos.organizationUrl} target="_blank" rel="noreferrer" className="text-xs text-[#475569] hover:text-[#2563eb] truncate block">
+                    {pos.organization}
+                  </a>
+                </div>
+                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 bg-[#f8fafc] border border-[#cbd5e1]">
+                  {pos.since}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Live Bangkok Clock */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="md:col-span-5 flex flex-col gap-4"
+        >
+          <div className="card-paper p-6 bg-white border-1.5 border-[#0f172a] flex-1 flex flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-[#2563eb] uppercase">Bangkok, TH</span>
+              <Clock className="w-4 h-4 text-[#0f172a]" />
+            </div>
+
+            <div>
+              <p className="text-xs font-semibold text-[#475569] mb-1">เวลากรุงเทพฯ ปัจจุบัน</p>
+              <p className="font-mono text-3xl font-bold text-[#0f172a] tracking-tight">
+                {currentTime || "--:--:--"}
+              </p>
+            </div>
+          </div>
+
+          <div className="card-paper p-4 bg-[#0f172a] text-white flex items-center justify-between">
+            <div>
+              <p className="text-xs font-mono text-[#60a5fa]">STATUS</p>
+              <p className="text-sm font-bold text-white">พร้อมรับงาน & โปรเจกต์ใหม่</p>
+            </div>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="#contact"
+              className="px-3.5 py-1.5 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-white hover:bg-white transition-colors"
+            >
+              ติดต่อ
+            </motion.a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
