@@ -12,7 +12,13 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
-      rolldownOptions: {},
+      include: [
+        '@supabase/supabase-js',
+        'framer-motion',
+        'lucide-react',
+        'react',
+        'react-dom',
+      ],
     },
     customLogger: {
       warn(msg, options) {
