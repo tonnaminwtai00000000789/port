@@ -1,15 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { HeaderNav } from '../components/islands/HeaderNav';
-import HeroSection from '../components/static/HeroSection.astro';
-import AboutSection from '../components/static/AboutSection.astro';
-import { TechStackTabs } from '../components/islands/TechStackTabs';
-import BlogCard from '../components/static/BlogCard.astro';
+import { Hero } from '../components/islands/Hero';
+import { Work } from '../components/islands/Work';
+import { TechStack } from '../components/islands/TechStack';
+import { Aboutme } from '../components/islands/Aboutme';
+import { BlogsSection } from '../components/islands/BlogsSection';
+import { Contact } from '../components/islands/Contact';
 
 import {
   getHeroData,
   getAboutMeData,
   getTechStackData,
+  getWorksData,
   getContactData,
   getBlogPosts,
 } from '../lib/data';
@@ -17,98 +20,36 @@ import {
 const hero = await getHeroData();
 const aboutMe = await getAboutMeData();
 const techStack = await getTechStackData();
+const works = await getWorksData();
 const contact = await getContactData();
 const posts = await getBlogPosts();
 ---
 
-<Layout title="Tonnam | Developer Portfolio">
+<Layout title={hero?.displayName ? `${hero.displayName}` : 'Tonnam Portfolio'}>
   <HeaderNav client:load />
 
-  <main class="space-y-12 pb-24">
-    <!-- Hero Section -->
-    <HeroSection hero={hero} />
+  <div class="animate-fade-in bg-dark-bg min-h-screen text-gray-200 relative overflow-hidden">
+    {/* Mystical Background Effects */}
+    <div class="fixed inset-0 pointer-events-none z-0">
+      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+      <div class="absolute top-[20%] right-[-5%] w-[30%] h-[30%] bg-blue-500/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 4s;"></div>
+      <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+    </div>
 
-    <!-- About Section -->
-    <AboutSection aboutMe={aboutMe} />
-
-    <!-- Tech Stack Section -->
-    <section id="skills" class="py-20 border-t border-slate-800/60">
-      <div class="max-w-6xl mx-auto px-6 space-y-12">
-        <div class="text-center space-y-3">
-          <h2 class="text-3xl font-extrabold text-white">Tech Stack & Tools</h2>
-          <p class="text-slate-400 text-sm max-w-lg mx-auto">
-            Technologies and frameworks I work with regularly.
-          </p>
-        </div>
-
-        <TechStackTabs client:visible techStack={techStack} />
+    <div class="flex justify-center py-10 md:py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="w-full max-w-6xl space-y-12 md:space-y-20">
+        {hero && <Hero client:load data={hero} />}
+        {works && works.length > 0 && <Work client:visible data={works} />}
+        {techStack && techStack.length > 0 && <TechStack client:visible data={techStack} />}
+        {aboutMe && <Aboutme client:visible data={aboutMe} />}
+        {posts && posts.length > 0 && <BlogsSection client:visible data={posts} />}
+        {contact && <Contact client:visible data={contact} />}
       </div>
-    </section>
+    </div>
+  </div>
 
-    <!-- Latest Blog Posts -->
-    {posts.length > 0 && (
-      <section class="py-20 border-t border-slate-800/60">
-        <div class="max-w-6xl mx-auto px-6 space-y-12">
-          <div class="flex items-center justify-between">
-            <div>
-              <h2 class="text-3xl font-extrabold text-white">Recent Articles</h2>
-              <p class="text-slate-400 text-sm mt-1">Thoughts, tutorials, and project updates.</p>
-            </div>
-            <a href="/blog" class="text-xs font-semibold text-indigo-400 hover:underline">
-              View All Posts →
-            </a>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {posts.slice(0, 3).map((post) => (
-              <BlogCard post={post} />
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 border-t border-slate-800/60">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="glass-card rounded-3xl p-8 sm:p-12 text-center max-w-3xl mx-auto space-y-6">
-          <h2 class="text-3xl font-extrabold text-white">Let's Connect</h2>
-          <p class="text-slate-300 text-sm max-w-md mx-auto">
-            Feel free to reach out via email or connect on social media.
-          </p>
-
-          {contact?.email && (
-            <div class="pt-2">
-              <a
-                href={`mailto:${contact.email}`}
-                class="inline-block px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all hover:scale-105"
-              >
-                📧 {contact.email}
-              </a>
-            </div>
-          )}
-
-          {contact?.socials && contact.socials.length > 0 && (
-            <div class="flex flex-wrap justify-center gap-4 pt-4">
-              {contact.socials.map((social: any) => (
-                <a
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white transition-all"
-                >
-                  <i class={social.icon}></i>
-                  <span>{social.platform} ({social.username})</span>
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 glass">
-    <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). Built with Astro + Islands + Supabase on Bun runtime.</p>
+  <footer class="border-t border-white/5 py-8 text-center text-xs text-gray-500 glass relative z-10">
+    <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). Astro + Islands + Supabase on Bun.</p>
   </footer>
 </Layout>

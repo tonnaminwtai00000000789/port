@@ -7,16 +7,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface HeroRow {
   id: number;
-  first_name: string;
-  last_name: string;
-  display_name: string;
+  firstName: string;
+  lastName: string;
+  displayName: string;
   nickname: string;
-  birth_date: string;
-  start_date: string;
+  birthDate: string;
+  startDate: string;
   location: string;
-  profile_image: string;
+  profileImage: string;
   emoji: string;
-  webring_url: string;
+  webringUrl: string | null;
   positions: any[];
 }
 
@@ -24,8 +24,8 @@ export interface AboutMeRow {
   id: number;
   nickname: string;
   status: string;
-  status_link: string;
-  full_name: string;
+  statusLink: string | null;
+  fullName: string;
   birthday: string;
   location: string;
   facts: any[];
@@ -36,6 +36,19 @@ export interface TechStackRow {
   category: string;
   order: number;
   technologies: any[];
+}
+
+export interface WorkRow {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  year: string;
+  size: "large" | "small";
+  watermark: string | null;
+  tags: any[];
+  links: any[];
+  order: number;
 }
 
 export interface ContactRow {

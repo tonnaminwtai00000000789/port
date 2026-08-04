@@ -1,17 +1,17 @@
-import { supabase, type HeroRow, type AboutMeRow, type TechStackRow, type ContactRow, type BlogRow } from './supabase';
+import { supabase, type HeroRow, type AboutMeRow, type TechStackRow, type WorkRow, type ContactRow, type BlogRow } from './supabase';
 
 const DEFAULT_HERO: HeroRow = {
-  id: 1,
-  first_name: 'Supakron',
-  last_name: 'Klinbubpa',
-  display_name: 'TonnamInwtai00789',
+  id: 3,
+  firstName: 'Supakron',
+  lastName: 'Klinbubpa',
+  displayName: 'TonnamInwtai00789',
   nickname: 'Tonnam',
-  birth_date: '2011-03-03',
-  start_date: '2021-01-01',
+  birthDate: '2011-03-03',
+  startDate: '2021-01-01',
   location: 'Bangbon, Bangkok',
-  profile_image: 'https://theijon.online/images/tonnam.png',
+  profileImage: 'https://theijon.online/images/tonnam.png',
   emoji: '😪💤',
-  webring_url: 'https://webring.wonderful.software#nsys.site',
+  webringUrl: 'https://webring.wonderful.software#nsys.site',
   positions: [
     {
       logo: 'https://theijon.online/logo.jpg',
@@ -20,15 +20,22 @@ const DEFAULT_HERO: HeroRow = {
       organization: 'The ijon',
       organizationUrl: 'https://theijon.online/',
     },
+    {
+      logo: 'https://scontent.fbkk22-1.fna.fbcdn.net/v/t39.30808-6/399066911_734484848721847_3491665446363065300_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=a5f93a',
+      since: 'Become a student in 2014',
+      title: 'Student (Grade 9) in',
+      organization: 'Sarasas Witaed Bangbon',
+      organizationUrl: 'https://www.swb.ac.th/swb/',
+    },
   ],
 };
 
 const DEFAULT_ABOUT: AboutMeRow = {
-  id: 1,
+  id: 3,
   nickname: 'Tonnam',
   status: 'IDK',
-  status_link: 'https://www.pornhub.org/',
-  full_name: 'Supakron Klinbubpa',
+  statusLink: 'https://www.pornhub.org/',
+  fullName: 'Supakron Klinbubpa',
   birthday: 'Thursday, March 3, 2011',
   location: 'Bangbon, Thailand',
   facts: [
@@ -44,29 +51,72 @@ const DEFAULT_ABOUT: AboutMeRow = {
       title: 'KFC',
       subtitle: 'Favorite Food',
     },
+    {
+      type: 'image',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.svg',
+      title: 'Valorant',
+      subtitle: 'Favorite Game',
+    },
   ],
 };
 
 const DEFAULT_TECH: TechStackRow[] = [
   {
-    id: 1,
+    id: 16,
     category: 'Frontend Frameworks',
     order: 1,
     technologies: [
       { icon: 'devicon-react-original colored', name: 'React' },
+      { icon: 'devicon-nextjs-plain colored', name: 'Next.js' },
       { icon: 'devicon-astro-plain colored', name: 'Astro' },
+      { icon: 'devicon-svelte-plain colored', name: 'SvelteKit' },
       { icon: 'devicon-tailwindcss-original colored', name: 'Tailwind CSS' },
     ],
   },
   {
-    id: 2,
-    category: 'Languages & Runtimes',
+    id: 17,
+    category: 'Backend Frameworks',
     order: 2,
+    technologies: [
+      { icon: 'devicon-express-original', name: 'Express' },
+      { icon: 'devicon-nestjs-original colored', name: 'NestJS' },
+      { icon: 'https://hono.dev/favicon.ico', name: 'Hono' },
+      { icon: 'https://elysiajs.com/assets/elysia.svg', name: 'Elysia' },
+      { icon: 'devicon-cloudflare-plain colored', name: 'Cloudflare Workers' },
+    ],
+  },
+  {
+    id: 18,
+    category: 'Languages & Runtimes',
+    order: 3,
     technologies: [
       { icon: 'devicon-typescript-plain colored', name: 'TypeScript' },
       { icon: 'devicon-javascript-plain colored', name: 'JavaScript' },
+      { icon: 'devicon-nodejs-plain-wordmark colored', name: 'Node.js' },
       { icon: 'devicon-bun-plain colored', name: 'Bun' },
+      { icon: 'devicon-python-plain colored', name: 'Python' },
     ],
+  },
+];
+
+const DEFAULT_WORKS: WorkRow[] = [
+  {
+    id: 1,
+    title: 'The iJon Project',
+    description: 'A modern web ecosystem built for community members & developers.',
+    image: 'https://theijon.online/images/tonnam.png',
+    year: '2025',
+    size: 'large',
+    watermark: null,
+    tags: [
+      { label: 'React', url: '#' },
+      { label: 'TypeScript', url: '#' },
+      { label: 'Tailwind', url: '#' },
+    ],
+    links: [
+      { url: 'https://theijon.online/', type: 'website' },
+    ],
+    order: 1,
   },
 ];
 
@@ -81,18 +131,18 @@ const DEFAULT_CONTACT: ContactRow = {
 
 const DEFAULT_BLOGS: BlogRow[] = [
   {
-    id: 1,
-    title: 'Welcome to my Astro + Supabase portfolio',
-    slug: 'welcome',
+    id: 10,
+    title: 'ควย',
+    slug: 'เย้',
     image: 'https://tr.rbxcdn.com/180DAY-6a9f37f333452ee91542001faacf5e49/576/324/Image/Jpeg/noFilter',
-    date: '2026-02-17',
-    content: 'Welcome to my new blog powered by Astro 5, React Islands, and Supabase!',
+    date: '9999-99-99',
+    content: '# ควยควย\nควย\nควย\nควย',
     published: true,
   },
 ];
 
 export async function getHeroData(): Promise<HeroRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
+  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
     const { data } = await supabase.from('hero').select('*').limit(1).single();
     if (data) return data as HeroRow;
   }
@@ -100,7 +150,7 @@ export async function getHeroData(): Promise<HeroRow | null> {
 }
 
 export async function getAboutMeData(): Promise<AboutMeRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
+  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
     const { data } = await supabase.from('about_me').select('*').limit(1).single();
     if (data) return data as AboutMeRow;
   }
@@ -108,15 +158,23 @@ export async function getAboutMeData(): Promise<AboutMeRow | null> {
 }
 
 export async function getTechStackData(): Promise<TechStackRow[]> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
+  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
     const { data } = await supabase.from('tech_stack').select('*').order('order', { ascending: true });
     if (data && data.length) return data as TechStackRow[];
   }
   return DEFAULT_TECH;
 }
 
+export async function getWorksData(): Promise<WorkRow[]> {
+  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+    const { data } = await supabase.from('works').select('*').order('order', { ascending: true });
+    if (data && data.length) return data as WorkRow[];
+  }
+  return DEFAULT_WORKS;
+}
+
 export async function getContactData(): Promise<ContactRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
+  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
     const { data } = await supabase.from('contact').select('*').limit(1).single();
     if (data) return data as ContactRow;
   }
@@ -124,7 +182,7 @@ export async function getContactData(): Promise<ContactRow | null> {
 }
 
 export async function getBlogPosts(): Promise<BlogRow[]> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
+  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
     const { data } = await supabase.from('blog').select('*').eq('published', true);
     if (data && data.length) return data as BlogRow[];
   }
@@ -132,7 +190,7 @@ export async function getBlogPosts(): Promise<BlogRow[]> {
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
+  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
     const { data } = await supabase.from('blog').select('*').eq('slug', slug).single();
     if (data) return data as BlogRow;
   }
