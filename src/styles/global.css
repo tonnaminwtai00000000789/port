@@ -33,14 +33,8 @@ body {
   overflow-x: hidden;
 }
 
-@theme inline {
-  --color-paper: #ffffff;
-  --color-[#60a5fa]: #60a5fa;
-  --color-[#3b82f6]: #3b82f6;
-  --color-[#2563eb]: #2563eb;
-  --color-[#eff6ff]: #eff6ff;
-  --color-[#e2e8f0]: #e2e8f0;
-  --color-[#0f172a]: #0f172a;
+:root {
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Slanted Skew Utilities */
@@ -52,7 +46,79 @@ body {
   transform: skewX(10deg);
 }
 
-/* Paper Card (Tactile Hairline Borders + Sky Blue Pop Shadow) */
+/* Slanted Background Bands Flying Entrance & Breathe Motion */
+.band {
+  animation: band-enter 1.15s cubic-bezier(0.16, 1, 0.3, 1) var(--ed, 0s) both, breathe 7s ease-in-out calc(1.3s + var(--bd, 0s)) infinite alternate;
+}
+
+@keyframes band-enter {
+  0% {
+    transform: translate(-110vw) skew(-12deg);
+  }
+  100% {
+    transform: translate(0) skew(-12deg);
+  }
+}
+
+@keyframes breathe {
+  0% {
+    transform: skew(-12deg) translateY(-1.5%);
+  }
+  100% {
+    transform: skew(-12deg) translateY(1.5%);
+  }
+}
+
+/* Staggered Hero Content Rise Animation */
+.hero-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: hero-rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
+}
+
+@keyframes hero-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card Cluster Entrance Animation */
+.card-in {
+  opacity: 0;
+  animation: card-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
+}
+
+@keyframes card-in {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Card Hover Tilt */
+.card-floating {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-floating:hover {
+  transform: scale(1.04) rotate(0deg) !important;
+  z-index: 50;
+  box-shadow: 0 20px 40px -10px rgba(96, 165, 250, 0.25), 0 4px 8px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Mouse Parallax Layer Container */
+.hero-layer {
+  transform: translate(var(--px, 0), var(--py, 0));
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+
+/* Paper Card Style */
 .card-paper {
   background: #ffffff;
   border: 1.5px solid #0f172a;
@@ -66,19 +132,7 @@ body {
   box-shadow: 7px 7px 0px 0px #2563eb;
 }
 
-.card-paper-subtle {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  transition: all 0.25s ease;
-}
-
-.card-paper-subtle:hover {
-  border-color: #0f172a;
-  box-shadow: 4px 4px 0px 0px #60a5fa;
-}
-
-/* Button & Badge Pop Shadows */
+/* Button Pop */
 .btn-pop {
   background: #60a5fa;
   color: #0f172a;
@@ -101,7 +155,19 @@ body {
   box-shadow: 1px 1px 0px 0px #0f172a;
 }
 
-/* Tag Badge */
+/* Number badge styling */
+.num-badge {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 0 0.4em;
+  border-radius: 4px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
 .tag-badge {
   display: inline-flex;
   align-items: center;
@@ -116,50 +182,14 @@ body {
   transition: all 0.2s ease;
 }
 
-.tag-badge:hover {
-  border-color: #60a5fa;
-  background: #eff6ff;
-  color: #1d4ed8;
-}
-
-/* Number badge styling */
-.num-badge {
-  display: inline-block;
-  margin: 0 2px;
-  padding: 0 0.4em;
-  border-radius: 4px;
-  border: 1px solid #bfdbfe;
-  background: #eff6ff;
-  color: #1d4ed8;
-  font-weight: 700;
-  font-size: 0.9em;
-}
-
-/* AOS Animation Simulation Keyframes */
-@keyframes aos-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
+@media (prefers-reduced-motion: reduce) {
+  .hero-in, .card-in {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    animation: none;
   }
-}
-
-@keyframes float-subtle {
-  0%, 100% {
-    transform: translateY(0);
+  .band {
+    animation: none;
+    transform: skew(-12deg);
   }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-.animate-aos-up {
-  animation: aos-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-float {
-  animation: float-subtle 4s ease-in-out infinite;
 }

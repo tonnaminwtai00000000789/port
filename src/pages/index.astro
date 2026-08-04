@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { IntroPreloader } from '../components/islands/IntroPreloader';
 import { HeaderNav } from '../components/islands/HeaderNav';
 import { Hero } from '../components/islands/Hero';
 import { Work } from '../components/islands/Work';
@@ -31,7 +30,6 @@ const posts = await getBlogPosts();
   description={hero ? `builder ที่ชอบสร้างสิ่งใหม่ๆ | ${hero.displayName}` : 'Personal portfolio'}
   image={hero?.profileImage}
 >
-  <IntroPreloader client:load />
   <HeaderNav client:load webringUrl={hero?.webringUrl} />
 
   <main class="mx-auto max-w-5xl px-6 flex-1 w-full space-y-8">
