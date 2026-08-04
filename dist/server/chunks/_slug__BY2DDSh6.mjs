@@ -1,6 +1,6 @@
 import { C as createAstro, R as __exportAll, g as addAttribute, i as renderComponent, m as maybeRenderHead, u as renderTemplate } from "./server_uVWWhcj-.mjs";
 import { t as createComponent } from "./compiler_D7PGrtXv.mjs";
-import { c as $$Layout, n as getBlogPostBySlug, s as HeaderNav } from "./data_B7pZ49cj.mjs";
+import { c as $$Layout, n as getBlogPostBySlug, s as HeaderNav } from "./data_DC1-joQ6.mjs";
 //#region src/pages/blog/[slug].astro
 var _slug__exports = /* @__PURE__ */ __exportAll({
 	default: () => $$Slug,

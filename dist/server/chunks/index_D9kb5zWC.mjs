@@ -1,6 +1,6 @@
 import { R as __exportAll, i as renderComponent, m as maybeRenderHead, u as renderTemplate } from "./server_uVWWhcj-.mjs";
 import { t as createComponent } from "./compiler_D7PGrtXv.mjs";
-import { c as $$Layout, r as getBlogPosts, s as HeaderNav } from "./data_B7pZ49cj.mjs";
+import { c as $$Layout, r as getBlogPosts, s as HeaderNav } from "./data_DC1-joQ6.mjs";
 import { t as $$BlogCard } from "./BlogCard_D48ljGwo.mjs";
 //#region src/pages/blog/index.astro
 var blog_exports = /* @__PURE__ */ __exportAll({
