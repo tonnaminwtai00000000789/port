@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { HeaderNav } from '../components/islands/HeaderNav';
+import HeroSection from '../components/static/HeroSection.astro';
+import AboutSection from '../components/static/AboutSection.astro';
+import { TechStackTabs } from '../components/islands/TechStackTabs';
+import BlogCard from '../components/static/BlogCard.astro';
+
+import {
+  getHeroData,
+  getAboutMeData,
+  getTechStackData,
+  getContactData,
+  getBlogPosts,
+} from '../lib/data';
+
+const hero = await getHeroData();
+const aboutMe = await getAboutMeData();
+const techStack = await getTechStackData();
+const contact = await getContactData();
+const posts = await getBlogPosts();
+---
+
+<Layout title="Tonnam | Developer Portfolio">
+  <HeaderNav client:load />
+
+  <main class="space-y-12 pb-24">
+    <!-- Hero Section -->
+    <HeroSection hero={hero} />
+
+    <!-- About Section -->
+    <AboutSection aboutMe={aboutMe} />
+
+    <!-- Tech Stack Section -->
+    <section id="skills" class="py-20 border-t border-slate-800/60">
+      <div class="max-w-6xl mx-auto px-6 space-y-12">
+        <div class="text-center space-y-3">
+          <h2 class="text-3xl font-extrabold text-white">Tech Stack & Tools</h2>
+          <p class="text-slate-400 text-sm max-w-lg mx-auto">
+            Technologies and frameworks I work with regularly.
+          </p>
+        </div>
+
+        <TechStackTabs client:visible techStack={techStack} />
+      </div>
+    </section>
+
+    <!-- Latest Blog Posts -->
+    {posts.length > 0 && (
+      <section class="py-20 border-t border-slate-800/60">
+        <div class="max-w-6xl mx-auto px-6 space-y-12">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-3xl font-extrabold text-white">Recent Articles</h2>
+              <p class="text-slate-400 text-sm mt-1">Thoughts, tutorials, and project updates.</p>
+            </div>
+            <a href="/blog" class="text-xs font-semibold text-indigo-400 hover:underline">
+              View All Posts →
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {posts.slice(0, 3).map((post) => (
+              <BlogCard post={post} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 border-t border-slate-800/60">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="glass-card rounded-3xl p-8 sm:p-12 text-center max-w-3xl mx-auto space-y-6">
+          <h2 class="text-3xl font-extrabold text-white">Let's Connect</h2>
+          <p class="text-slate-300 text-sm max-w-md mx-auto">
+            Feel free to reach out via email or connect on social media.
+          </p>
+
+          {contact?.email && (
+            <div class="pt-2">
+              <a
+                href={`mailto:${contact.email}`}
+                class="inline-block px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all hover:scale-105"
+              >
+                📧 {contact.email}
+              </a>
+            </div>
+          )}
+
+          {contact?.socials && contact.socials.length > 0 && (
+            <div class="flex flex-wrap justify-center gap-4 pt-4">
+              {contact.socials.map((social: any) => (
+                <a
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-xs font-medium text-slate-300 hover:text-white transition-all"
+                >
+                  <i class={social.icon}></i>
+                  <span>{social.platform} ({social.username})</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 glass">
+    <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). Built with Astro + Islands + Supabase on Bun runtime.</p>
+  </footer>
+</Layout>

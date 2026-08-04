@@ -1,0 +1,75 @@
+---
+import type { HeroRow } from '../../lib/supabase';
+
+interface Props {
+  hero: HeroRow | null;
+}
+
+const { hero } = Astro.props;
+
+const positions = hero?.positions || [];
+---
+
+<section className="relative py-20 md:py-28 overflow-hidden">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+    <!-- Left Column: Bio & Intro -->
+    <div class="flex-1 space-y-6 text-center md:text-left z-10">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold tracking-wide">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Available for software engineering & projects
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-none">
+        Hi, I'm <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">{hero?.nickname || 'Tonnam'}</span> {hero?.emoji || '😪💤'}
+      </h1>
+
+      <p class="text-lg text-slate-300 max-w-xl leading-relaxed">
+        Passionate developer building high-performance web applications using modern tech stacks. Focused on clean architecture, SSR, and rich user experiences.
+      </p>
+
+      {/* Positions list */}
+      {positions.length > 0 && (
+        <div class="space-y-3 pt-2">
+          {positions.map((pos: any) => (
+            <div class="flex items-center gap-3 justify-center md:justify-start p-3 rounded-xl bg-slate-900/60 border border-slate-800/80">
+              {pos.logo && (
+                <img src={pos.logo} alt={pos.organization} class="w-8 h-8 rounded-lg object-cover border border-slate-700/60" />
+              )}
+              <div class="text-left text-xs">
+                <p class="text-slate-200 font-medium">{pos.title} <a href={pos.organizationUrl} target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">{pos.organization}</a></p>
+                <p class="text-slate-500">{pos.since}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
+        <a
+          href="#contact"
+          class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all hover:scale-105"
+        >
+          Get In Touch
+        </a>
+        <a
+          href="#skills"
+          class="px-6 py-3 rounded-xl glass hover:bg-slate-800/80 text-slate-200 font-semibold text-sm transition-all"
+        >
+          Explore Tech Stack
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Column: Profile Image -->
+    <div class="relative z-10 flex-shrink-0">
+      <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-3xl p-2 glass-card animate-float">
+        <img
+          src={hero?.profile_image || 'https://theijon.online/images/tonnam.png'}
+          alt={hero?.display_name || 'Tonnam'}
+          class="w-full h-full rounded-2xl object-cover border border-slate-700/50 shadow-2xl"
+        />
+      </div>
+    </div>
+  </div>
+</section>

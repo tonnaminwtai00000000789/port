@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Tonnam | Developer Portfolio',
+  description = 'Personal developer portfolio featuring SSR with Astro, React Islands, and Supabase database.',
+} = Astro.props;
+---
+
+<!utf-8>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Devicon CDN for tech stack icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+  </head>
+  <body class="bg-[#030405] text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+    <div class="fixed inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] pointer-events-none z-0"></div>
+    <div class="relative z-10 flex flex-col flex-grow">
+      <slot />
+    </div>
+  </body>
+</html>
