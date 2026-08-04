@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Mail, Send, Globe, Loader2 } from "lucide-react";
+import { Mail, Send, Globe, Loader2, CheckCircle } from "lucide-react";
 
 export interface ContactData {
   id: number;
@@ -29,120 +29,126 @@ export function Contact({ data }: { data: ContactData }) {
   if (!data) return null;
 
   return (
-    <div id="contact" className="mb-24 py-12 md:py-24 relative">
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start justify-between">
-        <div className="flex-1 space-y-8 md:space-y-12">
-          <div>
-            <div className="inline-block px-4 py-1.5 rounded-full glass border border-white/5 text-[10px] md:text-xs font-semibold tracking-widest text-primary uppercase mb-4">
-              INITIATE CONTACT
-            </div>
-            <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-black text-white leading-none tracking-tighter mb-6">
-              Let&apos;s build something <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-indigo-400 to-blue-400 filter drop-shadow-[0_0_20px_rgba(99,102,241,0.3)]">extraordinary</span> together.
-            </h1>
-            <p className="text-gray-400 text-lg md:text-xl max-w-lg leading-relaxed font-medium">
-              I&apos;m always open to discussing new projects, creative ideas or opportunities to be part of your visions.
-            </p>
-          </div>
+    <section id="contact" className="py-16">
+      {/* Section Header */}
+      <div className="flex items-center gap-3.5 mb-10">
+        <span className="slant inline-block h-7 w-3 rounded-sm bg-indigo-600"></span>
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-display">
+          Initiate Contact
+        </h2>
+        <span className="h-px flex-1 bg-slate-200 ml-2"></span>
+      </div>
 
-          <div className="grid grid-cols-1 gap-4 md:gap-6 w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column: Email & Socials */}
+        <div className="lg:col-span-6 space-y-6">
+          <div className="card-light p-8 rounded-[32px] bg-white border border-slate-200/80 space-y-6">
+            <div>
+              <span className="text-xs font-bold tracking-widest text-indigo-600 uppercase">DIRECT ENVELOPE</span>
+              <h3 className="text-3xl font-black text-slate-900 tracking-tight mt-1 mb-2">
+                Let's build something extraordinary.
+              </h3>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed">
+                Open for software opportunities, creative technical collaborations, or just a friendly chat.
+              </p>
+            </div>
+
             <a
               href={`mailto:${data.email}`}
-              className="group glass-card flex items-center justify-between p-6 md:p-8 rounded-[32px] md:rounded-[40px] hover:bg-white/5 transition-all duration-700 md:hover:-translate-y-1"
+              className="flex items-center gap-4 p-5 rounded-2xl bg-indigo-50 border border-indigo-100 text-slate-900 hover:bg-indigo-600 hover:text-white transition-all group"
             >
-              <div className="flex items-center gap-4 md:gap-6">
-                <div className="p-4 md:p-5 glass rounded-xl md:rounded-[24px] text-primary md:group-hover:scale-110 transition-transform duration-500 shadow-2xl">
-                  <Mail className="w-6 h-6 md:w-8 md:h-8" />
-                </div>
-                <div>
-                  <p className="text-[8px] md:text-[10px] text-gray-500 uppercase font-black tracking-[0.2em] mb-1 md:mb-2">DROP AN ENVELOPE</p>
-                  <p className="text-lg md:text-2xl font-black text-white tracking-tight break-all">{data.email}</p>
-                </div>
+              <div className="w-12 h-12 rounded-xl bg-white text-indigo-600 flex items-center justify-center font-bold shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                <Mail className="w-6 h-6" />
               </div>
-              <div className="w-10 h-10 md:w-14 md:h-14 rounded-full glass flex items-center justify-center text-gray-500 group-hover:text-white transition-all duration-500 shrink-0">
-                <Send className="w-4 h-4 md:w-6 md:h-6 md:group-hover:-rotate-45 transition-transform" />
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] uppercase font-bold text-slate-500 group-hover:text-indigo-200">Email Address</p>
+                <p className="text-base sm:text-lg font-black tracking-tight truncate">{data.email}</p>
               </div>
             </a>
           </div>
 
+          {/* Social Badges Grid */}
           {data.socials && data.socials.length > 0 && (
-            <div className="flex flex-wrap gap-3 md:gap-4">
+            <div className="flex flex-wrap gap-3">
               {data.socials.map((social, idx) => (
                 <a
                   key={idx}
                   href={social.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 glass-card rounded-xl md:rounded-2xl text-gray-400 hover:text-white transition-all duration-500 md:hover:-translate-y-1 active:scale-95"
+                  className="px-5 py-3 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:border-indigo-600 hover:text-indigo-600 font-bold text-xs inline-flex items-center gap-2.5 shadow-xs transition-all"
                 >
-                  <div className="text-lg md:text-xl md:group-hover:scale-110 transition-transform">
-                    {social.icon && social.icon.startsWith('devicon-') ? (
-                      <i className={`${social.icon}`} />
-                    ) : (
-                      <Globe className="w-4 h-4 md:w-5 md:h-5" />
-                    )}
-                  </div>
-                  <span className="text-[10px] md:text-xs font-black uppercase tracking-widest">{social.platform}</span>
+                  {social.icon && social.icon.startsWith("devicon-") ? (
+                    <i className={`${social.icon} text-base`} />
+                  ) : (
+                    <Globe className="w-4 h-4 text-indigo-600" />
+                  )}
+                  <span>{social.platform}</span>
                 </a>
               ))}
             </div>
           )}
         </div>
 
-        <div className="w-full lg:w-[480px]">
-          <div className="glass-card rounded-[32px] md:rounded-[48px] p-8 md:p-12 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
+        {/* Right Column: Direct Channel Form */}
+        <div className="lg:col-span-6">
+          <div className="card-light p-8 rounded-[32px] bg-white border border-slate-200/80">
+            <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-1">Direct Channel</h3>
+            <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-6">Send a quick transmission</p>
 
-            <div className="relative z-10 mb-8 md:mb-10">
-              <h3 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-1 md:mb-2">Direct Channel</h3>
-              <p className="text-gray-500 text-[10px] md:text-sm font-bold uppercase tracking-widest">Awaiting your coordinates</p>
-            </div>
-
-            <form className="space-y-4 md:space-y-6 relative z-10" onSubmit={handleSubmit}>
-              <div className="space-y-2">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
                 <input
                   type="text"
                   required
-                  placeholder="Your Identity"
+                  placeholder="Your Identity / Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full glass bg-black/20 border-white/5 rounded-xl md:rounded-2xl px-5 md:px-6 py-4 md:py-5 text-sm md:text-base text-white focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-gray-600 font-bold"
+                  className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 text-sm font-semibold focus:outline-none focus:border-indigo-600 focus:bg-white transition-all placeholder:text-slate-400"
                 />
               </div>
-              <div className="space-y-2">
+
+              <div>
                 <input
                   type="email"
                   required
-                  placeholder="Return Address"
+                  placeholder="Return Address / Email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full glass bg-black/20 border-white/5 rounded-xl md:rounded-2xl px-5 md:px-6 py-4 md:py-5 text-sm md:text-base text-white focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-gray-600 font-bold"
+                  className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 text-sm font-semibold focus:outline-none focus:border-indigo-600 focus:bg-white transition-all placeholder:text-slate-400"
                 />
               </div>
-              <div className="space-y-2">
+
+              <div>
                 <textarea
                   required
-                  placeholder="Mission Details"
+                  rows={4}
+                  placeholder="Transmission details..."
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  rows={4}
-                  className="w-full glass bg-black/20 border-white/5 rounded-xl md:rounded-[24px] px-5 md:px-6 py-4 md:py-5 text-sm md:text-base text-white focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all placeholder:text-gray-600 resize-none font-bold min-h-[120px] md:min-h-[160px]"
+                  className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 text-sm font-semibold focus:outline-none focus:border-indigo-600 focus:bg-white transition-all placeholder:text-slate-400 resize-none min-h-[120px]"
                 />
               </div>
+
               <button
+                type="submit"
                 disabled={status === "sending"}
-                className="w-full bg-primary hover:bg-indigo-500 text-white font-black py-4 md:py-6 rounded-xl md:rounded-[24px] flex items-center justify-center gap-3 md:gap-4 transition-all shadow-[0_20px_40px_rgba(99,102,241,0.2)] active:scale-95 disabled:opacity-50 group/btn"
+                className="w-full py-4 rounded-2xl bg-indigo-600 text-white font-extrabold text-sm uppercase tracking-wider hover:bg-indigo-700 transition-colors shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {status === "sending" ? (
                   <>
-                    <span className="text-xs md:text-base">Initializing Transmission</span>
-                    <Loader2 className="w-5 md:w-6 h-5 md:h-6 animate-spin" />
+                    <span>Sending Transmission...</span>
+                    <Loader2 className="w-4 h-4 animate-spin" />
                   </>
                 ) : status === "sent" ? (
-                  <span className="uppercase tracking-[0.2em] text-[10px] md:text-sm text-green-400">Transmission Sent!</span>
+                  <>
+                    <span>Transmission Sent!</span>
+                    <CheckCircle className="w-4 h-4 text-emerald-300" />
+                  </>
                 ) : (
                   <>
-                    <span className="uppercase tracking-[0.2em] text-[10px] md:text-sm">Send Transmission</span>
-                    <Send className="w-4 h-4 md:w-5 md:h-5 md:group-hover:translate-x-1 md:group-hover:-translate-y-1 transition-transform" />
+                    <span>Send Transmission</span>
+                    <Send className="w-4 h-4" />
                   </>
                 )}
               </button>
@@ -150,6 +156,6 @@ export function Contact({ data }: { data: ContactData }) {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

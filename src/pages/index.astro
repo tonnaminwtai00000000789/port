@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { HeaderNav } from '../components/islands/HeaderNav';
 import { Hero } from '../components/islands/Hero';
 import { Work } from '../components/islands/Work';
 import { TechStack } from '../components/islands/TechStack';
@@ -25,28 +26,25 @@ const posts = await getBlogPosts();
 ---
 
 <Layout
-  title={hero?.displayName ? `${hero.displayName}` : 'TonnamInwtai00789'}
+  title={hero?.displayName ? `${hero.displayName} · Digital Craftsman` : 'TonnamInwtai00789'}
   description={hero ? `Developer based in ${hero.location}. ${hero.displayName}` : 'Personal portfolio'}
   image={hero?.profileImage}
 >
-  <div class="animate-fade-in bg-dark-bg min-h-screen text-gray-200 relative overflow-hidden">
-    {/* Mystical Background Effects */}
-    <div class="fixed inset-0 pointer-events-none">
-      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse"></div>
-      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
-      <div class="absolute top-[20%] right-[-5%] w-[30%] h-[30%] bg-blue-500/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 4s;"></div>
-      <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-    </div>
+  <HeaderNav client:load webringUrl={hero?.webringUrl} />
 
-    <div class="flex justify-center py-10 md:py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="w-full max-w-6xl space-y-12 md:space-y-20">
-        {hero && <Hero client:load data={hero} />}
-        {works && works.length > 0 && <Work client:visible data={works} />}
-        {techStack && techStack.length > 0 && <TechStack client:visible data={techStack} />}
-        {aboutMe && <Aboutme client:visible data={aboutMe} />}
-        {posts && posts.length > 0 && <BlogsSection client:visible data={posts} />}
-        {contact && <Contact client:visible data={contact} />}
-      </div>
+  <main class="mx-auto max-w-6xl px-6 flex-1 w-full space-y-12">
+    {hero && <Hero client:load data={hero} />}
+    {works && works.length > 0 && <Work client:visible data={works} />}
+    {techStack && techStack.length > 0 && <TechStack client:visible data={techStack} />}
+    {aboutMe && <Aboutme client:visible data={aboutMe} />}
+    {posts && posts.length > 0 && <BlogsSection client:visible data={posts} />}
+    {contact && <Contact client:visible data={contact} />}
+  </main>
+
+  <footer class="mt-20 border-t border-slate-200 bg-white py-8 text-center text-xs font-semibold text-slate-500">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). All rights reserved.</p>
+      <p class="text-slate-400">Crafted with Astro 5, React Islands & Supabase on Bun</p>
     </div>
-  </div>
+  </footer>
 </Layout>

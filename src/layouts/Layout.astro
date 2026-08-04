@@ -8,14 +8,14 @@ interface Props {
 }
 
 const {
-  title = 'TonnamInwtai00789',
-  description = 'Developer based in Bangbon, Bangkok. TonnamInwtai00789',
+  title = 'TonnamInwtai00789 · Digital Craftsman',
+  description = 'Developer based in Bangbon, Bangkok. Building software & magical web experiences.',
   image = 'https://theijon.online/images/tonnam.png',
 } = Astro.props;
 ---
 
-<!utf-8>
-<html lang="en" class="dark">
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,20 +26,21 @@ const {
     <meta property="og:image" content={image} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    
-    <!-- Fonts & Devicon CDN -->
+
+    <!-- Google Fonts: Outfit & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     />
+    <!-- Devicon CDN -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
     />
   </head>
-  <body class="bg-dark-bg text-gray-200 selection:bg-indigo-500 selection:text-white">
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col">
     <slot />
   </body>
 </html>

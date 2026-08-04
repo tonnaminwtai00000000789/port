@@ -1,5 +1,5 @@
 import React from "react";
-import { Terminal } from "lucide-react";
+import { Terminal, Layers, Code, Cpu } from "lucide-react";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "../ui/hover-card";
 
 export interface Technology {
@@ -19,66 +19,69 @@ export function TechStack({ data }: { data: TechStackCategory[] }) {
   if (!data || data.length === 0) return null;
 
   return (
-    <div id="skills" className="mb-24 py-12 md:py-24 glass rounded-[32px] md:rounded-[40px] border border-white/5 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+    <section id="skills" className="py-16">
+      {/* Section Header */}
+      <div className="flex items-center gap-3.5 mb-10">
+        <span className="slant inline-block h-7 w-3 rounded-sm bg-indigo-600"></span>
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-display">
+          Technological Arsenal
+        </h2>
+        <span className="h-px flex-1 bg-slate-200 ml-2"></span>
+      </div>
 
-      <div className="relative z-10 px-6 md:px-12">
-        <div className="flex items-center gap-3 md:gap-4 mb-10 md:mb-16">
-          <div className="p-3 md:p-4 rounded-xl md:rounded-[20px] glass-card text-primary shadow-2xl">
-            <Terminal className="w-6 h-6 md:w-8 md:h-8" />
-          </div>
-          <div>
-            <h2 className="text-[10px] md:text-xs font-black text-primary tracking-[0.4em] uppercase mb-1">CAPABILITIES</h2>
-            <h1 className="text-[clamp(1.75rem,5vw,3.5rem)] font-black text-white tracking-tighter text-balance">Technological Arsenal</h1>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          {data.map((stack) => (
-            <div key={stack.id || stack.category} className="group flex flex-col">
-              <div className="flex items-center gap-2 md:gap-3 mb-6 md:mb-8 pb-3 border-b border-white/10 group-hover:border-primary/50 transition-all duration-500">
-                <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary animate-pulse" />
-                <h3 className="text-lg md:text-xl font-bold text-gray-200 group-hover:text-white transition-colors">{stack.category}</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {data.map((stack) => (
+          <div
+            key={stack.id || stack.category}
+            className="card-light p-6 md:p-8 rounded-[32px] bg-white border border-slate-200/80 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-6 pb-3 border-b border-slate-100">
+                <div className="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
+                  <Terminal className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest">Category</p>
+                  <h3 className="text-lg font-bold text-slate-900">{stack.category}</h3>
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 md:gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 {stack.technologies?.map((tech, idx) => (
-                  <HoverCard key={idx} openDelay={200}>
+                  <HoverCard key={idx} openDelay={150}>
                     <HoverCardTrigger asChild>
-                      <div
-                        className="flex items-center gap-2 md:gap-3 glass-card p-2 md:p-3 rounded-xl md:rounded-2xl group/tech hover:bg-white/5 transition-all duration-300 cursor-crosshair active:scale-95"
-                      >
-                        <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-lg md:rounded-xl bg-black/40 border border-white/5 group-hover/tech:border-primary/30 transition-colors">
+                      <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 hover:bg-indigo-50/60 hover:border-indigo-200 transition-all cursor-pointer group">
+                        <div className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 group-hover:border-indigo-300 shrink-0 shadow-xs">
                           {tech.icon && tech.icon.startsWith("devicon-") ? (
-                            <i className={`${tech.icon} text-base md:text-xl opacity-50 group-hover/tech:opacity-100 grayscale-0 transition-all text-gray-400 group-hover/tech:text-white`} />
+                            <i className={`${tech.icon} text-lg text-slate-700 group-hover:text-indigo-600 transition-colors`} />
                           ) : tech.icon ? (
                             <img
                               src={tech.icon}
                               alt={tech.name}
-                              className="w-4 h-4 md:w-5 md:h-5 object-contain opacity-50 group-hover/tech:opacity-100 transition-all"
+                              className="w-5 h-5 object-contain"
                               loading="lazy"
-                              decoding="async"
                             />
-                          ) : null}
+                          ) : (
+                            <Code className="w-4 h-4 text-indigo-600" />
+                          )}
                         </div>
-                        <span className="text-[8px] md:text-[10px] font-bold text-gray-400 group-hover/tech:text-white transition-colors uppercase tracking-wider leading-tight break-words">
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-indigo-600 transition-colors truncate">
                           {tech.name}
                         </span>
                       </div>
                     </HoverCardTrigger>
-                    <HoverCardContent className="glass-card border-white/10 p-4 rounded-2xl backdrop-blur-2xl">
-                      <div className="flex items-center gap-4">
-                        <div className="p-3 bg-black/40 border border-white/10 rounded-xl">
+                    <HoverCardContent className="bg-white border border-slate-200 p-4 rounded-2xl shadow-xl w-60">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2.5 bg-indigo-50 rounded-xl border border-indigo-100">
                           {tech.icon && tech.icon.startsWith("devicon-") ? (
-                            <i className={`${tech.icon} text-3xl text-primary`} />
+                            <i className={`${tech.icon} text-2xl text-indigo-600`} />
                           ) : tech.icon ? (
-                            <img src={tech.icon} className="w-8 h-8 object-contain" alt={tech.name} />
+                            <img src={tech.icon} className="w-6 h-6 object-contain" alt={tech.name} />
                           ) : null}
                         </div>
                         <div>
-                          <h4 className="text-sm font-black text-white uppercase tracking-widest">{tech.name}</h4>
-                          <p className="text-[10px] text-gray-500 mt-1 font-bold uppercase">Mastery level: Expert</p>
+                          <p className="text-xs font-black text-slate-900 uppercase tracking-wider">{tech.name}</p>
+                          <p className="text-[11px] text-indigo-600 font-bold mt-0.5">Mastery: Proficient</p>
                         </div>
                       </div>
                     </HoverCardContent>
@@ -86,9 +89,9 @@ export function TechStack({ data }: { data: TechStackCategory[] }) {
                 ))}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </div>
+    </section>
   );
 }

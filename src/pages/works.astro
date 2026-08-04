@@ -5,57 +5,55 @@ import { getWorksData, getHeroData } from '../lib/data';
 
 const works = await getWorksData();
 const hero = await getHeroData();
-const displayName = hero?.displayName || 'tonnaminwtai0000789';
+const displayName = hero?.displayName || 'TonnamInwtai00789';
 ---
 
-<Layout title={`${displayName} | Projects`}>
-  <div class="min-h-screen bg-dark-bg py-12 px-4 md:px-8">
-    <div class="max-w-7xl mx-auto">
-      <!-- Header -->
-      <div class="flex items-center gap-4 mb-20">
+<Layout title={`${displayName} · Works Archive`}>
+  <div class="min-h-screen bg-slate-50 py-12 px-6">
+    <div class="max-w-6xl mx-auto">
+      {/* Header */}
+      <div class="flex items-center gap-4 mb-16">
         <a
           href="/"
-          class="p-3 bg-dark-accent border border-dark-border rounded-full shadow hover:border-primary hover:text-primary transition-all text-gray-400"
+          class="p-3 bg-white border border-slate-200 rounded-2xl shadow-xs hover:border-indigo-600 hover:text-indigo-600 transition-all text-slate-600"
         >
-          <ArrowLeft className="w-6 h-6" />
+          <ArrowLeft className="w-5 h-5" />
         </a>
         <div>
-          <h2 class="text-sm font-bold text-primary tracking-wider uppercase mb-1">PROJECTS</h2>
-          <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">Recent Projects</h1>
+          <span class="text-xs font-bold text-indigo-600 tracking-wider uppercase">CRAFTSMANSHIP</span>
+          <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">Recent Projects</h1>
         </div>
       </div>
 
-      <!-- Works Grid -->
+      {/* Works Grid */}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {works.map((work, index) => (
-          <div class="group bg-dark-card border border-dark-border rounded-[32px] overflow-hidden hover:border-primary/50 transition-all duration-300 flex flex-col h-full hover:shadow-[0_0_40px_rgba(99,102,241,0.1)] relative">
-            <div class="aspect-video relative overflow-hidden">
+          <div class="card-light rounded-[32px] overflow-hidden bg-white group border border-slate-200/80 flex flex-col justify-between">
+            <div class="aspect-video relative overflow-hidden bg-slate-100">
               <img
                 src={work.image}
                 alt={work.title}
                 loading={index < 2 ? 'eager' : 'lazy'}
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent opacity-90" />
-
               <div class="absolute top-4 right-4">
-                <span class="bg-black/50 backdrop-blur-md border border-white/10 text-white text-xs font-mono px-3 py-1 rounded-full">
+                <span class="px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 text-slate-800 text-xs font-bold shadow-xs">
                   {work.year}
                 </span>
               </div>
             </div>
 
-            <div class="p-8 flex flex-col flex-grow relative z-10">
-              <div class="mb-6">
-                <h2 class="text-3xl font-bold text-white mb-3 group-hover:text-primary transition-colors">
+            <div class="p-8 flex flex-col justify-between flex-1">
+              <div className="space-y-3 mb-6">
+                <h2 class="text-2xl font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">
                   {work.title}
                 </h2>
-                <p class="text-gray-400 font-light leading-relaxed mb-4">{work.description}</p>
+                <p class="text-slate-600 text-sm font-medium leading-relaxed">{work.description}</p>
 
                 {work.tags && work.tags.length > 0 && (
-                  <div class="flex flex-wrap gap-2">
+                  <div class="flex flex-wrap gap-2 pt-2">
                     {work.tags.map((tag: any) => (
-                      <span class="text-xs px-3 py-1 bg-dark-accent border border-dark-border rounded-full text-gray-300">
+                      <span class="px-3 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold">
                         {tag.label}
                       </span>
                     ))}
@@ -63,20 +61,23 @@ const displayName = hero?.displayName || 'tonnaminwtai0000789';
                 )}
               </div>
 
-              <div class="mt-auto flex gap-3 pt-4 border-t border-dark-border">
+              <div class="flex items-center gap-3 pt-4 border-t border-slate-100">
                 {work.links?.map((link: any) => (
                   <a
                     href={link.url}
                     target="_blank"
                     rel="noreferrer"
-                    class="px-5 py-2.5 bg-dark-accent border border-dark-border rounded-xl text-sm font-medium text-white hover:bg-primary hover:border-primary transition-all flex items-center gap-2"
+                    class="px-4 py-2 rounded-xl bg-slate-900 text-white hover:bg-indigo-600 text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-sm"
                   >
                     {link.type === 'website' ? (
-                      <ExternalLink className="w-4 h-4" />
+                      <>
+                        Visit Website <ExternalLink className="w-3.5 h-3.5" />
+                      </>
                     ) : (
-                      <Github className="w-4 h-4" />
+                      <>
+                        View Code <Github className="w-3.5 h-3.5" />
+                      </>
                     )}
-                    {link.type === 'website' ? 'View Site' : 'View Code'}
                   </a>
                 ))}
               </div>
@@ -84,12 +85,6 @@ const displayName = hero?.displayName || 'tonnaminwtai0000789';
           </div>
         ))}
       </div>
-
-      {works.length === 0 && (
-        <div class="text-center py-20 bg-dark-card rounded-[32px] border border-dark-border">
-          <p class="text-xl text-gray-500">No works found.</p>
-        </div>
-      )}
     </div>
   </div>
 </Layout>
