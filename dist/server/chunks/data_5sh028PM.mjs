@@ -2,8 +2,6 @@ import { C as createAstro, g as addAttribute, h as renderHead, s as renderSlot, 
 import { t as createComponent } from "./compiler_D7PGrtXv.mjs";
 import { useState } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-import { existsSync, readFileSync } from "fs";
-import { resolve } from "path";
 import { createClient } from "@supabase/supabase-js";
 //#region src/layouts/Layout.astro
 createAstro("https://astro.build");
@@ -136,94 +134,148 @@ var supabaseAnonKey = process.env.PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
 var supabase = createClient(supabaseUrl, supabaseAnonKey);
 //#endregion
 //#region src/lib/data.ts
-function parseCsvLine(text) {
-	const result = [];
-	let cur = "";
-	let inQuotes = false;
-	for (let i = 0; i < text.length; i++) {
-		const c = text[i];
-		if (c === "\"") if (inQuotes && text[i + 1] === "\"") {
-			cur += "\"";
-			i++;
-		} else inQuotes = !inQuotes;
-		else if (c === "," && !inQuotes) {
-			result.push(cur);
-			cur = "";
-		} else cur += c;
-	}
-	result.push(cur);
-	return result;
-}
-function parseCsvFile(filename) {
-	try {
-		const filePath = resolve(process.cwd(), filename);
-		if (!existsSync(filePath)) return [];
-		const lines = readFileSync(filePath, "utf-8").trim().split("\n");
-		if (lines.length < 2) return [];
-		const headers = parseCsvLine(lines[0]);
-		const rows = [];
-		for (let i = 1; i < lines.length; i++) {
-			if (!lines[i].trim()) continue;
-			const values = parseCsvLine(lines[i]);
-			const obj = {};
-			headers.forEach((h, idx) => {
-				let val = values[idx] ?? "";
-				if (val.startsWith("[") || val.startsWith("{")) try {
-					val = JSON.parse(val);
-				} catch {}
-				if (val === "true") val = true;
-				if (val === "false") val = false;
-				obj[h] = val;
-			});
-			rows.push(obj);
+var DEFAULT_HERO = {
+	id: 1,
+	first_name: "Supakron",
+	last_name: "Klinbubpa",
+	display_name: "TonnamInwtai00789",
+	nickname: "Tonnam",
+	birth_date: "2011-03-03",
+	start_date: "2021-01-01",
+	location: "Bangbon, Bangkok",
+	profile_image: "https://theijon.online/images/tonnam.png",
+	emoji: "😪💤",
+	webring_url: "https://webring.wonderful.software#nsys.site",
+	positions: [{
+		logo: "https://theijon.online/logo.jpg",
+		since: "Since Jan 2025",
+		title: "the founder of",
+		organization: "The ijon",
+		organizationUrl: "https://theijon.online/"
+	}]
+};
+var DEFAULT_ABOUT = {
+	id: 1,
+	nickname: "Tonnam",
+	status: "IDK",
+	status_link: "https://www.pornhub.org/",
+	full_name: "Supakron Klinbubpa",
+	birthday: "Thursday, March 3, 2011",
+	location: "Bangbon, Thailand",
+	facts: [{
+		type: "image",
+		image: "https://swebtoon-phinf.pstatic.net/20210224_142/1614130186947iB8vd_JPEG/0M_details.jpg?type=crop540_540",
+		title: "Manhwa",
+		subtitle: "Passions"
+	}, {
+		type: "image",
+		image: "https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/250px-KFC_logo.svg.png",
+		title: "KFC",
+		subtitle: "Favorite Food"
+	}]
+};
+var DEFAULT_TECH = [{
+	id: 1,
+	category: "Frontend Frameworks",
+	order: 1,
+	technologies: [
+		{
+			icon: "devicon-react-original colored",
+			name: "React"
+		},
+		{
+			icon: "devicon-astro-plain colored",
+			name: "Astro"
+		},
+		{
+			icon: "devicon-tailwindcss-original colored",
+			name: "Tailwind CSS"
 		}
-		return rows;
-	} catch (e) {
-		console.error(`Error reading CSV ${filename}:`, e);
-		return [];
-	}
-}
+	]
+}, {
+	id: 2,
+	category: "Languages & Runtimes",
+	order: 2,
+	technologies: [
+		{
+			icon: "devicon-typescript-plain colored",
+			name: "TypeScript"
+		},
+		{
+			icon: "devicon-javascript-plain colored",
+			name: "JavaScript"
+		},
+		{
+			icon: "devicon-bun-plain colored",
+			name: "Bun"
+		}
+	]
+}];
+var DEFAULT_CONTACT = {
+	id: 1,
+	email: "zel.da.supakron@gmail.com",
+	socials: [{
+		url: "https://github.com/tonnaminwtai00000000789",
+		icon: "devicon-github-original",
+		platform: "GitHub",
+		username: "tonnaminwtai00000000789"
+	}, {
+		url: "https://www.instagram.com/tonnaminwtai00000000789/",
+		icon: "devicon-instagram-plain colored",
+		platform: "Instagram",
+		username: "tonnaminwtai00000000789"
+	}]
+};
+var DEFAULT_BLOGS = [{
+	id: 1,
+	title: "Welcome to my Astro + Supabase portfolio",
+	slug: "welcome",
+	image: "https://tr.rbxcdn.com/180DAY-6a9f37f333452ee91542001faacf5e49/576/324/Image/Jpeg/noFilter",
+	date: "2026-02-17",
+	content: "Welcome to my new blog powered by Astro 5, React Islands, and Supabase!",
+	published: true
+}];
 async function getHeroData() {
 	if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
 		const { data } = await supabase.from("hero").select("*").limit(1).single();
 		if (data) return data;
 	}
-	return parseCsvFile("hero_rows.csv")[0] || null;
+	return DEFAULT_HERO;
 }
 async function getAboutMeData() {
 	if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
 		const { data } = await supabase.from("about_me").select("*").limit(1).single();
 		if (data) return data;
 	}
-	return parseCsvFile("about_me_rows.csv")[0] || null;
+	return DEFAULT_ABOUT;
 }
 async function getTechStackData() {
 	if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
 		const { data } = await supabase.from("tech_stack").select("*").order("order", { ascending: true });
 		if (data && data.length) return data;
 	}
-	return parseCsvFile("tech_stack_rows.csv");
+	return DEFAULT_TECH;
 }
 async function getContactData() {
 	if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
 		const { data } = await supabase.from("contact").select("*").limit(1).single();
 		if (data) return data;
 	}
-	return parseCsvFile("contact_rows.csv")[0] || null;
+	return DEFAULT_CONTACT;
 }
 async function getBlogPosts() {
 	if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
 		const { data } = await supabase.from("blog").select("*").eq("published", true);
 		if (data && data.length) return data;
 	}
-	return parseCsvFile("blog_rows.csv");
+	return DEFAULT_BLOGS;
 }
 async function getBlogPostBySlug(slug) {
 	if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY) {
 		const { data } = await supabase.from("blog").select("*").eq("slug", slug).single();
 		if (data) return data;
 	}
-	return parseCsvFile("blog_rows.csv").find((p) => p.slug === slug) || null;
+	return DEFAULT_BLOGS.find((p) => p.slug === slug) || null;
 }
 //#endregion
 export { getHeroData as a, $$Layout as c, getContactData as i, getBlogPostBySlug as n, getTechStackData as o, getBlogPosts as r, HeaderNav as s, getAboutMeData as t };

@@ -1,6 +1,6 @@
 import { C as createAstro, R as __exportAll, g as addAttribute, i as renderComponent, m as maybeRenderHead, u as renderTemplate } from "./server_uVWWhcj-.mjs";
 import { t as createComponent } from "./compiler_D7PGrtXv.mjs";
-import { a as getHeroData, c as $$Layout, i as getContactData, o as getTechStackData, r as getBlogPosts, s as HeaderNav, t as getAboutMeData } from "./data_DC1-joQ6.mjs";
+import { a as getHeroData, c as $$Layout, i as getContactData, o as getTechStackData, r as getBlogPosts, s as HeaderNav, t as getAboutMeData } from "./data_5sh028PM.mjs";
 import { t as $$BlogCard } from "./BlogCard_D48ljGwo.mjs";
 import { useState } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
