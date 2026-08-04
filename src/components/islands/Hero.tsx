@@ -97,7 +97,7 @@ export function Hero({ data }: { data: HeroData }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="font-display text-md sm:text-7xl font-extrabold text-[#0f172a] leading-none tracking-tight"
+              className="font-display text-5xl sm:text-7xl font-extrabold text-[#0f172a] leading-none tracking-tight"
             >
               <span className="text-[#60a5fa]">{data.displayName}</span>
             </motion.h1>
@@ -108,8 +108,8 @@ export function Hero({ data }: { data: HeroData }) {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="font-display text-2xl sm:text-3xl font-extrabold leading-snug text-[#0f172a]"
             >
-              ผมชอบสร้างสิ่งใหม่ๆ <br />
-              <span className="text-[#2563eb]">และชอบเห็นคนได้ใช้มัน</span>
+              ผมต้นน้ำเองจั๊ฟ <br />
+              <span className="text-[#2563eb]">หรือจะเรียกอะไรก็ได้ไม่ติด:)</span>
             </motion.p>
 
             <motion.p
@@ -118,7 +118,10 @@ export function Hero({ data }: { data: HeroData }) {
               transition={{ duration: 0.5, delay: 0.5 }}
               className="text-[#475569] text-sm sm:text-base leading-relaxed max-w-lg"
             >
-              เริ่มจากการเขียนบอท Discord เล่นกับเพื่อนๆ วันนี้อยู่กับการเขียนโปรแกรมมาแล้ว <span className="num-badge">{experience}</span> ปี และตั้งใจสร้างสรรค์เว็บแอปพลิเคชันที่ตอบโจทย์ผู้ใช้จริง
+              อยู่ไม่ไหว อยู่ไม่ไหว เฮ้ย อยู่ไม่ไหว อ้าว
+              บ้านนี้มันน่ากลัว กลัวกลัวกลัว อร๊าย
+              กูไม่อยากอยู่ กูไม่อยากอยู่ กูไม่อยากอยู่ที่นี่
+              ที่ไหน ที่นั่น ที่รักหรือเปล่าจ๊ะ จุ๊บๆ   <br /> (ไม่รู้จะใส่ไรอะโทษๆ55)
             </motion.p>
 
             <motion.div
@@ -133,7 +136,7 @@ export function Hero({ data }: { data: HeroData }) {
                 href="#works"
                 className="btn-pop px-6 py-2.5 text-sm font-bold inline-flex items-center gap-1.5"
               >
-                ดูสิ่งที่สร้างไว้ <ArrowRight className="w-4 h-4" />
+                ดูสิ่งที่ผมเคยทำ <ArrowRight className="w-4 h-4" />
               </motion.a>
               <span className="slant inline-flex border border-[#0f172a] bg-[#f1f5f9] px-3.5 py-2 text-xs font-bold text-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
                 <span className="unslant inline-flex items-center gap-1.5">
@@ -162,8 +165,8 @@ export function Hero({ data }: { data: HeroData }) {
                 <p className="text-xs font-semibold text-[#475569] mt-0.5">อายุ (ปี)</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold text-[#0f172a]">
-                  100%
+                <p className="font-display text-2xl font-extrabold text-[#0f172a]">
+                  67%
                 </p>
                 <p className="text-xs font-semibold text-[#475569] mt-0.5">ความตั้งใจ</p>
               </div>
@@ -188,7 +191,7 @@ export function Hero({ data }: { data: HeroData }) {
                   loading="eager"
                 />
                 <div className="p-3 bg-[#0f172a] text-white flex items-center justify-between text-xs font-mono">
-                  <span>TonnamInwtai00789</span>
+                  <span>{data.displayName}</span>
                   <span className="text-[#60a5fa] font-bold">{data.emoji}</span>
                 </div>
               </div>
@@ -208,12 +211,12 @@ export function Hero({ data }: { data: HeroData }) {
           className="md:col-span-7 card-paper p-6 bg-white border-1.5 border-[#0f172a]"
         >
           <h2 className="text-xl font-bold text-[#0f172a] mb-2 flex items-center gap-2">
-            สวัสดีครับ ผมชื่อ <span className="text-[#2563eb] font-extrabold">{data.nickname}</span> 👋
+            หวัดดีคับผม <span className="text-[#2563eb] font-extrabold">{data.nickname} </span> เอง👋
           </h2>
 
           <p className="text-[#475569] text-sm leading-relaxed mb-4 font-normal">
-            ผมอายุ <span className="num-badge">{age}</span> ปี ทำงานและสร้างสรรค์โปรเจกต์ซอฟต์แวร์จากกรุงเทพฯ ชอบทดลองเทคโนโลยีใหม่ๆ และพัฒนาเครื่องมือที่มีประโยชน์
-          </p>
+            ผมเริ่มเขียนโค้ดตอนประมาณป.5(มั้งไม่แน่ใจจำไม่ได้ละ555) ตอนนั้นผมหัดใช้สคริปต์Robloxครั้งแรกและผมก็ลองทำสคริปต์ของผมเองซื่งก็ค่อนข้างกากเลยแหละจนตอนนี้ผมก็ทำเว็บทำแอพหรืออื่นๆที่ต้องเขียนโค้ดได้บ้างเช่นเขียนโค้คในพวก Esp32 หรือ Arduino และ Microbit ซื่งได้ไงก็ไม่รู้เหมือนกัน555
+      </p>
 
           <div className="space-y-2 pt-3 border-t-1.5 border-[#0f172a]">
             <p className="text-xs font-extrabold text-[#0f172a] uppercase tracking-wider">กำลังทำอยู่ในปัจจุบัน</p>
@@ -263,7 +266,7 @@ export function Hero({ data }: { data: HeroData }) {
           <div className="card-paper p-4 bg-[#0f172a] text-white flex items-center justify-between">
             <div>
               <p className="text-xs font-mono text-[#60a5fa]">STATUS</p>
-              <p className="text-sm font-bold text-white">พร้อมรับงาน & โปรเจกต์ใหม่</p>
+              <p className="text-sm font-bold text-black">ว่างคับจ้างได้</p>
             </div>
             <motion.a
               whileHover={{ scale: 1.05 }}
