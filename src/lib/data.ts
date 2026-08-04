@@ -97,6 +97,55 @@ const DEFAULT_TECH: TechStackRow[] = [
       { icon: 'devicon-python-plain colored', name: 'Python' },
     ],
   },
+  {
+    id: 19,
+    category: 'Database & ORM',
+    order: 4,
+    technologies: [
+      { icon: 'devicon-postgresql-plain colored', name: 'PostgreSQL' },
+      { icon: 'devicon-mysql-plain colored', name: 'MySQL' },
+      { icon: 'devicon-mongodb-plain colored', name: 'MongoDB' },
+      { icon: 'devicon-redis-plain colored', name: 'Redis' },
+      { icon: 'devicon-prisma-original colored', name: 'Prisma' },
+      { icon: 'https://orm.drizzle.team/favicon.ico', name: 'Drizzle ORM' },
+    ],
+  },
+  {
+    id: 20,
+    category: 'Real-time Communication',
+    order: 5,
+    technologies: [
+      { icon: 'devicon-[#0f172a]', name: 'WebSocket' },
+      { icon: 'devicon-socketio-original colored', name: 'Socket.IO' },
+      { icon: 'devicon-[#0f172a]', name: 'EventStream' },
+    ],
+  },
+  {
+    id: 21,
+    category: 'DevOps & Infrastructure',
+    order: 6,
+    technologies: [
+      { icon: 'devicon-docker-plain colored', name: 'Docker' },
+      { icon: 'devicon-[#0f172a]', name: 'PM2' },
+      { icon: 'devicon-nginx-original colored', name: 'Nginx' },
+      { icon: 'devicon-vercel-[#0f172a]', name: 'Vercel' },
+      { icon: 'devicon-cloudflare-plain colored', name: 'Cloudflare' },
+      { icon: 'devicon-githubactions-plain colored', name: 'GitHub Actions' },
+      { icon: 'devicon-ubuntu-plain colored', name: 'Ubuntu' },
+      { icon: 'devicon-windows8-original colored', name: 'Windows Server' },
+    ],
+  },
+  {
+    id: 22,
+    category: 'Design & Tools',
+    order: 7,
+    technologies: [
+      { icon: 'devicon-figma-plain colored', name: 'Figma' },
+      { icon: 'devicon-photoshop-plain colored', name: 'Photoshop' },
+      { icon: 'devicon-premierepro-plain colored', name: 'Premiere Pro' },
+      { icon: 'devicon-[#0f172a]', name: 'Vegas Pro' },
+    ],
+  },
 ];
 
 const DEFAULT_WORKS: WorkRow[] = [
