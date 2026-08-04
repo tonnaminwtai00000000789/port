@@ -25,11 +25,11 @@ export function Aboutme({ data }: { data: AboutMeData }) {
 
   const generateContributionDays = () => {
     const days = [];
-    const today = new Date();
+    const today = new Date("2026-08-04");
     for (let i = 119; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      const count = Math.floor(Math.random() * 6);
+      const count = (i * 17 + 5) % 6;
       days.push({ date: date.toISOString().split("T")[0], count });
     }
     return days;
