@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { IntroPreloader } from '../components/islands/IntroPreloader';
 import { HeaderNav } from '../components/islands/HeaderNav';
 import { Hero } from '../components/islands/Hero';
 import { Work } from '../components/islands/Work';
@@ -30,6 +31,7 @@ const posts = await getBlogPosts();
   description={hero ? `builder ที่ชอบสร้างสิ่งใหม่ๆ | ${hero.displayName}` : 'Personal portfolio'}
   image={hero?.profileImage}
 >
+  <IntroPreloader client:load />
   <HeaderNav client:load webringUrl={hero?.webringUrl} />
 
   <main class="mx-auto max-w-5xl px-6 flex-1 w-full space-y-8">
@@ -41,10 +43,10 @@ const posts = await getBlogPosts();
     {contact && <Contact client:visible data={contact} />}
   </main>
 
-  <footer class="mt-16 border-t-2 border-[#161616] bg-white py-6 text-center text-xs font-medium text-[#525252]">
+  <footer class="mt-16 border-t-2 border-[#0f172a] bg-white py-6 text-center text-xs font-medium text-[#475569]">
     <div class="mx-auto max-w-5xl px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
       <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). All rights reserved.</p>
-      <p class="font-mono text-[11px] text-[#161616]">Astro 5 · React Islands · Supabase · Bun</p>
+      <p class="font-mono text-[11px] text-[#0f172a]">Astro 5 · React Islands · Supabase · Bun</p>
     </div>
   </footer>
 </Layout>
