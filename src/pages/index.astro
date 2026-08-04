@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { HeaderNav } from '../components/islands/HeaderNav';
 import { Hero } from '../components/islands/Hero';
 import { Work } from '../components/islands/Work';
 import { TechStack } from '../components/islands/TechStack';
@@ -25,12 +24,14 @@ const contact = await getContactData();
 const posts = await getBlogPosts();
 ---
 
-<Layout title={hero?.displayName ? `${hero.displayName}` : 'Tonnam Portfolio'}>
-  <HeaderNav client:load />
-
+<Layout
+  title={hero?.displayName ? `${hero.displayName}` : 'TonnamInwtai00789'}
+  description={hero ? `Developer based in ${hero.location}. ${hero.displayName}` : 'Personal portfolio'}
+  image={hero?.profileImage}
+>
   <div class="animate-fade-in bg-dark-bg min-h-screen text-gray-200 relative overflow-hidden">
     {/* Mystical Background Effects */}
-    <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="fixed inset-0 pointer-events-none">
       <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-pulse"></div>
       <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
       <div class="absolute top-[20%] right-[-5%] w-[30%] h-[30%] bg-blue-500/5 rounded-full blur-[120px] animate-pulse" style="animation-delay: 4s;"></div>
@@ -48,8 +49,4 @@ const posts = await getBlogPosts();
       </div>
     </div>
   </div>
-
-  <footer class="border-t border-white/5 py-8 text-center text-xs text-gray-500 glass relative z-10">
-    <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). Astro + Islands + Supabase on Bun.</p>
-  </footer>
 </Layout>

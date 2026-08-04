@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MapPin, Clock, ArrowRight } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 export interface HeroData {
   id: number;
@@ -24,12 +25,12 @@ export interface HeroData {
 
 export function Hero({ data }: { data: HeroData }) {
   const [currentTime, setCurrentTime] = useState("");
-  const [age, setAge] = useState(14);
+  const [age, setAge] = useState(19);
   const [experience, setExperience] = useState(4);
 
   useEffect(() => {
     if (!data) return;
-    const birthDate = new Date(data.birthDate || '2011-03-03');
+    const birthDate = new Date(data.birthDate || "2011-03-03");
     const today = new Date();
     let calculatedAge = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -41,9 +42,9 @@ export function Hero({ data }: { data: HeroData }) {
     }
     setAge(calculatedAge);
 
-    const startDate = new Date(data.startDate || '2021-01-01');
+    const startDate = new Date(data.startDate || "2021-01-01");
     const years = Math.floor(
-      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25),
+      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
     );
     setExperience(years);
 
@@ -55,7 +56,7 @@ export function Hero({ data }: { data: HeroData }) {
           minute: "2-digit",
           hour12: true,
           timeZone: "Asia/Bangkok",
-        }),
+        })
       );
     };
 
@@ -68,7 +69,7 @@ export function Hero({ data }: { data: HeroData }) {
   if (!data) return null;
 
   return (
-    <div>
+    <TooltipProvider>
       {/* Hero Banner with Dark Theme */}
       <div className="relative mb-8 flex justify-center flex-col items-center w-full min-h-[480px] md:h-[500px] glass-card rounded-[40px] overflow-hidden group transition-all duration-700 hover:shadow-[0_0_50px_rgba(99,102,241,0.2)]">
         {/* Dynamic Background Elements */}
@@ -81,13 +82,13 @@ export function Hero({ data }: { data: HeroData }) {
           className="absolute top-8 md:top-4 -left-10 italic text-5xl sm:text-7xl md:text-[180px] font-black text-transparent animate-slide-left opacity-10 select-none pointer-events-none z-0"
           style={{ WebkitTextStroke: "1px rgba(255,255,255,0.15)" }}
         >
-          {(data.firstName || 'SUPAKRON').toUpperCase()}
+          {(data.firstName || "SUPAKRON").toUpperCase()}
         </h1>
         <h1
           className="absolute bottom-8 md:bottom-4 -right-10 italic text-5xl sm:text-7xl md:text-[180px] font-black text-transparent animate-slide-right opacity-10 select-none pointer-events-none z-0"
           style={{ WebkitTextStroke: "1px rgba(255,255,255,0.15)" }}
         >
-          {(data.lastName || 'KLINBUBPA').toUpperCase()}
+          {(data.lastName || "KLINBUBPA").toUpperCase()}
         </h1>
 
         <div className="relative z-10 text-center px-4 space-y-4 md:space-y-6 max-w-full md:max-w-5xl mx-auto overflow-hidden">
@@ -128,13 +129,20 @@ export function Hero({ data }: { data: HeroData }) {
             <p className="text-sm uppercase tracking-widest text-gray-500 font-semibold mb-2">CURRENTLY</p>
             {data.positions?.map((position, index) => (
               <div key={index} className="flex items-center gap-4 group/item hover:bg-dark-accent p-2 rounded-xl transition-colors -mx-2">
-                <div className="w-10 h-10 rounded-lg overflow-hidden border border-dark-border bg-dark-card cursor-help flex-shrink-0" title={`Works at ${position.organization}`}>
-                  <img
-                    className="w-full h-full object-cover"
-                    alt={position.organization}
-                    src={position.logo}
-                  />
-                </div>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="w-10 h-10 rounded-lg overflow-hidden border border-dark-border bg-dark-card cursor-help flex-shrink-0">
+                      <img
+                        className="w-full h-full object-cover"
+                        alt={position.organization}
+                        src={position.logo}
+                      />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Works at {position.organization}</p>
+                  </TooltipContent>
+                </Tooltip>
 
                 <div className="flex-1">
                   <p className="text-white font-medium flex items-center gap-2">
@@ -172,13 +180,20 @@ export function Hero({ data }: { data: HeroData }) {
 
             <div className="absolute bottom-6 left-6 right-6">
               <div className="flex justify-between items-end">
-                <div className="bg-dark-bg/80 backdrop-blur-md border border-dark-border p-3 rounded-2xl inline-flex items-center gap-3 cursor-pointer hover:border-primary/50 transition-colors" title="Current Mood & Status">
-                  <span className="text-3xl filter drop-shadow-lg">{data.emoji}</span>
-                  <div className="flex flex-col">
-                    <span className="text-xs text-gray-400 uppercase tracking-wider">Status</span>
-                    <span className="text-sm text-white font-medium">Sleepy</span>
-                  </div>
-                </div>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="bg-dark-bg/80 backdrop-blur-md border border-dark-border p-3 rounded-2xl inline-flex items-center gap-3 cursor-pointer hover:border-primary/50 transition-colors">
+                      <span className="text-3xl filter drop-shadow-lg">{data.emoji}</span>
+                      <div className="flex flex-col">
+                        <span className="text-xs text-gray-400 uppercase tracking-wider">Status</span>
+                        <span className="text-sm text-white font-medium">Sleepy</span>
+                      </div>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Current Mood & Status</p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
           </div>
@@ -209,6 +224,6 @@ export function Hero({ data }: { data: HeroData }) {
           </div>
         </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }

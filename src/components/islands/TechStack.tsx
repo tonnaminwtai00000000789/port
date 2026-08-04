@@ -1,5 +1,6 @@
 import React from "react";
 import { Terminal } from "lucide-react";
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "../ui/hover-card";
 
 export interface Technology {
   name: string;
@@ -43,28 +44,45 @@ export function TechStack({ data }: { data: TechStackCategory[] }) {
 
               <div className="grid grid-cols-2 gap-2 md:gap-3">
                 {stack.technologies?.map((tech, idx) => (
-                  <div
-                    key={idx}
-                    title={`${tech.name} - Mastery level: Expert`}
-                    className="flex items-center gap-2 md:gap-3 glass-card p-2 md:p-3 rounded-xl md:rounded-2xl group/tech hover:bg-white/5 transition-all duration-300 cursor-crosshair active:scale-95"
-                  >
-                    <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-lg md:rounded-xl bg-black/40 border border-white/5 group-hover/tech:border-primary/30 transition-colors flex-shrink-0">
-                      {tech.icon && tech.icon.startsWith("devicon-") ? (
-                        <i className={`${tech.icon} text-base md:text-xl opacity-50 group-hover/tech:opacity-100 grayscale-0 transition-all text-gray-400 group-hover/tech:text-white`} />
-                      ) : tech.icon ? (
-                        <img
-                          src={tech.icon}
-                          alt={tech.name}
-                          className="w-4 h-4 md:w-5 md:h-5 object-contain opacity-50 group-hover/tech:opacity-100 transition-all"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : null}
-                    </div>
-                    <span className="text-[8px] md:text-[10px] font-bold text-gray-400 group-hover/tech:text-white transition-colors uppercase tracking-wider leading-tight break-words">
-                      {tech.name}
-                    </span>
-                  </div>
+                  <HoverCard key={idx} openDelay={200}>
+                    <HoverCardTrigger asChild>
+                      <div
+                        className="flex items-center gap-2 md:gap-3 glass-card p-2 md:p-3 rounded-xl md:rounded-2xl group/tech hover:bg-white/5 transition-all duration-300 cursor-crosshair active:scale-95"
+                      >
+                        <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-lg md:rounded-xl bg-black/40 border border-white/5 group-hover/tech:border-primary/30 transition-colors">
+                          {tech.icon && tech.icon.startsWith("devicon-") ? (
+                            <i className={`${tech.icon} text-base md:text-xl opacity-50 group-hover/tech:opacity-100 grayscale-0 transition-all text-gray-400 group-hover/tech:text-white`} />
+                          ) : tech.icon ? (
+                            <img
+                              src={tech.icon}
+                              alt={tech.name}
+                              className="w-4 h-4 md:w-5 md:h-5 object-contain opacity-50 group-hover/tech:opacity-100 transition-all"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : null}
+                        </div>
+                        <span className="text-[8px] md:text-[10px] font-bold text-gray-400 group-hover/tech:text-white transition-colors uppercase tracking-wider leading-tight break-words">
+                          {tech.name}
+                        </span>
+                      </div>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="glass-card border-white/10 p-4 rounded-2xl backdrop-blur-2xl">
+                      <div className="flex items-center gap-4">
+                        <div className="p-3 bg-black/40 border border-white/10 rounded-xl">
+                          {tech.icon && tech.icon.startsWith("devicon-") ? (
+                            <i className={`${tech.icon} text-3xl text-primary`} />
+                          ) : tech.icon ? (
+                            <img src={tech.icon} className="w-8 h-8 object-contain" alt={tech.name} />
+                          ) : null}
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-black text-white uppercase tracking-widest">{tech.name}</h4>
+                          <p className="text-[10px] text-gray-500 mt-1 font-bold uppercase">Mastery level: Expert</p>
+                        </div>
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>
                 ))}
               </div>
             </div>

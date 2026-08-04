@@ -4,32 +4,42 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
-  title = 'Tonnam | Developer Portfolio',
-  description = 'Personal developer portfolio featuring SSR with Astro, React Islands, and Supabase database.',
+  title = 'TonnamInwtai00789',
+  description = 'Developer based in Bangbon, Bangkok. TonnamInwtai00789',
+  image = 'https://theijon.online/images/tonnam.png',
 } = Astro.props;
 ---
 
 <!utf-8>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <!-- Devicon CDN for tech stack icons -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <!-- Fonts & Devicon CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
     />
   </head>
-  <body class="bg-[#030405] text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
-    <div class="fixed inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] pointer-events-none z-0"></div>
-    <div class="relative z-10 flex flex-col flex-grow">
-      <slot />
-    </div>
+  <body class="bg-dark-bg text-gray-200 selection:bg-indigo-500 selection:text-white">
+    <slot />
   </body>
 </html>
