@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'TonnamInwtai00789 · Digital Craftsman',
-  description = 'Developer based in Bangbon, Bangkok. Building software & magical web experiences.',
+  title = 'Tonnam · Supakron Klinbubpa',
+  description = 'builder ที่ชอบสร้างสิ่งใหม่ๆ และอยากเห็นคนเอาไปใช้จริง | TonnamInwtai00789',
   image = 'https://theijon.online/images/tonnam.png',
 } = Astro.props;
 ---
@@ -27,11 +27,11 @@ const {
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-    <!-- Google Fonts: Outfit & Inter -->
+    <!-- Google Fonts: Sora (Display) + Plus Jakarta Sans (Body) + Geist Mono (Code) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <!-- Devicon CDN -->
@@ -40,7 +40,7 @@ const {
       href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
     />
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col">
+  <body class="bg-[#f7f7f2] text-[#161616] antialiased selection:bg-[#ff4500] selection:text-white min-h-screen flex flex-col">
     <slot />
   </body>
 </html>

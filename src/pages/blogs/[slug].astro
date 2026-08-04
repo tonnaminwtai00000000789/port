@@ -16,57 +16,56 @@ if (!post) {
 }
 ---
 
-<Layout title={`${post.title} · Blog`}>
-  <div class="min-h-screen bg-slate-50 text-slate-800">
-    <!-- Blog Header Image -->
-    <div class="w-full h-[40vh] md:h-[50vh] relative overflow-hidden group">
+<Layout title={`${post.title} · บล็อก`}>
+  <div class="min-h-screen bg-[#f7f7f2] text-[#161616]">
+    <!-- Header Banner -->
+    <div class="w-full h-[35vh] md:h-[45vh] relative overflow-hidden">
       <img
         src={post.image}
         alt={post.title}
-        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        class="w-full h-full object-cover"
         loading="eager"
-        decoding="async"
       />
-      <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+      <div class="absolute inset-0 bg-[#161616]/70"></div>
 
       <!-- Navigation -->
-      <div class="absolute top-8 left-6 z-10">
+      <div class="absolute top-6 left-6 z-10">
         <a
           href="/blogs"
-          class="flex items-center gap-2 text-white bg-slate-900/60 hover:bg-slate-900 px-4 py-2 rounded-xl backdrop-blur-md transition border border-white/20 text-xs font-bold"
+          class="inline-flex items-center gap-2 text-white bg-[#161616] px-3.5 py-2 border border-white text-xs font-bold shadow-[2px_2px_0px_#ffffff]"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Blogs</span>
+          <span>กลับไปหน้าบทความ</span>
         </a>
       </div>
 
       <!-- Title overlay -->
-      <div class="absolute bottom-0 left-0 w-full p-6 md:p-12 text-white">
-        <div class="max-w-4xl mx-auto">
-          <div class="flex items-center gap-2 mb-3 text-indigo-300 font-bold text-xs">
-            <Clock className="w-4 h-4" />
+      <div class="absolute bottom-0 left-0 w-full p-6 md:p-10 text-white">
+        <div class="max-w-4xl mx-auto space-y-2">
+          <div class="flex items-center gap-2 text-[#ff4500] font-mono text-xs font-bold">
+            <Clock className="w-3.5 h-3.5" />
             <span>{post.date}</span>
           </div>
-          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight drop-shadow-md tracking-tight">
+          <h1 class="text-3xl sm:text-5xl font-black font-display leading-tight tracking-tight">
             {post.title}
           </h1>
         </div>
       </div>
     </div>
 
-    <!-- Content Container -->
-    <div class="max-w-3xl mx-auto px-6 py-12">
-      <div class="card-light p-8 md:p-12 rounded-[32px] bg-white border border-slate-200/80">
-        <article class="prose prose-slate max-w-none">
-          <div class="whitespace-pre-wrap font-sans text-slate-700 leading-relaxed text-base md:text-lg">
+    <!-- Article Content -->
+    <div class="max-w-3xl mx-auto px-6 py-10">
+      <div class="card-paper p-6 sm:p-10 bg-white border-1.5 border-[#161616]">
+        <article class="prose prose-neutral max-w-none">
+          <div class="whitespace-pre-wrap font-sans text-[#161616] leading-relaxed text-base">
             {post.content}
           </div>
         </article>
 
-        <div class="mt-12 pt-8 border-t border-slate-100 flex justify-between items-center text-xs font-bold text-slate-500">
-          <p>Thanks for reading!</p>
-          <a href="/blogs" class="text-indigo-600 hover:text-indigo-800 transition-colors">
-            Read more posts →
+        <div class="mt-10 pt-6 border-t-1.5 border-[#161616] flex justify-between items-center text-xs font-bold text-[#525252]">
+          <p>ขอบคุณที่เข้ามาอ่านครับ</p>
+          <a href="/blogs" class="text-[#ff4500] hover:underline font-bold">
+            อ่านบทความอื่นๆ →
           </a>
         </div>
       </div>
