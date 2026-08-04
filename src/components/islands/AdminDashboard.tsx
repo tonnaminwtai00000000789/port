@@ -112,10 +112,17 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { error } = await supabase.from("hero").upsert({ ...heroData });
-        if (error) throw error;
+        const { id, ...payload } = heroData || {};
+        if (id && typeof id === "number" && id < 1000000000) {
+          const { error } = await supabase.from("hero").update(payload).eq("id", id);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from("hero").insert(payload);
+          if (error) throw error;
+        }
       }
       showNotification("success", "บันทึกข้อมูล Hero Section เรียบร้อยแล้ว!");
+      await loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -127,10 +134,17 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { error } = await supabase.from("about_me").upsert({ ...aboutData });
-        if (error) throw error;
+        const { id, ...payload } = aboutData || {};
+        if (id && typeof id === "number" && id < 1000000000) {
+          const { error } = await supabase.from("about_me").update(payload).eq("id", id);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from("about_me").insert(payload);
+          if (error) throw error;
+        }
       }
       showNotification("success", "บันทึกข้อมูล About Me เรียบร้อยแล้ว!");
+      await loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -142,10 +156,19 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { error } = await supabase.from("tech_stack").upsert(techData);
-        if (error) throw error;
+        for (const cat of techData) {
+          const { id, ...payload } = cat;
+          if (id && typeof id === "number" && id < 1000000000) {
+            const { error } = await supabase.from("tech_stack").update(payload).eq("id", id);
+            if (error) throw error;
+          } else {
+            const { error } = await supabase.from("tech_stack").insert(payload);
+            if (error) throw error;
+          }
+        }
       }
       showNotification("success", "บันทึกข้อมูล Tech Stack เรียบร้อยแล้ว!");
+      await loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -157,23 +180,28 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const formattedWorks = worksData.map((work) => {
+        for (const work of worksData) {
           const { url, id, ...cleanWork } = work;
           const projectUrl = url || (cleanWork.links && cleanWork.links[0]?.url) || "";
           const payload: any = {
             ...cleanWork,
             links: projectUrl ? [{ url: projectUrl, type: "website" }] : cleanWork.links || [],
           };
-          if (typeof id === "number" && id < 1000000000) {
-            payload.id = id;
+          
+          if (id && typeof id === "number" && id < 1000000000) {
+            const { error } = await supabase.from("works").update(payload).eq("id", id);
+            if (error) {
+              const { error: insErr } = await supabase.from("works").insert(payload);
+              if (insErr) throw insErr;
+            }
+          } else {
+            const { error } = await supabase.from("works").insert(payload);
+            if (error) throw error;
           }
-          return payload;
-        });
-        const { error } = await supabase.from("works").upsert(formattedWorks);
-        if (error) throw error;
+        }
       }
       showNotification("success", "บันทึกข้อมูล Portfolio Works เรียบร้อยแล้ว!");
-      loadAllData();
+      await loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -185,18 +213,22 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const formattedBlogs = blogsData.map((blog) => {
-          const { id, ...rest } = blog;
-          if (typeof id === "number" && id > 1000000000) {
-            return rest;
+        for (const blog of blogsData) {
+          const { id, ...payload } = blog;
+          if (id && typeof id === "number" && id < 1000000000) {
+            const { error } = await supabase.from("blog").update(payload).eq("id", id);
+            if (error) {
+              const { error: insErr } = await supabase.from("blog").insert(payload);
+              if (insErr) throw insErr;
+            }
+          } else {
+            const { error } = await supabase.from("blog").insert(payload);
+            if (error) throw error;
           }
-          return blog;
-        });
-        const { error } = await supabase.from("blog").upsert(formattedBlogs);
-        if (error) throw error;
+        }
       }
       showNotification("success", "บันทึกข้อมูล Blog Posts เรียบร้อยแล้ว!");
-      loadAllData();
+      await loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -208,10 +240,17 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { error } = await supabase.from("contact").upsert({ ...contactData });
-        if (error) throw error;
+        const { id, ...payload } = contactData || {};
+        if (id && typeof id === "number" && id < 1000000000) {
+          const { error } = await supabase.from("contact").update(payload).eq("id", id);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from("contact").insert(payload);
+          if (error) throw error;
+        }
       }
       showNotification("success", "บันทึกข้อมูล Contact เรียบร้อยแล้ว!");
+      await loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
