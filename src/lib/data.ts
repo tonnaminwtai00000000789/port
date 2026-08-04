@@ -1,4 +1,4 @@
-import { supabase, type HeroRow, type AboutMeRow, type TechStackRow, type WorkRow, type ContactRow, type BlogRow } from './supabase';
+import { supabase, isSupabaseConfigured, type HeroRow, type AboutMeRow, type TechStackRow, type WorkRow, type ContactRow, type BlogRow } from './supabase';
 
 const DEFAULT_HERO: HeroRow = {
   id: 3,
@@ -142,7 +142,7 @@ const DEFAULT_BLOGS: BlogRow[] = [
 ];
 
 export async function getHeroData(): Promise<HeroRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+  if (isSupabaseConfigured()) {
     const { data } = await supabase.from('hero').select('*').limit(1).single();
     if (data) return data as HeroRow;
   }
@@ -150,7 +150,7 @@ export async function getHeroData(): Promise<HeroRow | null> {
 }
 
 export async function getAboutMeData(): Promise<AboutMeRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+  if (isSupabaseConfigured()) {
     const { data } = await supabase.from('about_me').select('*').limit(1).single();
     if (data) return data as AboutMeRow;
   }
@@ -158,7 +158,7 @@ export async function getAboutMeData(): Promise<AboutMeRow | null> {
 }
 
 export async function getTechStackData(): Promise<TechStackRow[]> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+  if (isSupabaseConfigured()) {
     const { data } = await supabase.from('tech_stack').select('*').order('order', { ascending: true });
     if (data && data.length) return data as TechStackRow[];
   }
@@ -166,7 +166,7 @@ export async function getTechStackData(): Promise<TechStackRow[]> {
 }
 
 export async function getWorksData(): Promise<WorkRow[]> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+  if (isSupabaseConfigured()) {
     const { data } = await supabase.from('works').select('*').order('order', { ascending: true });
     if (data && data.length) return data as WorkRow[];
   }
@@ -174,7 +174,7 @@ export async function getWorksData(): Promise<WorkRow[]> {
 }
 
 export async function getContactData(): Promise<ContactRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+  if (isSupabaseConfigured()) {
     const { data } = await supabase.from('contact').select('*').limit(1).single();
     if (data) return data as ContactRow;
   }
@@ -182,7 +182,7 @@ export async function getContactData(): Promise<ContactRow | null> {
 }
 
 export async function getBlogPosts(): Promise<BlogRow[]> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+  if (isSupabaseConfigured()) {
     const { data } = await supabase.from('blog').select('*').eq('published', true);
     if (data && data.length) return data as BlogRow[];
   }
@@ -190,7 +190,7 @@ export async function getBlogPosts(): Promise<BlogRow[]> {
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogRow | null> {
-  if (process.env.PUBLIC_SUPABASE_URL && process.env.PUBLIC_SUPABASE_ANON_KEY && !process.env.PUBLIC_SUPABASE_URL.includes('placeholder')) {
+  if (isSupabaseConfigured()) {
     const { data } = await supabase.from('blog').select('*').eq('slug', slug).single();
     if (data) return data as BlogRow;
   }
