@@ -16,7 +16,7 @@ import {
   AlertCircle,
   KeyRound,
   ArrowLeft,
-  Globe,
+  Image as ImageIcon,
 } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "../../lib/supabase";
 import {
@@ -157,10 +157,18 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { error } = await supabase.from("works").upsert(worksData);
+        const formattedWorks = worksData.map((work) => {
+          const { id, ...rest } = work;
+          if (typeof id === "number" && id > 1000000000) {
+            return rest;
+          }
+          return work;
+        });
+        const { error } = await supabase.from("works").upsert(formattedWorks);
         if (error) throw error;
       }
       showNotification("success", "บันทึกข้อมูล Portfolio Works เรียบร้อยแล้ว!");
+      loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -172,10 +180,18 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { error } = await supabase.from("blog").upsert(blogsData);
+        const formattedBlogs = blogsData.map((blog) => {
+          const { id, ...rest } = blog;
+          if (typeof id === "number" && id > 1000000000) {
+            return rest;
+          }
+          return blog;
+        });
+        const { error } = await supabase.from("blog").upsert(formattedBlogs);
         if (error) throw error;
       }
       showNotification("success", "บันทึกข้อมูล Blog Posts เรียบร้อยแล้ว!");
+      loadAllData();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -572,17 +588,17 @@ export function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-black font-display text-[#0f172a]">Portfolio Works Editor</h1>
-                <p className="text-xs text-[#475569]">เพิ่มและแก้ไขโปรเจกต์ผลงาน ({worksData.length} รายการ)</p>
+                <p className="text-xs text-[#475569]">เพิ่มและแก้ไขโปรเจกต์ผลงานพร้อมรูปภาพ ({worksData.length} รายการ)</p>
               </div>
               <button onClick={saveWorks} disabled={saving} className="btn-pop px-5 py-2.5 text-xs inline-flex items-center gap-2">
                 <Save className="w-4 h-4" /> {saving ? "กำลังบันทึก..." : "บันทึกโปรเจกต์"}
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               {worksData.map((work, idx) => (
-                <div key={idx} className="card-paper p-5 bg-white border-1.5 border-[#0f172a] space-y-3">
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                <div key={idx} className="card-paper p-6 bg-white border-1.5 border-[#0f172a] space-y-4">
+                  <div className="flex justify-between items-center pb-3 border-b border-slate-200">
                     <span className="text-xs font-bold text-[#2563eb]">Project #{idx + 1}</span>
                     <button
                       onClick={() => setWorksData(worksData.filter((_, i) => i !== idx))}
@@ -591,28 +607,77 @@ export function AdminDashboard() {
                       <Trash2 className="w-3.5 h-3.5" /> ลบโปรเจกต์
                     </button>
                   </div>
+
+                  {/* Image URL & Preview Row */}
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center bg-slate-50 p-3 rounded-lg border border-[#cbd5e1]">
+                    <div className="md:col-span-3 aspect-video rounded-md overflow-hidden border border-[#0f172a] bg-white flex items-center justify-center shrink-0">
+                      {work.image ? (
+                        <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <ImageIcon className="w-6 h-6 text-[#94a3b8]" />
+                      )}
+                    </div>
+                    <div className="md:col-span-9 space-y-1">
+                      <label className="block text-xs font-bold text-[#0f172a] flex items-center gap-1">
+                        <ImageIcon className="w-3.5 h-3.5 text-[#2563eb]" /> URL รูปภาพโปรเจกต์ (Image URL)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="https://example.com/project-cover.jpg"
+                        value={work.image || ""}
+                        onChange={(e) => {
+                          const updated = [...worksData];
+                          updated[idx].image = e.target.value;
+                          setWorksData(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold bg-white"
+                      />
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <input
-                      type="text"
-                      placeholder="ชื่อโปรเจกต์"
-                      value={work.title}
-                      onChange={(e) => {
-                        const updated = [...worksData];
-                        updated[idx].title = e.target.value;
-                        setWorksData(updated);
-                      }}
-                      className="px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold"
-                    />
-                    <input
-                      type="text"
-                      placeholder="คำอธิบายสั้นๆ"
-                      value={work.description}
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#0f172a] mb-1">ชื่อโปรเจกต์</label>
+                      <input
+                        type="text"
+                        placeholder="ชื่อโปรเจกต์"
+                        value={work.title || ""}
+                        onChange={(e) => {
+                          const updated = [...worksData];
+                          updated[idx].title = e.target.value;
+                          setWorksData(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#0f172a] mb-1">ปี (Year)</label>
+                      <input
+                        type="text"
+                        placeholder="2026"
+                        value={work.year || ""}
+                        onChange={(e) => {
+                          const updated = [...worksData];
+                          updated[idx].year = e.target.value;
+                          setWorksData(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#0f172a] mb-1">คำอธิบายโปรเจกต์</label>
+                    <textarea
+                      rows={2}
+                      placeholder="รายละเอียดสรุปเกี่ยวกับโปรเจกต์..."
+                      value={work.description || ""}
                       onChange={(e) => {
                         const updated = [...worksData];
                         updated[idx].description = e.target.value;
                         setWorksData(updated);
                       }}
-                      className="px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold"
+                      className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-medium resize-none"
                     />
                   </div>
                 </div>
@@ -622,7 +687,7 @@ export function AdminDashboard() {
                 onClick={() =>
                   setWorksData([
                     ...worksData,
-                    { id: Date.now(), title: "ใหม่ โปรเจกต์", description: "รายละเอียด", image: "https://theijon.online/images/tonnam.png", year: "2026", size: "large", tags: [], links: [] },
+                    { id: Date.now(), title: "โปรเจกต์ใหม่", description: "รายละเอียดโปรเจกต์", image: "https://theijon.online/images/tonnam.png", year: "2026", size: "large", tags: [], links: [] },
                   ])
                 }
                 className="w-full py-3 border-2 border-dashed border-[#0f172a] rounded-xl text-xs font-bold text-[#0f172a] hover:bg-slate-100 flex items-center justify-center gap-2"
@@ -639,40 +704,112 @@ export function AdminDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-black font-display text-[#0f172a]">Blog Posts Editor</h1>
-                <p className="text-xs text-[#475569]">จัดการบทความและโพสต์ ({blogsData.length} บทความ)</p>
+                <p className="text-xs text-[#475569]">จัดการบทความและโพสต์พร้อมรูปภาพปก ({blogsData.length} บทความ)</p>
               </div>
               <button onClick={saveBlogs} disabled={saving} className="btn-pop px-5 py-2.5 text-xs inline-flex items-center gap-2">
                 <Save className="w-4 h-4" /> {saving ? "กำลังบันทึก..." : "บันทึกบทความ"}
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               {blogsData.map((blog, idx) => (
-                <div key={idx} className="card-paper p-5 bg-white border-1.5 border-[#0f172a] space-y-3">
-                  <input
-                    type="text"
-                    placeholder="หัวข้อบทความ"
-                    value={blog.title}
-                    onChange={(e) => {
-                      const updated = [...blogsData];
-                      updated[idx].title = e.target.value;
-                      setBlogsData(updated);
-                    }}
-                    className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-bold"
-                  />
-                  <textarea
-                    rows={3}
-                    placeholder="เนื้อหาบทความ"
-                    value={blog.content}
-                    onChange={(e) => {
-                      const updated = [...blogsData];
-                      updated[idx].content = e.target.value;
-                      setBlogsData(updated);
-                    }}
-                    className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-medium resize-none"
-                  />
+                <div key={idx} className="card-paper p-6 bg-white border-1.5 border-[#0f172a] space-y-4">
+                  <div className="flex justify-between items-center pb-3 border-b border-slate-200">
+                    <span className="text-xs font-bold text-[#2563eb]">Post #{idx + 1}</span>
+                    <button
+                      onClick={() => setBlogsData(blogsData.filter((_, i) => i !== idx))}
+                      className="text-xs text-rose-600 hover:underline inline-flex items-center gap-1 font-bold"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" /> ลบบทความ
+                    </button>
+                  </div>
+
+                  {/* Image URL & Preview Row for Blog */}
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center bg-slate-50 p-3 rounded-lg border border-[#cbd5e1]">
+                    <div className="md:col-span-3 aspect-video rounded-md overflow-hidden border border-[#0f172a] bg-white flex items-center justify-center shrink-0">
+                      {blog.image ? (
+                        <img src={blog.image} alt={blog.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <ImageIcon className="w-6 h-6 text-[#94a3b8]" />
+                      )}
+                    </div>
+                    <div className="md:col-span-9 space-y-1">
+                      <label className="block text-xs font-bold text-[#0f172a] flex items-center gap-1">
+                        <ImageIcon className="w-3.5 h-3.5 text-[#2563eb]" /> URL รูปปกบทความ (Cover Image URL)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="https://example.com/blog-cover.jpg"
+                        value={blog.image || ""}
+                        onChange={(e) => {
+                          const updated = [...blogsData];
+                          updated[idx].image = e.target.value;
+                          setBlogsData(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-semibold bg-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#0f172a] mb-1">หัวข้อบทความ (Title)</label>
+                      <input
+                        type="text"
+                        placeholder="หัวข้อบทความ"
+                        value={blog.title || ""}
+                        onChange={(e) => {
+                          const updated = [...blogsData];
+                          updated[idx].title = e.target.value;
+                          setBlogsData(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-[#0f172a] mb-1">Slug URL (e.g. my-post)</label>
+                      <input
+                        type="text"
+                        placeholder="my-post"
+                        value={blog.slug || ""}
+                        onChange={(e) => {
+                          const updated = [...blogsData];
+                          updated[idx].slug = e.target.value;
+                          setBlogsData(updated);
+                        }}
+                        className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-[#0f172a] mb-1">เนื้อหาบทความ (Markdown/Text)</label>
+                    <textarea
+                      rows={4}
+                      placeholder="เนื้อหาบทความ..."
+                      value={blog.content || ""}
+                      onChange={(e) => {
+                        const updated = [...blogsData];
+                        updated[idx].content = e.target.value;
+                        setBlogsData(updated);
+                      }}
+                      className="w-full px-3 py-2 rounded-lg border border-[#0f172a] text-xs font-medium resize-none"
+                    />
+                  </div>
                 </div>
               ))}
+
+              <button
+                onClick={() =>
+                  setBlogsData([
+                    ...blogsData,
+                    { id: Date.now(), title: "บทความใหม่", slug: `post-${Date.now()}`, image: "https://theijon.online/images/tonnam.png", date: new Date().toISOString().split('T')[0], content: "เนื้อหาบทความใหม่...", published: true },
+                  ])
+                }
+                className="w-full py-3 border-2 border-dashed border-[#0f172a] rounded-xl text-xs font-bold text-[#0f172a] hover:bg-slate-100 flex items-center justify-center gap-2"
+              >
+                <Plus className="w-4 h-4" /> เพิ่มบทความใหม่
+              </button>
             </div>
           </div>
         )}
