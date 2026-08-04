@@ -17,7 +17,7 @@ import {
   KeyRound,
   ArrowLeft,
 } from "lucide-react";
-import { supabase } from "../../lib/supabase";
+import { supabase, isSupabaseConfigured } from "../../lib/supabase";
 import {
   getHeroData,
   getAboutMeData,
@@ -75,8 +75,7 @@ export function AdminDashboard() {
       if (c) setContactData(c);
       if (b) setBlogsData(b);
 
-      // Load inbox messages from Supabase if table exists
-      if (process.env.PUBLIC_SUPABASE_URL && !process.env.PUBLIC_SUPABASE_URL.includes("placeholder")) {
+      if (isSupabaseConfigured()) {
         const { data: inbox } = await supabase.from("messages").select("*").order("created_at", { ascending: false });
         if (inbox) setInboxData(inbox);
       }
@@ -87,7 +86,6 @@ export function AdminDashboard() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Default admin key check: 'admin123' or 'tonnam1234'
     if (password === "admin123" || password === "tonnam1234") {
       setIsAuthenticated(true);
       sessionStorage.setItem("admin_auth", "true");
@@ -112,7 +110,7 @@ export function AdminDashboard() {
   const saveHero = async () => {
     setSaving(true);
     try {
-      if (process.env.PUBLIC_SUPABASE_URL && !process.env.PUBLIC_SUPABASE_URL.includes("placeholder")) {
+      if (isSupabaseConfigured()) {
         const { error } = await supabase.from("hero").upsert({ ...heroData });
         if (error) throw error;
       }
@@ -127,7 +125,7 @@ export function AdminDashboard() {
   const saveAboutMe = async () => {
     setSaving(true);
     try {
-      if (process.env.PUBLIC_SUPABASE_URL && !process.env.PUBLIC_SUPABASE_URL.includes("placeholder")) {
+      if (isSupabaseConfigured()) {
         const { error } = await supabase.from("about_me").upsert({ ...aboutData });
         if (error) throw error;
       }
@@ -142,7 +140,7 @@ export function AdminDashboard() {
   const saveWorks = async () => {
     setSaving(true);
     try {
-      if (process.env.PUBLIC_SUPABASE_URL && !process.env.PUBLIC_SUPABASE_URL.includes("placeholder")) {
+      if (isSupabaseConfigured()) {
         const { error } = await supabase.from("works").upsert(worksData);
         if (error) throw error;
       }
@@ -157,7 +155,7 @@ export function AdminDashboard() {
   const saveBlogs = async () => {
     setSaving(true);
     try {
-      if (process.env.PUBLIC_SUPABASE_URL && !process.env.PUBLIC_SUPABASE_URL.includes("placeholder")) {
+      if (isSupabaseConfigured()) {
         const { error } = await supabase.from("blog").upsert(blogsData);
         if (error) throw error;
       }

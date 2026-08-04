@@ -1,7 +1,25 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+const getEnv = (key: string) => {
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) {
+      return import.meta.env[key];
+    }
+  } catch (e) {}
+  try {
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      return process.env[key];
+    }
+  } catch (e) {}
+  return '';
+};
+
+const supabaseUrl = getEnv('PUBLIC_SUPABASE_URL') || 'https://placeholder.supabase.co';
+const supabaseAnonKey = getEnv('PUBLIC_SUPABASE_ANON_KEY') || 'placeholder-key';
+
+export const isSupabaseConfigured = () => {
+  return supabaseUrl && !supabaseUrl.includes('placeholder');
+};
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
