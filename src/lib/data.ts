@@ -21,7 +21,7 @@ const DEFAULT_HERO: HeroRow = {
       organizationUrl: 'https://theijon.online/',
     },
     {
-      logo: 'https://scontent.fbkk22-1.fna.fbcdn.net/v/t39.30808-6/399066911_734484848721847_3491665446363065300_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=a5f93a',
+      logo: 'https://ui-avatars.com/api/?name=SWB&background=0f172a&color=60a5fa&font-size=0.45&bold=true',
       since: 'Become a student in 2014',
       title: 'Student (Grade 9) in',
       organization: 'Sarasas Witaed Bangbon',
@@ -132,67 +132,95 @@ const DEFAULT_CONTACT: ContactRow = {
 const DEFAULT_BLOGS: BlogRow[] = [
   {
     id: 10,
-    title: 'ควย',
-    slug: 'เย้',
-    image: 'https://tr.rbxcdn.com/180DAY-6a9f37f333452ee91542001faacf5e49/576/324/Image/Jpeg/noFilter',
-    date: '9999-99-99',
-    content: '# ควยควย\nควย\nควย\nควย',
+    title: 'บทความแนะนำ',
+    slug: 'welcome',
+    image: 'https://theijon.online/images/tonnam.png',
+    date: '2026-08-04',
+    content: '# ต้อนรับสู่บล็อกของผม\nขอบคุณที่เข้ามาเยี่ยมชมเว็บไซต์และอ่านบทความครับ',
     published: true,
   },
 ];
 
 export async function getHeroData(): Promise<HeroRow | null> {
   if (isSupabaseConfigured()) {
-    const { data } = await supabase.from('hero').select('*').limit(1).single();
-    if (data) return data as HeroRow;
+    try {
+      const { data, error } = await supabase.from('hero').select('*').limit(1).single();
+      if (data && !error) return data as HeroRow;
+    } catch (e) {
+      console.warn('Supabase hero fetch fallback:', e);
+    }
   }
   return DEFAULT_HERO;
 }
 
 export async function getAboutMeData(): Promise<AboutMeRow | null> {
   if (isSupabaseConfigured()) {
-    const { data } = await supabase.from('about_me').select('*').limit(1).single();
-    if (data) return data as AboutMeRow;
+    try {
+      const { data, error } = await supabase.from('about_me').select('*').limit(1).single();
+      if (data && !error) return data as AboutMeRow;
+    } catch (e) {
+      console.warn('Supabase about_me fetch fallback:', e);
+    }
   }
   return DEFAULT_ABOUT;
 }
 
 export async function getTechStackData(): Promise<TechStackRow[]> {
   if (isSupabaseConfigured()) {
-    const { data } = await supabase.from('tech_stack').select('*').order('order', { ascending: true });
-    if (data && data.length) return data as TechStackRow[];
+    try {
+      const { data, error } = await supabase.from('tech_stack').select('*').order('order', { ascending: true });
+      if (data && data.length && !error) return data as TechStackRow[];
+    } catch (e) {
+      console.warn('Supabase tech_stack fetch fallback:', e);
+    }
   }
   return DEFAULT_TECH;
 }
 
 export async function getWorksData(): Promise<WorkRow[]> {
   if (isSupabaseConfigured()) {
-    const { data } = await supabase.from('works').select('*').order('order', { ascending: true });
-    if (data && data.length) return data as WorkRow[];
+    try {
+      const { data, error } = await supabase.from('works').select('*').order('order', { ascending: true });
+      if (data && data.length && !error) return data as WorkRow[];
+    } catch (e) {
+      console.warn('Supabase works fetch fallback:', e);
+    }
   }
   return DEFAULT_WORKS;
 }
 
 export async function getContactData(): Promise<ContactRow | null> {
   if (isSupabaseConfigured()) {
-    const { data } = await supabase.from('contact').select('*').limit(1).single();
-    if (data) return data as ContactRow;
+    try {
+      const { data, error } = await supabase.from('contact').select('*').limit(1).single();
+      if (data && !error) return data as ContactRow;
+    } catch (e) {
+      console.warn('Supabase contact fetch fallback:', e);
+    }
   }
   return DEFAULT_CONTACT;
 }
 
 export async function getBlogPosts(): Promise<BlogRow[]> {
   if (isSupabaseConfigured()) {
-    const { data } = await supabase.from('blog').select('*').eq('published', true);
-    if (data && data.length) return data as BlogRow[];
+    try {
+      const { data, error } = await supabase.from('blog').select('*').eq('published', true);
+      if (data && data.length && !error) return data as BlogRow[];
+    } catch (e) {
+      console.warn('Supabase blog fetch fallback:', e);
+    }
   }
   return DEFAULT_BLOGS;
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogRow | null> {
   if (isSupabaseConfigured()) {
-    const { data } = await supabase.from('blog').select('*').eq('slug', slug).single();
-    if (data) return data as BlogRow;
+    try {
+      const { data, error } = await supabase.from('blog').select('*').eq('slug', slug).single();
+      if (data && !error) return data as BlogRow;
+    } catch (e) {
+      console.warn('Supabase blog slug fetch fallback:', e);
+    }
   }
   return DEFAULT_BLOGS.find((p) => p.slug === slug) || null;
 }
