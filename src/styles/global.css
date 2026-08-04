@@ -8,109 +8,158 @@
   --font-mono: "Geist Mono", "JetBrains Mono", monospace;
 }
 
-/* Custom Scrollbar - Warm Paper */
+/* Custom Scrollbar - Sky Blue Theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0f0ea;
+  background: #f0f4f8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4cb;
-  border-radius: 2px;
+  background: #93c5fd;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff4500;
+  background: #3b82f6;
 }
 
 body {
-  background-color: #f7f7f2;
-  color: #161616;
+  background-color: #f8fafc;
+  color: #0f172a;
   font-family: var(--font-sans);
+  overflow-x: hidden;
 }
 
 @theme inline {
   --color-paper: #ffffff;
-  --color-paper-warm: #f7f7f2;
-  --color-ink: #161616;
-  --color-ink-muted: #525252;
-  --color-accent: #ff4500;
-  --color-accent-hover: #e03d00;
-  --color-accent-soft: #fff0eb;
-  --color-border: #e2e2d8;
-  --color-border-strong: #161616;
+  --color-[#60a5fa]: #60a5fa;
+  --color-[#3b82f6]: #3b82f6;
+  --color-[#2563eb]: #2563eb;
+  --color-[#eff6ff]: #eff6ff;
+  --color-[#e2e8f0]: #e2e8f0;
+  --color-[#0f172a]: #0f172a;
 }
 
 /* Slanted Skew Utilities */
 .slant {
-  transform: skewX(-12deg);
+  transform: skewX(-10deg);
 }
 
 .unslant {
-  transform: skewX(12deg);
+  transform: skewX(10deg);
 }
 
-/* Editorial Paper Card (Tactile Hairline Borders + Solid Pop Shadow) */
+/* Paper Card (Tactile Hairline Borders + Sky Blue Pop Shadow) */
 .card-paper {
   background: #ffffff;
-  border: 1.5px solid #161616;
-  border-radius: 8px;
-  box-shadow: 3px 3px 0px 0px #161616;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1.5px solid #0f172a;
+  border-radius: 12px;
+  box-shadow: 4px 4px 0px 0px #60a5fa;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-paper:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px 0px #161616;
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0px 0px #2563eb;
 }
 
 .card-paper-subtle {
   background: #ffffff;
-  border: 1px solid #e2e2d8;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.25s ease;
 }
 
 .card-paper-subtle:hover {
-  border-color: #161616;
-  box-shadow: 3px 3px 0px 0px #ff4500;
+  border-color: #0f172a;
+  box-shadow: 4px 4px 0px 0px #60a5fa;
 }
 
 /* Button & Badge Pop Shadows */
 .btn-pop {
-  background: #ff4500;
-  color: #ffffff;
-  border: 1.5px solid #161616;
-  border-radius: 6px;
-  box-shadow: 3px 3px 0px 0px #161616;
+  background: #60a5fa;
+  color: #0f172a;
+  border: 1.5px solid #0f172a;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0px 0px #0f172a;
   font-weight: 700;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-pop:hover {
-  background: #e03d00;
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px 0px #161616;
+  background: #3b82f6;
+  color: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px 0px #0f172a;
 }
 
 .btn-pop:active {
   transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px 0px #161616;
+  box-shadow: 1px 1px 0px 0px #0f172a;
 }
 
-/* Authentic Tag Badge */
+/* Tag Badge */
 .tag-badge {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: 1px solid #e2e2d8;
-  background: #fafaf7;
-  color: #161616;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  color: #0f172a;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.tag-badge:hover {
+  border-color: #60a5fa;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+/* Number badge styling */
+.num-badge {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 0 0.4em;
+  border-radius: 4px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+/* AOS Animation Simulation Keyframes */
+@keyframes aos-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-aos-up {
+  animation: aos-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: float-subtle 4s ease-in-out infinite;
 }

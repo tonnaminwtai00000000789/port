@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { MapPin, Clock, ArrowRight, Code } from "lucide-react";
+import { MapPin, Clock, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 export interface HeroData {
   id: number;
@@ -71,136 +72,169 @@ export function Hero({ data }: { data: HeroData }) {
   return (
     <section className="pt-24 pb-8">
       {/* Main Showcase Hero */}
-      <div className="card-paper p-6 sm:p-10 bg-white mb-6 border-1.5 border-[#161616]">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="card-paper p-6 sm:p-10 bg-white mb-6 border-1.5 border-[#0f172a]"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Left Hero Statement */}
           <div className="lg:col-span-7 space-y-4">
-            <h1 className="font-display text-5xl sm:text-7xl font-extrabold text-[#161616] leading-none tracking-tight">
-              <span className="text-[#ff4500]">T</span>onnam
+            <h1 className="font-display text-5xl sm:text-7xl font-extrabold text-[#0f172a] leading-none tracking-tight">
+              <span className="text-[#60a5fa]">T</span>onnam
             </h1>
 
-            <p className="font-display text-2xl sm:text-3xl font-extrabold leading-snug text-[#161616]">
+            <p className="font-display text-2xl sm:text-3xl font-extrabold leading-snug text-[#0f172a]">
               ผมชอบสร้างสิ่งใหม่ๆ <br />
-              <span className="text-[#ff4500]">และชอบเห็นคนได้ใช้มัน</span>
+              <span className="text-[#3b82f6]">และชอบเห็นคนได้ใช้มัน</span>
             </p>
 
-            <p className="text-[#525252] text-sm sm:text-base leading-relaxed">
+            <p className="text-[#475569] text-sm sm:text-base leading-relaxed">
               เริ่มจากการเขียนบอท Discord เล่นกับเพื่อนๆ วันนี้อยู่กับการเขียนโปรแกรมมาแล้ว <span className="num-badge">{experience}</span> ปี และตั้งใจสร้างสรรค์เว็บแอปพลิเคชันที่ตอบโจทย์ผู้ใช้จริง
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 href="#works"
                 className="btn-pop px-5 py-2 text-sm font-bold inline-flex items-center gap-1.5"
               >
                 ดูสิ่งที่สร้างไว้ <ArrowRight className="w-4 h-4" />
-              </a>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#fafaf7] border border-[#e2e2d8] text-xs font-semibold text-[#161616]">
-                <MapPin className="w-3.5 h-3.5 text-[#ff4500]" /> {data.location}
+              </motion.a>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#f1f5f9] border border-[#cbd5e1] text-xs font-semibold text-[#0f172a]">
+                <MapPin className="w-3.5 h-3.5 text-[#3b82f6]" /> {data.location}
               </span>
             </div>
 
             {/* Stats Counter */}
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t-2 border-dashed border-[#e2e2d8]">
+            <div className="grid grid-cols-3 gap-4 pt-6 border-t-2 border-dashed border-[#e2e8f0]">
               <div>
-                <p className="font-display text-3xl font-extrabold text-[#ff4500]">
+                <p className="font-display text-3xl font-extrabold text-[#2563eb]">
                   {experience}+
                 </p>
-                <p className="text-xs font-semibold text-[#525252] mt-0.5">ปีที่เขียนโค้ด</p>
+                <p className="text-xs font-semibold text-[#475569] mt-0.5">ปีที่เขียนโค้ด</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold text-[#161616]">
+                <p className="font-display text-3xl font-extrabold text-[#0f172a]">
                   {age}
                 </p>
-                <p className="text-xs font-semibold text-[#525252] mt-0.5">อายุ (ปี)</p>
+                <p className="text-xs font-semibold text-[#475569] mt-0.5">อายุ (ปี)</p>
               </div>
               <div>
-                <p className="font-display text-3xl font-extrabold text-[#161616]">
+                <p className="font-display text-3xl font-extrabold text-[#0f172a]">
                   100%
                 </p>
-                <p className="text-xs font-semibold text-[#525252] mt-0.5">ความตั้งใจ</p>
+                <p className="text-xs font-semibold text-[#475569] mt-0.5">ความตั้งใจ</p>
               </div>
             </div>
           </div>
 
           {/* Right Profile Column */}
           <div className="lg:col-span-5 flex flex-col items-center">
-            <div className="relative w-full max-w-xs">
-              <div className="slant absolute -bottom-2 -left-2 z-0 h-full w-full bg-[#ff4500] border-1.5 border-[#161616]" />
-              <div className="relative z-10 overflow-hidden border-1.5 border-[#161616] bg-white">
+            <motion.div
+              whileHover={{ scale: 1.02, rotate: 1 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-xs"
+            >
+              <div className="slant absolute -bottom-2 -left-2 z-0 h-full w-full bg-[#60a5fa] border-1.5 border-[#0f172a]" />
+              <div className="relative z-10 overflow-hidden border-1.5 border-[#0f172a] bg-white">
                 <img
                   src={data.profileImage}
                   alt={data.displayName}
                   className="w-full aspect-[4/5] object-cover"
                   loading="eager"
                 />
-                <div className="p-3 bg-[#161616] text-white flex items-center justify-between text-xs font-mono">
+                <div className="p-3 bg-[#0f172a] text-white flex items-center justify-between text-xs font-mono">
                   <span>TonnamInwtai00789</span>
-                  <span className="text-[#ff4500] font-bold">{data.emoji}</span>
+                  <span className="text-[#60a5fa] font-bold">{data.emoji}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Bio & Bangkok Time Grid */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Bio & Currently at */}
-        <div className="md:col-span-7 card-paper p-6 bg-white border-1.5 border-[#161616]">
-          <h2 className="text-xl font-bold text-[#161616] mb-2 flex items-center gap-2">
-            สวัสดีครับ ผมชื่อ <span className="text-[#ff4500] font-extrabold">{data.nickname}</span> 👋
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="md:col-span-7 card-paper p-6 bg-white border-1.5 border-[#0f172a]"
+        >
+          <h2 className="text-xl font-bold text-[#0f172a] mb-2 flex items-center gap-2">
+            สวัสดีครับ ผมชื่อ <span className="text-[#2563eb] font-extrabold">{data.nickname}</span> 👋
           </h2>
 
-          <p className="text-[#525252] text-sm leading-relaxed mb-4 font-normal">
+          <p className="text-[#475569] text-sm leading-relaxed mb-4 font-normal">
             ผมอายุ <span className="num-badge">{age}</span> ปี ทำงานและสร้างสรรค์โปรเจกต์ซอฟต์แวร์จากกรุงเทพฯ ชอบทดลองเทคโนโลยีใหม่ๆ และพัฒนาเครื่องมือที่มีประโยชน์
           </p>
 
-          <div className="space-y-2 pt-3 border-t-1.5 border-[#161616]">
-            <p className="text-xs font-extrabold text-[#161616] uppercase tracking-wider">กำลังทำอยู่ในปัจจุบัน</p>
+          <div className="space-y-2 pt-3 border-t-1.5 border-[#0f172a]">
+            <p className="text-xs font-extrabold text-[#0f172a] uppercase tracking-wider">กำลังทำอยู่ในปัจจุบัน</p>
             {data.positions?.map((pos, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-2 border border-[#e2e2d8] hover:border-[#161616] transition-colors">
-                <img src={pos.logo} alt={pos.organization} className="w-8 h-8 object-cover border border-[#161616]" />
+              <motion.div
+                key={idx}
+                whileHover={{ x: 3 }}
+                className="flex items-center gap-3 p-2 border border-[#e2e8f0] hover:border-[#0f172a] transition-colors"
+              >
+                <img src={pos.logo} alt={pos.organization} className="w-8 h-8 object-cover border border-[#0f172a]" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-[#161616] truncate">{pos.title}</p>
-                  <a href={pos.organizationUrl} target="_blank" rel="noreferrer" className="text-xs text-[#525252] hover:text-[#ff4500] truncate block">
+                  <p className="text-xs font-bold text-[#0f172a] truncate">{pos.title}</p>
+                  <a href={pos.organizationUrl} target="_blank" rel="noreferrer" className="text-xs text-[#475569] hover:text-[#2563eb] truncate block">
                     {pos.organization}
                   </a>
                 </div>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 bg-[#f7f7f2] border border-[#e2e2d8]">
+                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 bg-[#f8fafc] border border-[#cbd5e1]">
                   {pos.since}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Live Bangkok Clock */}
-        <div className="md:col-span-5 flex flex-col gap-4">
-          <div className="card-paper p-6 bg-white border-1.5 border-[#161616] flex-1 flex flex-col justify-between">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="md:col-span-5 flex flex-col gap-4"
+        >
+          <div className="card-paper p-6 bg-white border-1.5 border-[#0f172a] flex-1 flex flex-col justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-bold text-[#ff4500] uppercase">Bangkok, TH</span>
-              <Clock className="w-4 h-4 text-[#161616]" />
+              <span className="text-xs font-mono font-bold text-[#2563eb] uppercase">Bangkok, TH</span>
+              <Clock className="w-4 h-4 text-[#0f172a]" />
             </div>
 
             <div>
-              <p className="text-xs font-semibold text-[#525252] mb-1">เวลากรุงเทพฯ ปัจจุบัน</p>
-              <p className="font-mono text-3xl font-bold text-[#161616] tracking-tight">
+              <p className="text-xs font-semibold text-[#475569] mb-1">เวลากรุงเทพฯ ปัจจุบัน</p>
+              <p className="font-mono text-3xl font-bold text-[#0f172a] tracking-tight">
                 {currentTime || "--:--:--"}
               </p>
             </div>
           </div>
 
-          <div className="card-paper p-4 bg-[#161616] text-white flex items-center justify-between">
+          <div className="card-paper p-4 bg-[#0f172a] text-white flex items-center justify-between">
             <div>
-              <p className="text-xs font-mono text-[#ff4500]">STATUS</p>
+              <p className="text-xs font-mono text-[#60a5fa]">STATUS</p>
               <p className="text-sm font-bold text-white">พร้อมรับงาน & โปรเจกต์ใหม่</p>
             </div>
-            <a href="#contact" className="px-3 py-1.5 bg-[#ff4500] text-white text-xs font-bold border border-white hover:bg-white hover:text-[#161616] transition-colors">
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="#contact"
+              className="px-3 py-1.5 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-white hover:bg-white transition-colors"
+            >
               ติดต่อ
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

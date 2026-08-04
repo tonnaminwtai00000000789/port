@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function HeaderNav({ webringUrl }: { webringUrl?: string | null }) {
   const [scrolled, setScrolled] = useState(false);
@@ -14,10 +15,13 @@ export function HeaderNav({ webringUrl }: { webringUrl?: string | null }) {
   }, []);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-200 ${
+    <motion.header
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#f7f7f2]/90 backdrop-blur-md border-b-2 border-[#161616] py-3 shadow-xs"
+          ? "bg-[#f8fafc]/90 backdrop-blur-md border-b-2 border-[#0f172a] py-3 shadow-xs"
           : "bg-transparent py-5"
       }`}
     >
@@ -25,55 +29,60 @@ export function HeaderNav({ webringUrl }: { webringUrl?: string | null }) {
         {/* Brand Logo */}
         <a
           href="/"
-          className="font-display text-2xl font-black tracking-tight text-[#161616] flex items-center gap-1 group"
+          className="font-display text-2xl font-black tracking-tight text-[#0f172a] flex items-center gap-1 group"
         >
-          <span className="text-[#ff4500]">Tonnam</span>.dev
+          <span className="text-[#60a5fa] group-hover:text-[#2563eb] transition-colors">Tonnam</span>.dev
         </a>
 
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-6 md:flex">
           <a
             href="/"
-            className="text-sm font-bold text-[#525252] hover:text-[#161616] transition-colors"
+            className="text-sm font-bold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
           >
             หน้าแรก
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#60a5fa] transition-all duration-200 group-hover:w-full" />
           </a>
           <a
             href="#works"
-            className="text-sm font-bold text-[#525252] hover:text-[#161616] transition-colors"
+            className="text-sm font-bold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
           >
             ผลงาน
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#60a5fa] transition-all duration-200 group-hover:w-full" />
           </a>
           <a
             href="#skills"
-            className="text-sm font-bold text-[#525252] hover:text-[#161616] transition-colors"
+            className="text-sm font-bold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
           >
             ทักษะ
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#60a5fa] transition-all duration-200 group-hover:w-full" />
           </a>
           <a
             href="#about"
-            className="text-sm font-bold text-[#525252] hover:text-[#161616] transition-colors"
+            className="text-sm font-bold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
           >
             เกี่ยวกับ
           </a>
           <a
             href="/blogs"
-            className="text-sm font-bold text-[#525252] hover:text-[#161616] transition-colors"
+            className="text-sm font-bold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
           >
             บล็อก
           </a>
 
           {webringUrl && (
-            <a
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href={webringUrl}
               target="_blank"
               rel="noreferrer"
-              className="slant inline-flex items-center gap-1 px-3 py-1 bg-[#ff4500] text-white text-xs font-bold border border-[#161616] shadow-[2px_2px_0px_#161616] hover:translate-x-0.5 transition-all"
+              className="slant inline-flex items-center gap-1 px-3 py-1 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-[#0f172a] shadow-[2px_2px_0px_#0f172a]"
             >
               <span className="unslant inline-flex items-center gap-1">
                 Webring <ArrowUpRight className="w-3.5 h-3.5" />
               </span>
-            </a>
+            </motion.a>
           )}
         </nav>
 
@@ -81,7 +90,7 @@ export function HeaderNav({ webringUrl }: { webringUrl?: string | null }) {
         <button
           type="button"
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex h-9 w-9 items-center justify-center border-1.5 border-[#161616] bg-white text-[#161616] md:hidden shadow-[2px_2px_0px_#161616]"
+          className="flex h-9 w-9 items-center justify-center border-1.5 border-[#0f172a] bg-white text-[#0f172a] md:hidden shadow-[2px_2px_0px_#0f172a]"
           aria-label="เมนู"
         >
           {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -89,47 +98,55 @@ export function HeaderNav({ webringUrl }: { webringUrl?: string | null }) {
       </div>
 
       {/* Mobile Menu Panel */}
-      {mobileOpen && (
-        <div className="md:hidden px-6 py-4 bg-[#f7f7f2] border-b-2 border-[#161616]">
-          <nav className="flex flex-col gap-2">
-            <a
-              href="/"
-              onClick={() => setMobileOpen(false)}
-              className="px-3 py-2 text-sm font-bold text-[#161616] hover:bg-[#ff4500] hover:text-white transition-colors"
-            >
-              หน้าแรก
-            </a>
-            <a
-              href="#works"
-              onClick={() => setMobileOpen(false)}
-              className="px-3 py-2 text-sm font-bold text-[#161616] hover:bg-[#ff4500] hover:text-white transition-colors"
-            >
-              ผลงาน
-            </a>
-            <a
-              href="#skills"
-              onClick={() => setMobileOpen(false)}
-              className="px-3 py-2 text-sm font-bold text-[#161616] hover:bg-[#ff4500] hover:text-white transition-colors"
-            >
-              ทักษะ
-            </a>
-            <a
-              href="#about"
-              onClick={() => setMobileOpen(false)}
-              className="px-3 py-2 text-sm font-bold text-[#161616] hover:bg-[#ff4500] hover:text-white transition-colors"
-            >
-              เกี่ยวกับ
-            </a>
-            <a
-              href="/blogs"
-              onClick={() => setMobileOpen(false)}
-              className="px-3 py-2 text-sm font-bold text-[#161616] hover:bg-[#ff4500] hover:text-white transition-colors"
-            >
-              บล็อก
-            </a>
-          </nav>
-        </div>
-      )}
-    </header>
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden px-6 py-4 bg-[#f8fafc] border-b-2 border-[#0f172a] overflow-hidden"
+          >
+            <nav className="flex flex-col gap-2">
+              <a
+                href="/"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#60a5fa] transition-colors"
+              >
+                หน้าแรก
+              </a>
+              <a
+                href="#works"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#60a5fa] transition-colors"
+              >
+                ผลงาน
+              </a>
+              <a
+                href="#skills"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#60a5fa] transition-colors"
+              >
+                ทักษะ
+              </a>
+              <a
+                href="#about"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#60a5fa] transition-colors"
+              >
+                เกี่ยวกับ
+              </a>
+              <a
+                href="/blogs"
+                onClick={() => setMobileOpen(false)}
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#60a5fa] transition-colors"
+              >
+                บล็อก
+              </a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }
