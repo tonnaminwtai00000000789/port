@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowLeft, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import type { BlogRow } from "../../lib/supabase";
@@ -13,14 +12,15 @@ export function BlogPostDetail({ post }: { post: BlogRow }) {
     >
       {/* Navigation Bar */}
       <div className="flex items-center justify-between pb-4">
-        <a
-          href="/blogs"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-white text-[#0f172a] border-1.5 border-[#0f172a] text-xs font-bold shadow-[2px_2px_0px_#0f172a] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all"
-        >
-          <ArrowLeft className="w-4 h-4 text-[#2563eb]" />
-          <span>กลับไปหน้าบทความทั้งหมด</span>
-        </a>
-      </div>
+            <button
+              type="button"
+              onClick={() => window.history.back()}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white text-[#0f172a] border-[1.5px] border-[#0f172a] text-xs font-bold shadow-[2px_2px_0px_#0f172a] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 text-[#2563eb]" />
+              <span>กลับไปหน้าที่แล้ว</span>
+            </button>
+          </div>
 
       {/* Hero Header Banner */}
       <div className="card-paper overflow-hidden bg-[#0f172a] border-1.5 border-[#0f172a] shadow-[4px_4px_0px_#0f172a] relative">

@@ -31,7 +31,7 @@ export function HeaderNav() {
           href="/"
           className="font-display text-2xl font-black tracking-tight text-[#0f172a] flex items-center gap-1 group"
         >
-          <span className="text-[#60a5fa] group-hover:text-[#2563eb] transition-colors">Tonnam</span>.dev
+          <span className="text-[#60a5fa] group-hover:text-[#2563eb] transition-colors">Tonnam</span>
         </a>
 
         {/* Desktop Navigation */}

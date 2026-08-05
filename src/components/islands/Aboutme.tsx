@@ -66,12 +66,12 @@ export function Aboutme({ data }: { data: AboutMeData }) {
           className="md:col-span-7 card-paper p-6 bg-white border-1.5 border-[#0f172a] flex flex-col justify-between"
         >
           <div>
-            <span className="text-xs font-mono font-bold text-[#2563eb] uppercase">PSEUDONYM</span>
+            <span className="text-xs font-mono font-bold text-[#2563eb] uppercase">มารู้จักผมกัน🤗</span>
             <h1 className="font-display text-4xl sm:text-5xl font-black text-[#0f172a] mt-1 mb-2">
               {data.nickname}
             </h1>
             <p className="text-[#475569] text-sm leading-relaxed">
-              นามปากกาโปรแกรมเมอร์ <strong className="text-[#0f172a]">TonnamInwtai00789</strong> ที่ใช้มาตั้งแต่เริ่มเรียนรู้การเขียนโค้ด ชอบสร้างเว็บแอปพลิเคชัน ทดลองสิ่งใหม่ๆ และแก้ปัญหาทางเทคนิค
+              หวัดดีคับทุกคน ผมต้นน้ำ ชอบเล่นเกม,ดูหนัง,อ่านมังฮวา,นอน,ดูซีรี่ย์,เงิน🤑
             </p>
           </div>
 
@@ -137,46 +137,6 @@ export function Aboutme({ data }: { data: AboutMeData }) {
         </div>
       </div>
 
-      {/* Contribution Heatmap Widget */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.25 }}
-        className="card-paper p-5 sm:p-6 bg-white mb-6 border-1.5 border-[#0f172a]"
-      >
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <h3 className="text-base font-bold text-[#0f172a] flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#2563eb]" /> ลงมือสร้างสรรค์ทุกวัน
-            </h3>
-            <p className="text-xs text-[#475569] mt-0.5">
-              ประวัติการ commit และพัฒนาโค้ดอย่างต่อเนื่องในช่วงหลายเดือนที่ผ่านมา
-            </p>
-          </div>
-          <div className="flex items-center gap-1 text-[10px] font-mono text-[#475569]">
-            <span>น้อย</span>
-            <span className="w-2.5 h-2.5 bg-[#e2e8f0]"></span>
-            <span className="w-2.5 h-2.5 bg-[#bfdbfe]"></span>
-            <span className="w-2.5 h-2.5 bg-[#60a5fa]"></span>
-            <span className="w-2.5 h-2.5 bg-[#2563eb]"></span>
-            <span>มาก</span>
-          </div>
-        </div>
-
-        {/* Heatmap Grid */}
-        <div className="overflow-x-auto pb-1">
-          <div className="grid grid-rows-7 grid-flow-col gap-1 min-w-[550px]">
-            {contributionDays.map((day, idx) => (
-              <div
-                key={idx}
-                title={`${day.date}: ${day.count} กิจกรรม`}
-                className={`w-3 h-3 border border-[#0f172a] transition-colors cursor-pointer ${getHeatmapColor(day.count)}`}
-              />
-            ))}
-          </div>
-        </div>
-      </motion.div>
 
       {/* Interests Facts Gallery */}
       {data.facts && data.facts.length > 0 && (
