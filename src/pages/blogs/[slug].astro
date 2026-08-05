@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { ArrowLeft, Clock } from 'lucide-react';
+import { HeaderNav } from '../../components/islands/HeaderNav';
+import { BlogPostDetail } from '../../components/islands/BlogPostDetail';
 import { getBlogPostBySlug } from '../../lib/data';
 
 const { slug } = Astro.params;
@@ -18,59 +19,21 @@ if (!post) {
 Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=600, stale-while-revalidate=3600');
 ---
 
-<Layout title={`${post.title} · บล็อก`}>
-  <div class="min-h-screen bg-[#f7f7f2] text-[#161616]">
-    <!-- Header Banner -->
-    <div class="w-full h-[35vh] md:h-[45vh] relative overflow-hidden">
-      <img
-        src={post.image}
-        alt={post.title}
-        class="w-full h-full object-cover"
-        loading="eager"
-      />
-      <div class="absolute inset-0 bg-[#161616]/70"></div>
+<Layout
+  title={`${post.title} · Tonnam`}
+  description={post.content ? post.content.slice(0, 150) : post.title}
+  image={post.image}
+>
+  <HeaderNav client:load />
 
-      <!-- Navigation -->
-      <div class="absolute top-6 left-6 z-10">
-        <a
-          href="/blogs"
-          class="inline-flex items-center gap-2 text-white bg-[#161616] px-3.5 py-2 border border-white text-xs font-bold shadow-[2px_2px_0px_#ffffff]"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>กลับไปหน้าบทความ</span>
-        </a>
-      </div>
+  <main class="mx-auto max-w-4xl px-6 pt-28 pb-16 flex-1 w-full space-y-8">
+    <BlogPostDetail client:load post={post} />
+  </main>
 
-      <!-- Title overlay -->
-      <div class="absolute bottom-0 left-0 w-full p-6 md:p-10 text-white">
-        <div class="max-w-4xl mx-auto space-y-2">
-          <div class="flex items-center gap-2 text-[#ff4500] font-mono text-xs font-bold">
-            <Clock className="w-3.5 h-3.5" />
-            <span>{post.date}</span>
-          </div>
-          <h1 class="text-3xl sm:text-5xl font-black font-display leading-tight tracking-tight">
-            {post.title}
-          </h1>
-        </div>
-      </div>
+  <footer class="mt-16 border-t-2 border-[#0f172a] bg-white py-6 text-center text-xs font-medium text-[#475569]">
+    <div class="mx-auto max-w-5xl px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). All rights reserved.</p>
+      <p class="font-mono text-[11px] text-[#0f172a]">Astro 5 · React Islands · Supabase · Bun</p>
     </div>
-
-    <!-- Article Content -->
-    <div class="max-w-3xl mx-auto px-6 py-10">
-      <div class="card-paper p-6 sm:p-10 bg-white border-1.5 border-[#161616]">
-        <article class="prose prose-neutral max-w-none">
-          <div class="whitespace-pre-wrap font-sans text-[#161616] leading-relaxed text-base">
-            {post.content}
-          </div>
-        </article>
-
-        <div class="mt-10 pt-6 border-t-1.5 border-[#161616] flex justify-between items-center text-xs font-bold text-[#525252]">
-          <p>ขอบคุณที่เข้ามาอ่านครับ</p>
-          <a href="/blogs" class="text-[#ff4500] hover:underline font-bold">
-            อ่านบทความอื่นๆ →
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+  </footer>
 </Layout>
