@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "wrangler dev --config ./dist/server/wrangler.json ./dist/server/entry.mjs",
-    "deploy": "wrangler deploy --config ./dist/server/wrangler.json ./dist/server/entry.mjs",
+    "preview": "wrangler dev",
+    "deploy": "wrangler deploy",
     "seed": "bun run ./scripts/seed-supabase.ts"
   },
   "dependencies": {

@@ -1,10 +1,17 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "astro-portfolio",
+  "main": "./dist/server/entry.mjs",
   "compatibility_date": "2026-08-05",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
-  }
+    "directory": "./dist/client"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "bb758d8aae3e4eec975972a0ccf8629d"
+    }
+  ]
 }
