@@ -107,6 +107,18 @@ export function AdminDashboard() {
     setTimeout(() => setMessage(null), 4000);
   };
 
+  const notifyRevalidate = async (key?: string) => {
+    try {
+      await fetch("/api/revalidate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key }),
+      });
+    } catch (e) {
+      console.error("Revalidate failed", e);
+    }
+  };
+
   // Save Handlers
   const saveHero = async () => {
     setSaving(true);
@@ -152,6 +164,7 @@ export function AdminDashboard() {
       }
       showNotification("success", "บันทึกข้อมูล Hero Section เรียบร้อยแล้ว!");
       await loadAllData();
+      await notifyRevalidate("hero");
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -191,6 +204,7 @@ export function AdminDashboard() {
       }
       showNotification("success", "บันทึกข้อมูล About Me เรียบร้อยแล้ว!");
       await loadAllData();
+      await notifyRevalidate("about_me");
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -215,6 +229,7 @@ export function AdminDashboard() {
       }
       showNotification("success", "บันทึกข้อมูล Tech Stack เรียบร้อยแล้ว!");
       await loadAllData();
+      await notifyRevalidate("tech_stack");
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -248,6 +263,7 @@ export function AdminDashboard() {
       }
       showNotification("success", "บันทึกข้อมูล Portfolio Works เรียบร้อยแล้ว!");
       await loadAllData();
+      await notifyRevalidate("works");
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -275,6 +291,7 @@ export function AdminDashboard() {
       }
       showNotification("success", "บันทึกข้อมูล Blog Posts เรียบร้อยแล้ว!");
       await loadAllData();
+      await notifyRevalidate();
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
@@ -297,6 +314,7 @@ export function AdminDashboard() {
       }
       showNotification("success", "บันทึกข้อมูล Contact เรียบร้อยแล้ว!");
       await loadAllData();
+      await notifyRevalidate("contact");
     } catch (err: any) {
       showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
     } finally {
