@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -9,7 +10,7 @@ interface Props {
 
 const {
   title = 'Tonnam · Supakron Klinbubpa',
-  description = 'builder ที่ชอบสร้างสิ่งใหม่ๆ และอยากเห็นคนเอาไปใช้จริง | TonnamInwtai00789',
+  description = 'My portfolio/bio website',
   image = 'https://theijon.online/images/tonnam.png',
 } = Astro.props;
 ---
@@ -39,6 +40,7 @@ const {
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
     />
+    <ClientRouter />
   </head>
   <body class="bg-[#f8fafc] text-[#0f172a] antialiased selection:bg-[#60a5fa] selection:text-[#0f172a] min-h-screen flex flex-col">
     <slot />
