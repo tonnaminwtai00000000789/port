@@ -6,6 +6,8 @@ import { getWorksData, getHeroData } from '../lib/data';
 const works = await getWorksData();
 const hero = await getHeroData();
 const displayName = hero?.displayName || 'TonnamInwtai00789';
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=600, stale-while-revalidate=3600');
 ---
 
 <Layout title={`Tonnam · ผลงานทั้งหมด`}>

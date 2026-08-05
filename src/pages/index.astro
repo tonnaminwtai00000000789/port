@@ -23,6 +23,8 @@ const techStack = await getTechStackData();
 const works = await getWorksData();
 const contact = await getContactData();
 const posts = await getBlogPosts();
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=600, stale-while-revalidate=3600');
 ---
 
 <Layout
