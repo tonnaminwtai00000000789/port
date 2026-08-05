@@ -124,7 +124,7 @@ export function AdminDashboard() {
     setSaving(true);
     try {
       if (isSupabaseConfigured()) {
-        const { id, displayName, display_name, firstName, first_name, lastName, last_name, profileImage, profile_image, birthDate, birth_date, startDate, start_date, webringUrl, webring_url, ...rest } = heroData || {};
+        const { id, displayName, display_name, firstName, first_name, lastName, last_name, profileImage, profile_image, birthDate, birth_date, startDate, start_date, ...rest } = heroData || {};
         
         const snakePayload: any = {
           ...rest,
@@ -134,7 +134,6 @@ export function AdminDashboard() {
           profile_image: profileImage || profile_image || "",
           birth_date: birthDate || birth_date || "",
           start_date: startDate || start_date || "",
-          webring_url: webringUrl || webring_url || null,
         };
 
         const camelPayload: any = {
@@ -145,7 +144,6 @@ export function AdminDashboard() {
           profileImage: profileImage || profile_image || "",
           birthDate: birthDate || birth_date || "",
           startDate: startDate || start_date || "",
-          webringUrl: webringUrl || webring_url || null,
         };
 
         if (id && typeof id === "number" && id < 1000000000) {

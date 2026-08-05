@@ -32,7 +32,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=600, s
   description={hero ? `builder ที่ชอบสร้างสิ่งใหม่ๆ | ${hero.displayName}` : 'Personal portfolio'}
   image={hero?.profileImage}
 >
-  <HeaderNav client:load webringUrl={hero?.webringUrl} />
+  <HeaderNav client:load />
 
   <main class="mx-auto max-w-5xl px-6 flex-1 w-full space-y-8">
     {hero && <Hero client:load data={hero} />}

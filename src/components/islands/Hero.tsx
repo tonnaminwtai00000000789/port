@@ -13,7 +13,6 @@ export interface HeroData {
   location: string;
   profileImage: string;
   emoji: string;
-  webringUrl: string | null;
   positions: Array<{
     logo: string;
     title: string;

@@ -23,7 +23,6 @@ const HERO_DATA = [
     location: 'Bangbon, Bangkok',
     profile_image: 'https://theijon.online/images/tonnam.png',
     emoji: '😪💤',
-    webring_url: 'https://webring.wonderful.software#nsys.site',
     positions: [
       { logo: 'https://theijon.online/logo.jpg', since: 'Since Jan 2025', title: 'the founder of', organization: 'The ijon', organizationUrl: 'https://theijon.online/' },
       { logo: 'https://scontent.fbkk22-1.fna.fbcdn.net/v/t39.30808-6/399066911_734484848721847_3491665446363065300_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=a5f93a', since: 'Become a student in 2014', title: 'Student (Grade 9) in', organization: 'Sarasas Witaed Bangbon', organizationUrl: 'https://www.swb.ac.th/swb/' }

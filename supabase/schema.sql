@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS public.hero (
     location TEXT,
     profile_image TEXT,
     emoji TEXT,
-    webring_url TEXT,
     positions JSONB DEFAULT '[]'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())

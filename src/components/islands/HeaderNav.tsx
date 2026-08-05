@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function HeaderNav({ webringUrl }: { webringUrl?: string | null }) {
+export function HeaderNav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -69,21 +69,6 @@ export function HeaderNav({ webringUrl }: { webringUrl?: string | null }) {
           >
             บล็อก
           </a>
-
-          {webringUrl && (
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href={webringUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="slant inline-flex items-center gap-1 px-3 py-1 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-[#0f172a] shadow-[2px_2px_0px_#0f172a]"
-            >
-              <span className="unslant inline-flex items-center gap-1">
-                Webring <ArrowUpRight className="w-3.5 h-3.5" />
-              </span>
-            </motion.a>
-          )}
         </nav>
 
         {/* Mobile menu toggle */}

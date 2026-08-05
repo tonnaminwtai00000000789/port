@@ -14,7 +14,6 @@ export async function getHeroData(): Promise<HeroRow | null> {
           profileImage: data.profileImage || data.profile_image || '',
           birthDate: data.birthDate || data.birth_date || '',
           startDate: data.startDate || data.start_date || '',
-          webringUrl: data.webringUrl || data.webring_url || null,
         } as HeroRow;
       }
     } catch (e) {

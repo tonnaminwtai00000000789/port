@@ -34,7 +34,6 @@ export interface HeroRow {
   location: string;
   profileImage: string;
   emoji: string;
-  webringUrl: string | null;
   positions: any[];
 }
 
