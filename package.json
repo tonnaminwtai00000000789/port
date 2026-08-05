@@ -5,12 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "start": "bun run ./dist/server/entry.mjs",
+    "preview": "wrangler dev",
+    "deploy": "wrangler deploy",
     "seed": "bun run ./scripts/seed-supabase.ts"
   },
   "dependencies": {
-    "@astrojs/node": "^11.0.3",
+    "@astrojs/cloudflare": "^14.1.7",
     "@astrojs/react": "^6.0.2",
     "@nurodev/astro-bun": "^2.1.2",
     "@radix-ui/react-hover-card": "^1.1.23",
@@ -30,6 +30,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "wrangler": "^4.118.0"
   }
 }
