@@ -132,3 +132,46 @@ body {
   font-weight: 700;
   font-size: 0.9em;
 }
+
+/* Custom View Transitions: Accent Bar Fast Wipe */
+@keyframes page-wipe-out {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    opacity: 0.92;
+    transform: scale(0.99);
+  }
+}
+
+@keyframes page-wipe-in {
+  from {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    transform: scale(1.01);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1);
+  }
+}
+
+::view-transition-old(root) {
+  animation: 350ms cubic-bezier(0.16, 1, 0.3, 1) both page-wipe-out;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: 350ms cubic-bezier(0.16, 1, 0.3, 1) both page-wipe-in;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
