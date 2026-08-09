@@ -20,9 +20,11 @@ export function BlogsSection({ data }: { data: Blog[] }) {
     <section className="py-10">
       {/* Section Title */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2.5">
-          <div className="w-1.5 h-6 bg-[#1d4ed8] rounded-full" />
-          <h2 className="text-2xl font-bold text-[#0f172a] font-display">
+        <div>
+          <span className="font-mono text-xs text-[#1d4ed8] font-bold block mb-1">
+            [WRITINGS // 04]
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-display tracking-tight">
             บทความล่าสุด
           </h2>
         </div>

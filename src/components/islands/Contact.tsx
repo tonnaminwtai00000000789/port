@@ -32,9 +32,11 @@ export function Contact({ data }: { data: ContactData }) {
   return (
     <section id="contact" className="py-10">
       {/* Section Title */}
-      <div className="flex items-center gap-2.5 mb-6">
-        <div className="w-1.5 h-6 bg-[#1d4ed8] rounded-full" />
-        <h2 className="text-2xl font-bold text-[#0f172a] font-display">
+      <div className="mb-6">
+        <span className="font-mono text-xs text-[#1d4ed8] font-bold block mb-1">
+          [DIRECT LINE // 05]
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-display tracking-tight">
           ติดต่อผม
         </h2>
       </div>
@@ -56,7 +58,7 @@ export function Contact({ data }: { data: ContactData }) {
               <h3 className="text-xl font-bold text-[#0f172a] mt-1 mb-2 font-display">
                 ส่งข้อความพูดคุยหรือปรึกษาโปรเจกต์
               </h3>
-              <p className="text-[#475569] text-xs leading-relaxed">
+              <p className="text-[#475569] text-xs leading-relaxed font-sans">
                 ยินดีร่วมงาน พัฒนาโปรเจกต์ หรือแลกเปลี่ยนความคิดเห็นทางเทคโนโลยีครับ
               </p>
             </div>
@@ -68,7 +70,7 @@ export function Contact({ data }: { data: ContactData }) {
               <Mail className="w-5 h-5 text-[#1d4ed8] group-hover:text-white shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-[10px] uppercase font-mono font-bold">อีเมล</p>
-                <p className="text-sm font-bold truncate">{data.email}</p>
+                <p className="text-sm font-bold truncate font-sans">{data.email}</p>
               </div>
             </a>
           </div>
@@ -108,7 +110,7 @@ export function Contact({ data }: { data: ContactData }) {
             <h3 className="text-lg font-bold text-[#0f172a] mb-1 font-display">
               ส่งข้อความถึงผมโดยตรง
             </h3>
-            <p className="text-[#475569] text-xs mb-4">กรอกข้อมูลเพื่อส่งข้อความด่วน</p>
+            <p className="text-[#475569] text-xs mb-4 font-sans">กรอกข้อมูลเพื่อส่งข้อความด่วน</p>
 
             <form onSubmit={handleSubmit} className="space-y-3">
               <div>
@@ -118,7 +120,7 @@ export function Contact({ data }: { data: ContactData }) {
                   placeholder="ชื่อของคุณ / Your Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8]"
+                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans"
                 />
               </div>
 
@@ -129,7 +131,7 @@ export function Contact({ data }: { data: ContactData }) {
                   placeholder="อีเมลสำหรับตอบกลับ / Email Address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8]"
+                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans"
                 />
               </div>
 
@@ -140,14 +142,14 @@ export function Contact({ data }: { data: ContactData }) {
                   placeholder="ข้อความของคุณ..."
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] resize-none min-h-[100px]"
+                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] resize-none min-h-[100px] font-sans"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="stamp-btn-blue w-full py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-50"
+                className="stamp-btn-blue w-full py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-50 font-sans"
               >
                 {status === "sending" ? (
                   <>

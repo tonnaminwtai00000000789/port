@@ -1,5 +1,5 @@
 import React from "react";
-import { MapPin, Cake, Activity, Sparkles, Smile } from "lucide-react";
+import { MapPin, Cake, Activity } from "lucide-react";
 import { motion } from "framer-motion";
 
 export interface Fact {
@@ -26,9 +26,11 @@ export function Aboutme({ data }: { data: AboutMeData }) {
   return (
     <section id="about" className="py-10">
       {/* Section Title */}
-      <div className="flex items-center gap-2.5 mb-6">
-        <div className="w-1.5 h-6 bg-[#1d4ed8] rounded-full" />
-        <h2 className="text-2xl font-bold text-[#0f172a] font-display">
+      <div className="mb-6">
+        <span className="font-mono text-xs text-[#1d4ed8] font-bold block mb-1">
+          [STORY // 03]
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-display tracking-tight">
           เกี่ยวกับผม
         </h2>
       </div>
@@ -50,7 +52,7 @@ export function Aboutme({ data }: { data: AboutMeData }) {
             <h1 className="font-display text-4xl font-bold text-[#0f172a] mt-1 mb-2">
               {data.nickname}
             </h1>
-            <p className="text-[#475569] text-sm leading-relaxed">
+            <p className="text-[#475569] text-sm leading-relaxed font-sans">
               หวัดดีคับทุกคน ผมต้นน้ำ ชอบเล่นเกม,ดูหนัง,อ่านมังฮวา,นอน,ดูซีรี่ย์,เงิน🤑
             </p>
           </div>
@@ -76,7 +78,7 @@ export function Aboutme({ data }: { data: AboutMeData }) {
             </div>
             <div>
               <p className="text-[10px] font-mono font-bold text-[#64748b] uppercase">ที่อยู่ปัจจุบัน</p>
-              <p className="text-xs font-bold text-[#0f172a]">{data.location}</p>
+              <p className="text-xs font-bold text-[#0f172a] font-sans">{data.location}</p>
             </div>
           </motion.div>
 
@@ -92,7 +94,7 @@ export function Aboutme({ data }: { data: AboutMeData }) {
             </div>
             <div>
               <p className="text-[10px] font-mono font-bold text-[#64748b] uppercase">วันเกิด</p>
-              <p className="text-xs font-bold text-[#0f172a]">{data.birthday}</p>
+              <p className="text-xs font-bold text-[#0f172a] font-sans">{data.birthday}</p>
             </div>
           </motion.div>
 
@@ -108,7 +110,7 @@ export function Aboutme({ data }: { data: AboutMeData }) {
             </div>
             <div>
               <p className="text-[10px] font-mono font-bold text-[#64748b] uppercase">สถานะ</p>
-              <p className="text-xs font-bold text-[#0f172a] flex items-center gap-2">
+              <p className="text-xs font-bold text-[#0f172a] flex items-center gap-2 font-sans">
                 {data.status}
                 <span className="w-2 h-2 rounded-full bg-[#166534] animate-pulse inline-block" />
               </p>
