@@ -3,8 +3,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-display: "Sora", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-mono: "Geist Mono", "JetBrains Mono", monospace;
 }
 
@@ -14,126 +14,113 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f6f5f0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #93c5fd;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b82f6;
+  background: #1d4ed8;
 }
 
 body {
-  background-color: #f8fafc;
+  background-color: #f6f5f0;
   color: #0f172a;
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
-/* Slanted Skew Utilities */
-.slant {
-  transform: skewX(-8deg);
-}
-
-.unslant {
-  transform: skewX(8deg);
-}
-
-/* Studio Canvas Card (Crisp Hairline + Sky Blue Pop Shadow) */
-.card-paper {
-  background: #ffffff;
-  border: 1.5px solid #0f172a;
-  border-radius: 12px;
-  box-shadow: 4px 4px 0px 0px #60a5fa;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.card-paper:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px 0px #2563eb;
-}
-
-.card-paper-subtle {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  transition: all 0.25s ease;
-}
-
-.card-paper-subtle:hover {
-  border-color: #0f172a;
-  box-shadow: 4px 4px 0px 0px #60a5fa;
-}
-
-/* Studio Canvas Window Frame */
-.canvas-frame {
-  background: #ffffff;
-  border: 1.5px solid #0f172a;
-  border-radius: 14px;
-  box-shadow: 5px 5px 0px 0px #0f172a;
-  overflow: hidden;
-}
-
-/* Button & Badge Pop Shadows */
-.btn-pop {
-  background: #60a5fa;
-  color: #0f172a;
-  border: 1.5px solid #0f172a;
+/* Physical Desk Memo - Paper Cards & Artifacts */
+.paper-card {
+  background-color: #ffffff;
+  border: 1px solid #1e293b;
   border-radius: 8px;
-  box-shadow: 3px 3px 0px 0px #0f172a;
-  font-weight: 700;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 3px 3px 0px 0px #cbd5e1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.btn-pop:hover {
-  background: #3b82f6;
+.paper-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px 0px #1e293b;
+}
+
+.paper-card-subtle {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-shadow: 2px 2px 0px 0px #f1f5f9;
+  transition: all 0.2s ease;
+}
+
+.paper-card-subtle:hover {
+  border-color: #1e293b;
+  box-shadow: 3px 3px 0px 0px #cbd5e1;
+}
+
+/* Yellow Sticky Note Memo */
+.sticky-memo-yellow {
+  background-color: #fef08a;
+  color: #854d0e;
+  border: 1px solid #eab308;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px 0px rgba(161, 98, 7, 0.2);
+}
+
+/* Stamp Buttons & Badges */
+.stamp-btn-blue {
+  background-color: #1d4ed8;
   color: #ffffff;
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px 0px #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px 0px #1e293b;
+  font-weight: 700;
+  transition: all 0.15s ease;
 }
 
-.btn-pop:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px 0px #0f172a;
+.stamp-btn-blue:hover {
+  background-color: #1e40af;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px 0px #1e293b;
 }
 
-/* Tag & Number Badges */
+.stamp-btn-blue:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px 0px #1e293b;
+}
+
+.stamp-badge-mint {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
 .tag-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
-  border-radius: 6px;
+  padding: 3px 9px;
+  border-radius: 4px;
   border: 1px solid #cbd5e1;
-  background: #f1f5f9;
-  color: #0f172a;
+  background-color: #ffffff;
+  color: #1e293b;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 500;
   transition: all 0.2s ease;
 }
 
 .tag-badge:hover {
-  border-color: #60a5fa;
-  background: #eff6ff;
+  border-color: #1d4ed8;
   color: #1d4ed8;
+  background-color: #eff6ff;
 }
 
-.num-badge {
-  display: inline-block;
-  margin: 0 2px;
-  padding: 0 0.4em;
-  border-radius: 4px;
-  border: 1px solid #bfdbfe;
-  background: #eff6ff;
-  color: #1d4ed8;
-  font-weight: 700;
-  font-size: 0.9em;
-}
-
-/* Custom View Transitions: Accent Bar Fast Wipe */
+/* Custom View Transitions */
 @keyframes page-wipe-out {
   from {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -174,4 +161,3 @@ body {
     animation: none !important;
   }
 }
-
