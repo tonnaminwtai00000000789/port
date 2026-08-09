@@ -42,7 +42,7 @@ export function HeaderNav() {
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-[#1e293b] py-3 shadow-sm"
+          ? "bg-white/95 backdrop-blur-md border-b border-[#1e293b] py-3 shadow-xs"
           : "bg-transparent py-4"
       }`}
     >
@@ -60,43 +60,40 @@ export function HeaderNav() {
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-6 md:flex">
           <a
-            href="/"
-            className="text-sm font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
-          >
-            หน้าแรก
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 group-hover:w-full" />
-          </a>
-          <a
             href="#works"
-            className="text-sm font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
+            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
           >
-            ผลงาน
+            <span className="font-mono text-[#94a3b8] text-[10px]">01.</span>
+            <span>ผลงาน</span>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 group-hover:w-full" />
           </a>
           <a
             href="#skills"
-            className="text-sm font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
+            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
           >
-            ทักษะ
+            <span className="font-mono text-[#94a3b8] text-[10px]">02.</span>
+            <span>ทักษะ</span>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 group-hover:w-full" />
           </a>
           <a
             href="#about"
-            className="text-sm font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
+            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
           >
-            เกี่ยวกับ
+            <span className="font-mono text-[#94a3b8] text-[10px]">03.</span>
+            <span>เกี่ยวกับ</span>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 group-hover:w-full" />
           </a>
           <a
             href="/blogs"
-            className="text-sm font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1"
+            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
           >
-            บล็อก
+            <span className="font-mono text-[#94a3b8] text-[10px]">04.</span>
+            <span>บล็อก</span>
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 group-hover:w-full" />
           </a>
 
           {/* Bangkok Live Timestamp Badge */}
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#cbd5e1] bg-[#ffffff] text-[#1e293b] font-mono text-xs font-medium shadow-2xs">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#cbd5e1] bg-white text-[#1e293b] font-mono text-xs font-medium shadow-2xs">
             <Clock className="w-3.5 h-3.5 text-[#1d4ed8]" />
             <span>BKK {currentTime || "--:--:--"}</span>
           </span>
@@ -125,39 +122,36 @@ export function HeaderNav() {
           >
             <nav className="flex flex-col gap-2">
               <a
-                href="/"
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors"
-              >
-                หน้าแรก
-              </a>
-              <a
                 href="#works"
                 onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors"
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
               >
-                ผลงาน
+                <span className="font-mono text-xs text-[#94a3b8]">01.</span>
+                <span>ผลงาน</span>
               </a>
               <a
                 href="#skills"
                 onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors"
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
               >
-                ทักษะ
+                <span className="font-mono text-xs text-[#94a3b8]">02.</span>
+                <span>ทักษะ</span>
               </a>
               <a
                 href="#about"
                 onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors"
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
               >
-                เกี่ยวกับ
+                <span className="font-mono text-xs text-[#94a3b8]">03.</span>
+                <span>เกี่ยวกับ</span>
               </a>
               <a
                 href="/blogs"
                 onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors"
+                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
               >
-                บล็อก
+                <span className="font-mono text-xs text-[#94a3b8]">04.</span>
+                <span>บล็อก</span>
               </a>
               <div className="pt-2 border-t border-[#e2e8f0] flex items-center gap-2 text-xs font-mono text-[#64748b]">
                 <Clock className="w-3.5 h-3.5 text-[#1d4ed8]" />
