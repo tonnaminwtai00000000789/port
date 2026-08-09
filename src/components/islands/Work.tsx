@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github, FolderGit2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export interface WorkTag {
@@ -20,7 +20,7 @@ export interface WorkItem {
   year: string;
   size: "large" | "small";
   watermark?: string | null;
-  url?: string; // Direct Project URL fallback
+  url?: string;
   tags?: WorkTag[];
   links?: WorkLink[];
   order?: number;
@@ -42,15 +42,15 @@ export function Work({ data }: { data: WorkItem[] }) {
     <section id="works" className="py-10">
       {/* Section Title */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <span className="slant inline-block h-6 w-2.5 bg-[#60a5fa]"></span>
-          <h2 className="text-2xl font-black text-[#0f172a] font-display">
+        <div className="flex items-center gap-2.5">
+          <div className="w-1.5 h-6 bg-[#1d4ed8] rounded-full" />
+          <h2 className="text-2xl font-bold text-[#0f172a] font-display">
             ผลงานที่โดดเด่น
           </h2>
         </div>
         <a
           href="/works"
-          className="inline-flex items-center gap-1 text-xs font-bold text-[#2563eb] hover:underline"
+          className="inline-flex items-center gap-1 text-xs font-bold text-[#1d4ed8] hover:underline font-mono"
         >
           ดูทั้งหมด <ArrowUpRight className="w-3.5 h-3.5" />
         </a>
@@ -64,39 +64,39 @@ export function Work({ data }: { data: WorkItem[] }) {
             return (
               <motion.div
                 key={work.id}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 * idx }}
-                className="card-paper overflow-hidden bg-white border-1.5 border-[#0f172a] flex flex-col justify-between group"
+                transition={{ duration: 0.4, delay: 0.08 * idx }}
+                className="paper-card overflow-hidden bg-white flex flex-col justify-between group"
               >
-                {/* Project Banner Image - Clickable if URL exists */}
+                {/* Project Image */}
                 {primaryUrl ? (
                   <a
                     href={primaryUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="aspect-[16/10] overflow-hidden relative border-b-1.5 border-[#0f172a] block"
+                    className="aspect-[16/10] overflow-hidden relative border-b border-[#1e293b] block bg-[#f8fafc]"
                   >
                     <img
                       src={work.image}
                       alt={work.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-103"
                       loading="lazy"
                     />
-                    <span className="absolute top-2 right-2 px-2.5 py-0.5 bg-[#0f172a] text-white text-[10px] font-mono font-bold border border-white">
+                    <span className="absolute top-2.5 right-2.5 px-2.5 py-0.5 bg-[#1e293b] text-white text-[10px] font-mono font-semibold rounded shadow-2xs">
                       {work.year}
                     </span>
                   </a>
                 ) : (
-                  <div className="aspect-[16/10] overflow-hidden relative border-b-1.5 border-[#0f172a]">
+                  <div className="aspect-[16/10] overflow-hidden relative border-b border-[#1e293b] bg-[#f8fafc]">
                     <img
                       src={work.image}
                       alt={work.title}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                    <span className="absolute top-2 right-2 px-2.5 py-0.5 bg-[#0f172a] text-white text-[10px] font-mono font-bold border border-white">
+                    <span className="absolute top-2.5 right-2.5 px-2.5 py-0.5 bg-[#1e293b] text-white text-[10px] font-mono font-semibold rounded shadow-2xs">
                       {work.year}
                     </span>
                   </div>
@@ -104,15 +104,16 @@ export function Work({ data }: { data: WorkItem[] }) {
 
                 <div className="p-5 flex flex-col justify-between flex-1 space-y-4">
                   <div className="space-y-2">
-                    <h3 className="text-xl font-extrabold text-[#0f172a]">
+                    <h3 className="text-lg font-bold text-[#0f172a] font-display">
                       {primaryUrl ? (
                         <a
                           href={primaryUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="hover:text-[#2563eb] transition-colors inline-flex items-center gap-1.5"
+                          className="hover:text-[#1d4ed8] transition-colors inline-flex items-center gap-1.5"
                         >
-                          {work.title} <ArrowUpRight className="w-4 h-4 text-[#2563eb] opacity-0 group-hover:opacity-100 transition-opacity" />
+                          {work.title}
+                          <ArrowUpRight className="w-4 h-4 text-[#1d4ed8] opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                       ) : (
                         work.title
@@ -134,40 +135,36 @@ export function Work({ data }: { data: WorkItem[] }) {
                   </div>
 
                   {/* Links Row */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2">
+                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#f1f5f9]">
                     {work.links && work.links.length > 0 ? (
                       work.links.map((link, linkIdx) => (
-                        <motion.a
+                        <a
                           key={linkIdx}
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
                           href={link.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="px-3 py-1.5 bg-[#0f172a] text-white hover:bg-[#2563eb] text-xs font-bold transition-colors inline-flex items-center gap-1 border border-[#0f172a]"
+                          className="px-3 py-1.5 bg-[#1d4ed8] text-white hover:bg-[#1e40af] text-xs font-bold rounded transition-colors inline-flex items-center gap-1.5 shadow-2xs"
                         >
                           {link.type === "website" ? (
                             <>
-                              เปิดเว็บไซต์ <ExternalLink className="w-3 h-3 text-[#60a5fa]" />
+                              เปิดดูเว็บไซต์ <ExternalLink className="w-3.5 h-3.5" />
                             </>
                           ) : (
                             <>
-                              ดูซอร์สโค้ด <Github className="w-3 h-3 text-[#60a5fa]" />
+                              ซอร์สโค้ด <Github className="w-3.5 h-3.5" />
                             </>
                           )}
-                        </motion.a>
+                        </a>
                       ))
                     ) : primaryUrl ? (
-                      <motion.a
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
+                      <a
                         href={primaryUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 py-1.5 bg-[#0f172a] text-white hover:bg-[#2563eb] text-xs font-bold transition-colors inline-flex items-center gap-1 border border-[#0f172a]"
+                        className="px-3 py-1.5 bg-[#1d4ed8] text-white hover:bg-[#1e40af] text-xs font-bold rounded transition-colors inline-flex items-center gap-1.5 shadow-2xs"
                       >
-                        เปิดเว็บไซต์ <ExternalLink className="w-3 h-3 text-[#60a5fa]" />
-                      </motion.a>
+                        เปิดดูเว็บไซต์ <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
                     ) : null}
                   </div>
                 </div>
@@ -185,26 +182,26 @@ export function Work({ data }: { data: WorkItem[] }) {
             return (
               <motion.div
                 key={work.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.1 * idx }}
-                className="card-paper p-4 bg-white border-1.5 border-[#0f172a] flex items-center gap-3"
+                transition={{ duration: 0.3, delay: 0.08 * idx }}
+                className="paper-card-subtle p-3.5 bg-white flex items-center gap-3"
               >
-                <div className="w-12 h-12 border border-[#0f172a] shrink-0 overflow-hidden">
+                <div className="w-11 h-11 border border-[#cbd5e1] rounded shrink-0 overflow-hidden bg-[#f8fafc]">
                   <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-[#0f172a] truncate">
+                  <h4 className="text-xs font-bold text-[#0f172a] truncate font-display">
                     {work.title}
                   </h4>
-                  <p className="text-[10px] text-[#475569] truncate mb-1">{work.description}</p>
+                  <p className="text-[11px] text-[#64748b] truncate mb-1">{work.description}</p>
                   {primaryUrl && (
                     <a
                       href={primaryUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-[10px] font-bold text-[#2563eb] hover:underline inline-flex items-center gap-0.5"
+                      className="text-[10px] font-bold text-[#1d4ed8] hover:underline inline-flex items-center gap-0.5 font-mono"
                     >
                       เปิดดู <ArrowUpRight className="w-2.5 h-2.5" />
                     </a>
