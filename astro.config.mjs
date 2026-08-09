@@ -1,11 +1,13 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import bun from '@nurodev/astro-bun';
+import cloudflare from '@astrojs/cloudflare';
 import tailwindcss from '@tailwindcss/vite';
+
+const isCloudflare = process.argv.some(arg => arg.includes('build') || arg.includes('preview'));
 
 export default defineConfig({
   output: 'server',
-  adapter: bun(),
+  adapter: isCloudflare ? cloudflare({ imageService: 'passthrough', platformProxy: { enabled: false } }) : undefined,
   integrations: [react()],
   server: {
     host: true,
@@ -13,14 +15,5 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      include: [
-        '@supabase/supabase-js',
-        'framer-motion',
-        'lucide-react',
-        'react',
-        'react-dom',
-      ],
-    },
   },
 });
