@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MapPin, Clock, ArrowRight, Sparkles, Code, Globe, User } from "lucide-react";
+import { MapPin, ArrowRight, Code, Terminal, Sparkles, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 export interface HeroData {
@@ -23,7 +23,6 @@ export interface HeroData {
 }
 
 export function Hero({ data }: { data: HeroData }) {
-  const [currentTime, setCurrentTime] = useState("");
   const [age, setAge] = useState(14);
   const [experience, setExperience] = useState(4);
 
@@ -46,238 +45,158 @@ export function Hero({ data }: { data: HeroData }) {
       (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25)
     );
     setExperience(years);
-
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false,
-          timeZone: "Asia/Bangkok",
-        })
-      );
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-
-    return () => clearInterval(interval);
   }, [data]);
 
   if (!data) return null;
 
   return (
     <section className="pt-24 pb-8 relative">
-      {/* Main Showcase Hero */}
+      {/* Main Hero Paper Canvas */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="card-paper p-6 sm:p-10 bg-white mb-6 border-1.5 border-[#0f172a]"
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="paper-card p-6 sm:p-10 bg-white mb-6"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Hero Statement */}
-          <div className="lg:col-span-7 space-y-4">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <span className="slant inline-flex px-3 py-1 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
-                <span className="unslant inline-flex items-center gap-1.5">
-                  <Code className="w-3.5 h-3.5 text-[#0f172a]" /> Fullstack Builder
-                </span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Hero Copy & Memos */}
+          <div className="lg:col-span-7 space-y-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="tag-badge bg-[#eff6ff] text-[#1d4ed8] border-[#bfdbfe]">
+                <Code className="w-3.5 h-3.5 mr-1" /> Fullstack & Embedded Tinkerer
               </span>
+              <span className="tag-badge bg-[#f8fafc] text-[#475569]">
+                <MapPin className="w-3.5 h-3.5 mr-1 text-[#1d4ed8]" /> {data.location}
+              </span>
+            </div>
+
+            <h1 className="font-display text-4xl sm:text-6xl font-bold text-[#0f172a] leading-tight tracking-tight">
+              {data.displayName}
+            </h1>
+
+            {/* Yellow Sticky Memo (Authentic Humor & Bio) */}
+            <motion.div
+              initial={{ rotate: -1, scale: 0.98 }}
+              animate={{ rotate: -1, scale: 1 }}
+              whileHover={{ rotate: 0, scale: 1.01 }}
+              className="sticky-memo-yellow p-4 text-xs sm:text-sm font-medium leading-relaxed max-w-xl relative"
+            >
+              <div className="absolute -top-2.5 right-6 w-12 h-4 bg-[#fef9c3]/80 border-x border-t border-[#fef08a] opacity-80 shadow-2xs transform rotate-3" />
+              <p className="font-bold text-[#854d0e] mb-1 flex items-center gap-1.5">
+                <Terminal className="w-3.5 h-3.5" /> โน้ตจากต้นน้ำ 👋
+              </p>
+              <p className="text-[#713f12]">
+                ผมเริ่มเขียนโค้ดตอน ป.5 จากสคริปต์ Roblox จนตอนนี้ทำเว็บ แอพ และเขียนโค้ดใน ESP32 / Arduino ได้บ้าง ซึ่งได้ไงก็ไม่รู้เหมือนกัน 555
+              </p>
+              <p className="text-[#854d0e] font-mono text-[11px] mt-2 italic pt-1 border-t border-[#fde047]/60">
+                "อยู่ไม่ไหว... กลัวกลัวกลัว... จุ๊บๆ (ไม่รู้จะใส่ไรอะโทษๆ55)"
+              </p>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="font-display text-5xl sm:text-7xl font-extrabold text-[#0f172a] leading-none tracking-tight"
-            >
-              <span className="text-[#60a5fa]">{data.displayName}</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="font-display text-2xl sm:text-3xl font-extrabold leading-snug text-[#0f172a]"
-            >
-              ผมต้นน้ำเองจั๊ฟ <br />
-              <span className="text-[#2563eb]">หรือจะเรียกอะไรก็ได้ไม่ติด:)</span>
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-[#475569] text-sm sm:text-base leading-relaxed max-w-lg"
-            >
-              อยู่ไม่ไหว อยู่ไม่ไหว เฮ้ย อยู่ไม่ไหว อ้าว
-              บ้านนี้มันน่ากลัว กลัวกลัวกลัว อร๊าย
-              กูไม่อยากอยู่ กูไม่อยากอยู่ กูไม่อยากอยู่ที่นี่
-              ที่ไหน ที่นั่น ที่รักหรือเปล่าจ๊ะ จุ๊บๆ   <br /> (ไม่รู้จะใส่ไรอะโทษๆ55)
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex flex-wrap items-center gap-3 pt-2"
-            >
-              <motion.a
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+            {/* Action Buttons & Status */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <a
                 href="#works"
-                className="btn-pop px-6 py-2.5 text-sm font-bold inline-flex items-center gap-1.5"
+                className="stamp-btn-blue px-5 py-2.5 text-xs sm:text-sm font-bold inline-flex items-center gap-1.5"
               >
                 ดูสิ่งที่ผมเคยทำ <ArrowRight className="w-4 h-4" />
-              </motion.a>
-              <span className="slant inline-flex border border-[#0f172a] bg-[#f1f5f9] px-3.5 py-2 text-xs font-bold text-[#0f172a] shadow-[2px_2px_0px_#0f172a]">
-                <span className="unslant inline-flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#2563eb]" /> {data.location}
-                </span>
+              </a>
+              <span className="stamp-badge-mint px-3.5 py-2 text-xs font-mono inline-flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#166534] animate-pulse" />
+                STATUS: ว่างจ้างได้
               </span>
-            </motion.div>
+            </div>
 
-            {/* Stats Counter */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="grid grid-cols-3 gap-4 pt-6 border-t-2 border-dashed border-[#cbd5e1]"
-            >
-              <div>
-                <p className="font-display text-3xl font-extrabold text-[#2563eb]">
-                  {experience}+
+            {/* Spec Counter Notes */}
+            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-dashed border-[#cbd5e1]">
+              <div className="p-2.5 rounded bg-[#f8fafc] border border-[#e2e8f0]">
+                <p className="font-mono text-xl font-bold text-[#1d4ed8]">
+                  {experience}+ ปี
                 </p>
-                <p className="text-xs font-semibold text-[#475569] mt-0.5">ปีที่เขียนโค้ด</p>
+                <p className="text-[11px] font-semibold text-[#64748b] mt-0.5">ประสบการณ์</p>
               </div>
-              <div>
-                <p className="font-display text-3xl font-extrabold text-[#0f172a]">
-                  {age}
+              <div className="p-2.5 rounded bg-[#f8fafc] border border-[#e2e8f0]">
+                <p className="font-mono text-xl font-bold text-[#0f172a]">
+                  {age} ปี
                 </p>
-                <p className="text-xs font-semibold text-[#475569] mt-0.5">อายุ (ปี)</p>
+                <p className="text-[11px] font-semibold text-[#64748b] mt-0.5">อายุ</p>
               </div>
-              <div>
-                <p className="font-display text-2xl font-extrabold text-[#0f172a]">
+              <div className="p-2.5 rounded bg-[#f8fafc] border border-[#e2e8f0]">
+                <p className="font-mono text-xl font-bold text-[#0f172a]">
                   67%
                 </p>
-                <p className="text-xs font-semibold text-[#475569] mt-0.5">ความตั้งใจ</p>
+                <p className="text-[11px] font-semibold text-[#64748b] mt-0.5">ความตั้งใจ</p>
               </div>
-            </motion.div>
+            </div>
           </div>
 
-          {/* Right Profile Column Showcase */}
-          <div className="lg:col-span-5 flex flex-col items-center">
+          {/* Right Column: Polaroid Photo & Positions */}
+          <div className="lg:col-span-5 flex flex-col items-center gap-4">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="relative w-full max-w-xs"
             >
-              <div className="slant absolute -bottom-2 -left-2 z-0 h-full w-full bg-[#60a5fa] border-1.5 border-[#0f172a]" />
-              <div className="relative z-10 overflow-hidden border-1.5 border-[#0f172a] bg-white">
+              {/* Fake Tape Corner */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 w-16 h-5 bg-[#ffffff]/90 border border-[#cbd5e1] shadow-2xs transform -rotate-2" />
+              
+              {/* Polaroid Frame */}
+              <div className="p-3 pb-4 bg-white border border-[#1e293b] rounded shadow-md relative z-10">
                 <img
                   src={data.profileImage}
                   alt={data.displayName}
-                  className="w-full aspect-[4/5] object-cover"
+                  className="w-full aspect-[4/5] object-cover rounded-xs border border-[#e2e8f0]"
                   loading="eager"
                 />
-                <div className="p-3 bg-[#0f172a] text-white flex items-center justify-between text-xs font-mono">
-                  <span>{data.displayName}</span>
-                  <span className="text-[#60a5fa] font-bold">{data.emoji}</span>
+                <div className="mt-3 flex items-center justify-between px-1">
+                  <span className="font-display text-xs font-bold text-[#0f172a]">
+                    {data.displayName} ({data.nickname})
+                  </span>
+                  <span className="font-mono text-xs text-[#1d4ed8] font-bold">
+                    {data.emoji}
+                  </span>
                 </div>
               </div>
             </motion.div>
+
+            {/* Current Positions List */}
+            {data.positions && data.positions.length > 0 && (
+              <div className="w-full space-y-2 pt-2">
+                <p className="text-[11px] font-mono font-bold text-[#64748b] uppercase tracking-wider">
+                  กำลังทำในปัจจุบัน
+                </p>
+                {data.positions.map((pos, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-3 p-2.5 bg-white rounded border border-[#cbd5e1] hover:border-[#1e293b] transition-colors"
+                  >
+                    <img
+                      src={pos.logo}
+                      alt={pos.organization}
+                      className="w-7 h-7 object-cover rounded border border-[#cbd5e1]"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold text-[#0f172a] truncate">{pos.title}</p>
+                      <a
+                        href={pos.organizationUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[11px] text-[#475569] hover:text-[#1d4ed8] truncate block"
+                      >
+                        {pos.organization}
+                      </a>
+                    </div>
+                    <span className="text-[10px] font-mono font-medium px-2 py-0.5 bg-[#f8fafc] border border-[#e2e8f0] rounded">
+                      {pos.since}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
-
-      {/* Bio & Bangkok Time Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* Bio & Currently at */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="md:col-span-7 card-paper p-6 bg-white border-1.5 border-[#0f172a]"
-        >
-          <h2 className="text-xl font-bold text-[#0f172a] mb-2 flex items-center gap-2">
-            หวัดดีคับผม <span className="text-[#2563eb] font-extrabold">{data.nickname} </span> เอง👋
-          </h2>
-
-          <p className="text-[#475569] text-sm leading-relaxed mb-4 font-normal">
-            ผมเริ่มเขียนโค้ดตอนประมาณป.5(มั้งไม่แน่ใจจำไม่ได้ละ555) ตอนนั้นผมหัดใช้สคริปต์Robloxครั้งแรกและผมก็ลองทำสคริปต์ของผมเองซื่งก็ค่อนข้างกากเลยแหละจนตอนนี้ผมก็ทำเว็บทำแอพหรืออื่นๆที่ต้องเขียนโค้ดได้บ้างเช่นเขียนโค้คในพวก Esp32 หรือ Arduino และ Microbit ซื่งได้ไงก็ไม่รู้เหมือนกัน555
-      </p>
-
-          <div className="space-y-2 pt-3 border-t-1.5 border-[#0f172a]">
-            <p className="text-xs font-extrabold text-[#0f172a] uppercase tracking-wider">กำลังทำอยู่ในปัจจุบัน</p>
-            {data.positions?.map((pos, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ x: 3 }}
-                className="flex items-center gap-3 p-2 border border-[#cbd5e1] hover:border-[#0f172a] transition-colors"
-              >
-                <img src={pos.logo} alt={pos.organization} className="w-8 h-8 object-cover border border-[#0f172a]" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-[#0f172a] truncate">{pos.title}</p>
-                  <a href={pos.organizationUrl} target="_blank" rel="noreferrer" className="text-xs text-[#475569] hover:text-[#2563eb] truncate block">
-                    {pos.organization}
-                  </a>
-                </div>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 bg-[#f8fafc] border border-[#cbd5e1]">
-                  {pos.since}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Live Bangkok Clock */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="md:col-span-5 flex flex-col gap-4"
-        >
-          <div className="card-paper p-6 bg-white border-1.5 border-[#0f172a] flex-1 flex flex-col justify-between">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono font-bold text-[#2563eb] uppercase">Bangkok, TH</span>
-              <Clock className="w-4 h-4 text-[#0f172a]" />
-            </div>
-
-            <div>
-              <p className="text-xs font-semibold text-[#475569] mb-1">เวลากรุงเทพฯ ปัจจุบัน</p>
-              <p className="font-mono text-3xl font-bold text-[#0f172a] tracking-tight">
-                {currentTime || "--:--:--"}
-              </p>
-            </div>
-          </div>
-
-          <div className="card-paper p-4 bg-[#0f172a] text-white flex items-center justify-between">
-            <div>
-              <p className="text-xs font-mono text-[#60a5fa]">STATUS</p>
-              <p className="text-sm font-bold text-black">ว่างคับจ้างได้</p>
-            </div>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="#contact"
-              className="px-3.5 py-1.5 bg-[#60a5fa] text-[#0f172a] text-xs font-bold border border-white hover:bg-white transition-colors"
-            >
-              ติดต่อ
-            </motion.a>
-          </div>
-        </motion.div>
-      </div>
     </section>
   );
 }
