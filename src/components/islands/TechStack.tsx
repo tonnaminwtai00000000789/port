@@ -21,9 +21,11 @@ export function TechStack({ data }: { data: TechStackCategory[] }) {
   return (
     <section id="skills" className="py-10">
       {/* Section Title */}
-      <div className="flex items-center gap-2.5 mb-6">
-        <div className="w-1.5 h-6 bg-[#1d4ed8] rounded-full" />
-        <h2 className="text-2xl font-bold text-[#0f172a] font-display">
+      <div className="mb-6">
+        <span className="font-mono text-xs text-[#1d4ed8] font-bold block mb-1">
+          [TOOLKIT // 02]
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-display tracking-tight">
           ทักษะ & เครื่องมือ
         </h2>
       </div>

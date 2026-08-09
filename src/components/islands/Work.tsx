@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpRight, ExternalLink, Github, FolderGit2 } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion";
 
 export interface WorkTag {
@@ -42,9 +42,11 @@ export function Work({ data }: { data: WorkItem[] }) {
     <section id="works" className="py-10">
       {/* Section Title */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2.5">
-          <div className="w-1.5 h-6 bg-[#1d4ed8] rounded-full" />
-          <h2 className="text-2xl font-bold text-[#0f172a] font-display">
+        <div>
+          <span className="font-mono text-xs text-[#1d4ed8] font-bold block mb-1">
+            [SPEC // 01]
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-display tracking-tight">
             ผลงานที่โดดเด่น
           </h2>
         </div>
@@ -64,10 +66,10 @@ export function Work({ data }: { data: WorkItem[] }) {
             return (
               <motion.div
                 key={work.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.08 * idx }}
+                transition={{ duration: 0.35, delay: 0.08 * idx }}
                 className="paper-card overflow-hidden bg-white flex flex-col justify-between group"
               >
                 {/* Project Image */}
@@ -119,7 +121,7 @@ export function Work({ data }: { data: WorkItem[] }) {
                         work.title
                       )}
                     </h3>
-                    <p className="text-[#475569] text-xs leading-relaxed">
+                    <p className="text-[#475569] text-xs leading-relaxed font-sans">
                       {work.description}
                     </p>
 
@@ -143,7 +145,7 @@ export function Work({ data }: { data: WorkItem[] }) {
                           href={link.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="px-3 py-1.5 bg-[#1d4ed8] text-white hover:bg-[#1e40af] text-xs font-bold rounded transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+                          className="stamp-btn-blue px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs"
                         >
                           {link.type === "website" ? (
                             <>
@@ -161,7 +163,7 @@ export function Work({ data }: { data: WorkItem[] }) {
                         href={primaryUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 py-1.5 bg-[#1d4ed8] text-white hover:bg-[#1e40af] text-xs font-bold rounded transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+                        className="stamp-btn-blue px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs"
                       >
                         เปิดดูเว็บไซต์ <ExternalLink className="w-3.5 h-3.5" />
                       </a>
