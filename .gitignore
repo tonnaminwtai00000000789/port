@@ -4,6 +4,7 @@
 # Build and dist outputs
 /dist/
 /.astro/
+.wrangler/
 
 # Environment variables
 .env

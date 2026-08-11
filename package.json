@@ -5,16 +5,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "wrangler dev",
+    "deploy": "wrangler deploy",
     "seed": "bun run ./scripts/seed-supabase.ts"
   },
   "dependencies": {
-    "@astrojs/node": "^11.1.0",
+    "@astrojs/cloudflare": "^14.2.0",
     "@astrojs/preact": "^4.1.0",
     "@radix-ui/react-hover-card": "^1.1.23",
     "@radix-ui/react-tooltip": "^1.2.16",
     "@supabase/supabase-js": "^2.112.0",
-    "astro": "^7.1.6",
+    "astro": "^7.2.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.43.0",
     "lucide-react": "^0.564.0",
@@ -25,6 +26,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.1.2",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "wrangler": "^4.120.1"
   }
 }
