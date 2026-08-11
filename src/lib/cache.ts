@@ -14,22 +14,33 @@ export async function getCachedData<T>(
   const now = Date.now();
   const cached = memoryStore.get(key);
 
+  const fetchWithTimeout = async (): Promise<T> => {
+    const timeoutPromise = new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`Timeout fetching [${key}]`)), 2500)
+    );
+    return Promise.race([fetchFn(), timeoutPromise]);
+  };
+
   if (cached) {
     const isStale = now - cached.timestamp > ttlMs;
 
     if (isStale && !cached.isFetching) {
       cached.isFetching = true;
-      // Trigger background revalidation
-      fetchFn()
+      // Background revalidation
+      fetchWithTimeout()
         .then((freshData) => {
-          memoryStore.set(key, {
-            data: freshData,
-            timestamp: Date.now(),
-            isFetching: false,
-          });
+          if (freshData) {
+            memoryStore.set(key, {
+              data: freshData,
+              timestamp: Date.now(),
+              isFetching: false,
+            });
+          } else {
+            cached.isFetching = false;
+          }
         })
         .catch((err) => {
-          console.error(`Background revalidate failed for key [${key}]:`, err);
+          console.warn(`Background revalidate failed for [${key}]:`, err.message);
           cached.isFetching = false;
         });
     }
@@ -37,15 +48,22 @@ export async function getCachedData<T>(
     return cached.data;
   }
 
-  // Cache miss: fetch synchronously
-  const freshData = await fetchFn();
-  memoryStore.set(key, {
-    data: freshData,
-    timestamp: Date.now(),
-    isFetching: false,
-  });
+  // Cache miss
+  try {
+    const freshData = await fetchWithTimeout();
+    if (freshData) {
+      memoryStore.set(key, {
+        data: freshData,
+        timestamp: Date.now(),
+        isFetching: false,
+      });
+      return freshData;
+    }
+  } catch (err: any) {
+    console.warn(`Initial fetch failed for [${key}]:`, err.message);
+  }
 
-  return freshData;
+  return null as any;
 }
 
 export function clearCache(key?: string): void {

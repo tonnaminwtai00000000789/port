@@ -1,15 +1,17 @@
-import { A as REDIRECT_STATUS_CODES, C as renderEndpoint, D as ASTRO_ERROR_HEADER, E as isRoute500, F as nodeRequestAbortControllerCleanupSymbol, I as originPathnameSymbol, L as pipelineSymbol, M as appSymbol, N as clientAddressSymbol, O as ASTRO_GENERATOR, P as fetchStateSymbol, R as responseSentSymbol$1, T as isRoute404, b as pushDirective, d as renderTemplate, f as decodeKey, i as renderComponent, j as REROUTABLE_STATUS_CODES, k as DEFAULT_404_COMPONENT, l as renderSlotToString, m as generateCspDigest, n as renderPage, o as chunkToString, p as decryptString, r as renderJSX, s as createSlotValueFromString, u as isRenderTemplateResult, v as isRenderInstruction, x as isAstroComponentFactory, y as normalizeCspResourceEntry, z as __exportAll } from "./chunks/server_BbtTm7Uc.mjs";
-import { _ as slash, a as collapseDuplicateSlashes, c as hasFileExtension, f as joinPaths, g as removeTrailingForwardSlash, i as collapseDuplicateLeadingSlashes, l as isInternalPath, m as removeLeadingForwardSlash, n as matchPattern, o as collapseDuplicateTrailingSlashes, p as prependForwardSlash$1, r as appendForwardSlash, s as fileExtension, v as trimSlashes } from "./chunks/remote_C_eeoagx.mjs";
+import { n as __exportAll, r as __reExport } from "./chunks/rolldown-runtime_Djnuj9RT.mjs";
+import { A as DEFAULT_404_COMPONENT, D as isRoute500, E as isRoute404, F as fetchStateSymbol, I as nodeRequestAbortControllerCleanupSymbol, L as originPathnameSymbol, M as REROUTABLE_STATUS_CODES, N as appSymbol, O as ASTRO_ERROR_HEADER, P as clientAddressSymbol, R as pipelineSymbol, S as isAstroComponentFactory, b as normalizeCspResourceEntry, d as renderTemplate, f as decodeKey, i as renderComponent, j as REDIRECT_STATUS_CODES, k as ASTRO_GENERATOR, l as renderSlotToString, m as generateCspDigest, n as renderPage, o as chunkToString, p as decryptString, r as renderJSX, s as createSlotValueFromString, u as isRenderTemplateResult, w as renderEndpoint, x as pushDirective, y as isRenderInstruction, z as responseSentSymbol$1 } from "./chunks/server_Y_V3wPaU.mjs";
 import { B as PrerenderClientAddressNotAvailable, D as MiddlewareNoDataOrNextCalled, E as LocalsReassigned, G as RewriteWithBodyUsed, J as StaticClientAddressNotAvailable, K as SessionStorageInitError, L as NoMatchingStaticPathFound, O as MiddlewareNotAResponse, Q as i18nNoLocaleFoundInPath, S as InvalidGetStaticPathsReturn, T as LocalsNotAnObject, U as ReservedSlotName, V as PrerenderDynamicEndpointPathCollide, W as ResponseSentError, _ as GetStaticPathsRequired, a as CacheNotEnabled, g as GetStaticPathsInvalidRouteParam, h as GetStaticPathsExpectedParams, i as AstroResponseHeadersReassigned, m as ForbiddenRewrite, n as ActionNotFoundError, o as ClientAddressNotAvailable, q as SessionStorageSaveError, r as ActionsReturnedInvalidDataError, t as AstroError, x as InvalidGetStaticPathsEntry, z as PageNumberParamNotFound } from "./chunks/errors_NiNWikY8.mjs";
 import colors from "piccolore";
+import { appendForwardSlash, collapseDuplicateLeadingSlashes, collapseDuplicateSlashes, collapseDuplicateTrailingSlashes, hasFileExtension, isInternalPath, joinPaths, prependForwardSlash, removeLeadingForwardSlash, removeTrailingForwardSlash } from "@astrojs/internal-helpers/path";
 import { parse, stringify, unflatten } from "devalue";
 import "es-module-lexer";
 import { parseCookie, stringifySetCookie } from "cookie";
 import { escape } from "html-escaper";
+import { FORBIDDEN_PATH_KEYS } from "@astrojs/internal-helpers/object";
+import { matchPattern } from "@astrojs/internal-helpers/remote";
 import { createStorage } from "unstorage";
-import React, { createElement, memo } from "react";
-import ReactDOM from "react-dom/server";
-import picomatch from "picomatch";
+import { Component, h } from "preact";
+import { renderToStringAsync } from "preact-render-to-string";
 import { AsyncLocalStorage } from "node:async_hooks";
 import fs, { createReadStream } from "node:fs";
 import path from "node:path";
@@ -26,6 +28,11 @@ var ACTION_QUERY_PARAMS = {
 	actionName: "_action",
 	actionPayload: "_astroActionPayload"
 };
+//#endregion
+//#region node_modules/astro/dist/core/path.js
+var path_exports = /* @__PURE__ */ __exportAll({});
+import * as import__astrojs_internal_helpers_path from "@astrojs/internal-helpers/path";
+__reExport(path_exports, import__astrojs_internal_helpers_path);
 //#endregion
 //#region node_modules/astro/dist/actions/runtime/client.js
 var codeToStatusMap = {
@@ -236,7 +243,7 @@ function getActionContext(context) {
 		name: callerInfo.name,
 		handler: async () => {
 			const pipeline = Reflect.get(context, pipelineSymbol);
-			const callerInfoName = shouldAppendForwardSlash(pipeline.manifest.trailingSlash, pipeline.manifest.buildFormat) ? removeTrailingForwardSlash(callerInfo.name) : callerInfo.name;
+			const callerInfoName = shouldAppendForwardSlash(pipeline.manifest.trailingSlash, pipeline.manifest.buildFormat) ? (0, path_exports.removeTrailingForwardSlash)(callerInfo.name) : callerInfo.name;
 			let baseAction;
 			try {
 				baseAction = await pipeline.getAction(callerInfoName);
@@ -308,7 +315,7 @@ async function parseRequestBody(request, bodySizeLimit) {
 		message: `Request body exceeds ${bodySizeLimit} bytes`
 	});
 	try {
-		if (hasContentType(contentType, formContentTypes$1)) {
+		if (hasContentType(contentType, formContentTypes)) {
 			if (!hasContentLength) {
 				const body = await readBodyWithLimit(request.clone(), bodySizeLimit);
 				return await new Request(request.url, {
@@ -338,7 +345,7 @@ async function parseRequestBody(request, bodySizeLimit) {
 	throw new TypeError("Unsupported content type");
 }
 var ACTION_API_CONTEXT_SYMBOL = /* @__PURE__ */ Symbol.for("astro.actionAPIContext");
-var formContentTypes$1 = ["application/x-www-form-urlencoded", "multipart/form-data"];
+var formContentTypes = ["application/x-www-form-urlencoded", "multipart/form-data"];
 function hasContentType(contentType, expected) {
 	const type = contentType.split(";")[0].toLowerCase();
 	return expected.some((t) => type === t);
@@ -1006,7 +1013,7 @@ function findRouteToRewrite({ payload, routes, request, trailingSlash, buildForm
 	let foundRoute;
 	for (const route of routes) if (route.pattern.test(decodedPathname)) {
 		if (route.params && route.params.length !== 0 && route.distURL && route.distURL.length !== 0) {
-			if (!route.distURL.find((url) => url.href.replace(outDir.toString(), "").replace(/(?:\/index\.html|\.html)$/, "") === trimSlashes(pathname))) continue;
+			if (!route.distURL.find((url) => url.href.replace(outDir.toString(), "").replace(/(?:\/index\.html|\.html)$/, "") === (0, path_exports.trimSlashes)(pathname))) continue;
 		}
 		foundRoute = route;
 		break;
@@ -1059,8 +1066,8 @@ function setOriginPathname(request, pathname, trailingSlash, buildFormat) {
 	const shouldAppendSlash = shouldAppendForwardSlash(trailingSlash, buildFormat);
 	let finalPathname;
 	if (pathname === "/") finalPathname = "/";
-	else if (shouldAppendSlash) finalPathname = appendForwardSlash(pathname);
-	else finalPathname = removeTrailingForwardSlash(pathname);
+	else if (shouldAppendSlash) finalPathname = (0, path_exports.appendForwardSlash)(pathname);
+	else finalPathname = (0, path_exports.removeTrailingForwardSlash)(pathname);
 	Reflect.set(request, originPathnameSymbol, encodeURIComponent(finalPathname));
 }
 function getOriginPathname(request) {
@@ -1072,17 +1079,17 @@ function normalizeRewritePathname(urlPathname, base, trailingSlash, buildFormat)
 	let pathname = collapseDuplicateSlashes(urlPathname);
 	const shouldAppendSlash = shouldAppendForwardSlash(trailingSlash, buildFormat);
 	if (base !== "/") {
-		if (urlPathname === base || urlPathname === removeTrailingForwardSlash(base)) pathname = "/";
+		if (urlPathname === base || urlPathname === (0, path_exports.removeTrailingForwardSlash)(base)) pathname = "/";
 		else if (urlPathname.startsWith(base)) {
-			pathname = shouldAppendSlash ? appendForwardSlash(urlPathname) : removeTrailingForwardSlash(urlPathname);
+			pathname = shouldAppendSlash ? (0, path_exports.appendForwardSlash)(urlPathname) : (0, path_exports.removeTrailingForwardSlash)(urlPathname);
 			pathname = pathname.slice(base.length);
 		}
 	}
-	if (!pathname.startsWith("/") && shouldAppendSlash && urlPathname.endsWith("/")) pathname = prependForwardSlash$1(pathname);
+	if (!pathname.startsWith("/") && shouldAppendSlash && urlPathname.endsWith("/")) pathname = (0, path_exports.prependForwardSlash)(pathname);
 	if (buildFormat === "file") pathname = pathname.replace(/\.html$/, "");
 	let resolvedUrlPathname;
-	if (base !== "/" && (pathname === "" || pathname === "/") && !shouldAppendSlash) resolvedUrlPathname = removeTrailingForwardSlash(base);
-	else resolvedUrlPathname = joinPaths(...[base, pathname].filter(Boolean));
+	if (base !== "/" && (pathname === "" || pathname === "/") && !shouldAppendSlash) resolvedUrlPathname = (0, path_exports.removeTrailingForwardSlash)(base);
+	else resolvedUrlPathname = (0, path_exports.joinPaths)(...[base, pathname].filter(Boolean));
 	return {
 		pathname,
 		resolvedUrlPathname
@@ -1183,7 +1190,7 @@ function stringifyParams(params, route, trailingSlash) {
 	const validatedParams = {};
 	for (const [key, value] of Object.entries(params)) {
 		validateGetStaticPathsParameter([key, value], route.component);
-		if (value !== void 0) validatedParams[key] = trimSlashes(value);
+		if (value !== void 0) validatedParams[key] = (0, path_exports.trimSlashes)(value);
 	}
 	return getRouteGenerator(route.segments, trailingSlash)(validatedParams);
 }
@@ -1282,7 +1289,7 @@ function generatePaginateFunction(routeMatch, base, trailingSlash) {
 	};
 }
 function addRouteBase(route, base) {
-	let routeWithBase = joinPaths(base, route);
+	let routeWithBase = (0, path_exports.joinPaths)(base, route);
 	if (routeWithBase === "") routeWithBase = "/";
 	return routeWithBase;
 }
@@ -1621,7 +1628,7 @@ var Router = class {
 	constructor(routes, options) {
 		this.#routes = [...routes].sort(routeComparator);
 		this.#base = normalizeBase(options.base);
-		this.#baseWithoutTrailingSlash = removeTrailingForwardSlash(this.#base);
+		this.#baseWithoutTrailingSlash = (0, path_exports.removeTrailingForwardSlash)(this.#base);
 		this.#buildFormat = options.buildFormat;
 		this.#trailingSlash = options.trailingSlash;
 	}
@@ -1694,10 +1701,10 @@ var Router = class {
 function normalizeBase(base) {
 	if (!base) return "/";
 	if (base === "/") return base;
-	return prependForwardSlash$1(base);
+	return (0, path_exports.prependForwardSlash)(base);
 }
 function getRedirectForPathname(pathname) {
-	let value = prependForwardSlash$1(pathname);
+	let value = (0, path_exports.prependForwardSlash)(pathname);
 	if (value.startsWith("//")) return {
 		pathname: value,
 		redirect: `/${value.replace(/^\/+/, "")}`
@@ -1723,13 +1730,6 @@ function normalizeFileFormatPathname(pathname) {
 	}
 	return pathname;
 }
-//#endregion
-//#region node_modules/@astrojs/internal-helpers/dist/object.js
-var FORBIDDEN_PATH_KEYS = /* @__PURE__ */ new Set([
-	"__proto__",
-	"constructor",
-	"prototype"
-]);
 //#endregion
 //#region node_modules/astro/dist/core/base-pipeline.js
 var PipelineFeatures = {
@@ -2676,7 +2676,7 @@ function computePathnameFromDomain(request, url, i18n, base, trailingSlash, logg
 				}
 				if (locale) {
 					const requestPathname = pathnameFromRequest ?? removeBase(url.pathname, base);
-					pathname = prependForwardSlash$1(joinPaths(normalizeTheLocale(locale), requestPathname));
+					pathname = prependForwardSlash(joinPaths(normalizeTheLocale(locale), requestPathname));
 					if (trailingSlash === "always") pathname = appendForwardSlash(pathname);
 					else if (trailingSlash === "never") pathname = removeTrailingForwardSlash(pathname);
 					else if (requestPathname.endsWith("/")) pathname = appendForwardSlash(pathname);
@@ -3359,7 +3359,7 @@ var FetchState = class {
 			const baseWithoutTrailingSlash = removeTrailingForwardSlash(base);
 			pathname = pathname.slice(baseWithoutTrailingSlash.length + 1);
 		}
-		return prependForwardSlash$1(pathname);
+		return prependForwardSlash(pathname);
 	}
 	/**
 	* Decodes and normalizes the public request pathname before deriving the
@@ -4402,9 +4402,9 @@ var STATUS_CODE_PAGES = /* @__PURE__ */ new Set(["/404", "/500"]);
 function getOutputFilename(buildFormat, name, routeData) {
 	if (routeData.type === "endpoint") return name;
 	if (name === "/" || name === "") return name === "" ? "index.html" : "/index.html";
-	if (buildFormat === "file" || STATUS_CODE_PAGES.has(name)) return `${removeTrailingForwardSlash(name || "index")}.html`;
-	if (buildFormat === "preserve" && !routeData.isIndex) return `${removeTrailingForwardSlash(name || "index")}.html`;
-	return `${removeTrailingForwardSlash(name)}/index.html`;
+	if (buildFormat === "file" || STATUS_CODE_PAGES.has(name)) return `${(0, path_exports.removeTrailingForwardSlash)(name || "index")}.html`;
+	if (buildFormat === "preserve" && !routeData.isIndex) return `${(0, path_exports.removeTrailingForwardSlash)(name || "index")}.html`;
+	return `${(0, path_exports.removeTrailingForwardSlash)(name)}/index.html`;
 }
 //#endregion
 //#region node_modules/astro/dist/core/errors/handler.js
@@ -4643,7 +4643,7 @@ var BaseApp = class BaseApp {
 	*/
 	getPathnameFromRequest(request) {
 		const url = new URL(request.url);
-		const pathname = prependForwardSlash$1(this.removeBase(url.pathname));
+		const pathname = prependForwardSlash(this.removeBase(url.pathname));
 		return this.safeDecodeURI(pathname);
 	}
 	/**
@@ -4658,7 +4658,7 @@ var BaseApp = class BaseApp {
 		const url = new URL(request.url);
 		if (this.manifest.assets.has(url.pathname)) return void 0;
 		let pathname = this.computePathnameFromDomain(request);
-		if (!pathname) pathname = prependForwardSlash$1(this.removeBase(url.pathname));
+		if (!pathname) pathname = prependForwardSlash(this.removeBase(url.pathname));
 		const routeData = this.pipeline.matchRoute(this.safeDecodeURI(pathname));
 		if (!routeData) return void 0;
 		if (allowPrerenderedRoutes) return routeData;
@@ -4839,9 +4839,9 @@ function createAssetLink(href, base, assetsPrefix, queryParams) {
 	const { pathname, suffix } = splitAssetPath(href);
 	let url = "";
 	if (assetsPrefix) {
-		const pf = getAssetsPrefix(fileExtension(pathname), assetsPrefix);
-		url = joinPaths(pf, slash(pathname)) + suffix;
-	} else if (base) url = prependForwardSlash$1(joinPaths(base, slash(pathname))) + suffix;
+		const pf = getAssetsPrefix((0, path_exports.fileExtension)(pathname), assetsPrefix);
+		url = (0, path_exports.joinPaths)(pf, (0, path_exports.slash)(pathname)) + suffix;
+	} else if (base) url = (0, path_exports.prependForwardSlash)((0, path_exports.joinPaths)(base, (0, path_exports.slash)(pathname))) + suffix;
 	else url = href;
 	if (queryParams) url = appendQueryParams(url, queryParams);
 	return url;
@@ -5058,227 +5058,160 @@ function deserializeRouteInfo(rawRouteInfo) {
 	};
 }
 //#endregion
-//#region \0astro:react:opts
-var _astro_react_opts_default = {
-	include: void 0,
-	exclude: void 0,
-	experimentalReactChildren: false,
-	experimentalDisableStreaming: false
-};
-//#endregion
-//#region node_modules/@astrojs/react/dist/context.js
+//#region node_modules/@astrojs/preact/dist/context.js
 var contexts = /* @__PURE__ */ new WeakMap();
-var ID_PREFIX = "r";
-function getContext(rendererContextResult) {
-	if (contexts.has(rendererContextResult)) return contexts.get(rendererContextResult);
-	const ctx = {
-		currentIndex: 0,
+function getContext(result) {
+	if (contexts.has(result)) return contexts.get(result);
+	let ctx = {
+		c: 0,
 		get id() {
-			return ID_PREFIX + this.currentIndex.toString();
-		}
+			return "p" + this.c.toString();
+		},
+		signals: /* @__PURE__ */ new Map(),
+		propsToSignals: /* @__PURE__ */ new Map()
 	};
-	contexts.set(rendererContextResult, ctx);
+	contexts.set(result, ctx);
 	return ctx;
 }
-function incrementId(rendererContextResult) {
-	const ctx = getContext(rendererContextResult);
-	const id = ctx.id;
-	ctx.currentIndex++;
+function incrementId(ctx) {
+	let id = ctx.id;
+	ctx.c++;
 	return id;
 }
 //#endregion
-//#region node_modules/@astrojs/react/dist/static-html.js
+//#region node_modules/@astrojs/preact/dist/signals.js
+function isSignal(x) {
+	return x != null && typeof x === "object" && typeof x.peek === "function" && "value" in x;
+}
+function restoreSignalsOnProps(ctx, props) {
+	let propMap;
+	if (ctx.propsToSignals.has(props)) propMap = ctx.propsToSignals.get(props);
+	else {
+		propMap = /* @__PURE__ */ new Map();
+		ctx.propsToSignals.set(props, propMap);
+	}
+	for (const [key, signal] of propMap) props[key] = signal;
+	return propMap;
+}
+function serializeSignals(ctx, props, attrs, map) {
+	const signals = {};
+	for (const [key, value] of Object.entries(props)) {
+		const isPropArray = Array.isArray(value);
+		const isPropObject = !isSignal(value) && typeof props[key] === "object" && props[key] !== null && !isPropArray;
+		if (isPropObject || isPropArray) (isPropObject ? Object.keys(props[key]) : value).forEach((valueKey, valueIndex) => {
+			const signal = isPropObject ? props[key][valueKey] : valueKey;
+			if (isSignal(signal)) {
+				const keyOrIndex = isPropObject ? valueKey.toString() : valueIndex;
+				props[key] = isPropObject ? Object.assign({}, props[key], { [keyOrIndex]: signal.peek() }) : props[key].map((v, i) => i === valueIndex ? [signal.peek(), i] : v);
+				const currentMap = map.get(key) || [];
+				map.set(key, [...currentMap, [signal, keyOrIndex]]);
+				const currentSignals = signals[key] || [];
+				signals[key] = [...currentSignals, [getSignalId(ctx, signal), keyOrIndex]];
+			}
+		});
+		else if (isSignal(value)) {
+			props[key] = value.peek();
+			map.set(key, value);
+			signals[key] = getSignalId(ctx, value);
+		}
+	}
+	if (Object.keys(signals).length) attrs["data-preact-signals"] = JSON.stringify(signals);
+}
+function getSignalId(ctx, item) {
+	let id = ctx.signals.get(item);
+	if (!id) {
+		id = incrementId(ctx);
+		ctx.signals.set(item, id);
+	}
+	return id;
+}
+//#endregion
+//#region node_modules/@astrojs/preact/dist/static-html.js
 var StaticHtml = ({ value, name, hydrate = true }) => {
-	if (value == null || value.trim() === "") return null;
-	return createElement(hydrate ? "astro-slot" : "astro-static-slot", {
+	if (!value) return null;
+	return h(hydrate ? "astro-slot" : "astro-static-slot", {
 		name,
-		suppressHydrationWarning: true,
 		dangerouslySetInnerHTML: { __html: value }
 	});
 };
-var static_html_default = memo(StaticHtml, () => true);
+StaticHtml.shouldComponentUpdate = () => false;
+var static_html_default = StaticHtml;
 //#endregion
-//#region node_modules/@astrojs/internal-helpers/dist/create-filter.js
-function ensureArray(thing) {
-	if (Array.isArray(thing)) return thing;
-	if (thing == null) return [];
-	return [thing];
-}
-function toMatcher(pattern) {
-	if (pattern instanceof RegExp) return pattern;
-	const normalized = slash(pattern);
-	const fn = picomatch(normalized, { dot: true });
-	return { test: (what) => fn(what) };
-}
-function createFilter(include, exclude) {
-	const includeMatchers = ensureArray(include).map(toMatcher);
-	const excludeMatchers = ensureArray(exclude).map(toMatcher);
-	if (!includeMatchers.length && !excludeMatchers.length) return (id) => typeof id === "string" && !id.includes("\0");
-	return function(id) {
-		if (typeof id !== "string") return false;
-		if (id.includes("\0")) return false;
-		const pathId = slash(id);
-		for (const matcher of excludeMatchers) {
-			if (matcher instanceof RegExp) matcher.lastIndex = 0;
-			if (matcher.test(pathId)) return false;
-		}
-		for (const matcher of includeMatchers) {
-			if (matcher instanceof RegExp) matcher.lastIndex = 0;
-			if (matcher.test(pathId)) return true;
-		}
-		return !includeMatchers.length;
-	};
-}
-//#endregion
-//#region node_modules/@astrojs/react/dist/server.js
+//#region node_modules/@astrojs/preact/dist/server.js
 var slotName = (str) => str.trim().replace(/[-_]([a-z])/g, (_, w) => w.toUpperCase());
-var reactTypeof = /* @__PURE__ */ Symbol.for("react.element");
-var reactTransitionalTypeof = /* @__PURE__ */ Symbol.for("react.transitional.element");
-var filter = _astro_react_opts_default?.include || _astro_react_opts_default?.exclude ? createFilter(_astro_react_opts_default.include, _astro_react_opts_default.exclude) : null;
-async function check(Component, props, children, metadata) {
-	if (typeof Component === "object") return Component["$$typeof"].toString().slice(7).startsWith("react");
-	if (typeof Component !== "function") return false;
-	if (Component.name === "QwikComponent") return false;
-	if (typeof Component === "function" && Component["$$typeof"] === /* @__PURE__ */ Symbol.for("react.forward_ref")) return false;
-	if (Component.prototype != null && typeof Component.prototype.render === "function") return React.Component.isPrototypeOf(Component) || React.PureComponent.isPrototypeOf(Component);
-	if (filter && metadata?.componentUrl && !filter(metadata.componentUrl)) return false;
-	let isReactComponent = false;
-	function Tester(...args) {
-		try {
-			const vnode = Component(...args);
-			if (vnode && (vnode["$$typeof"] === reactTypeof || vnode["$$typeof"] === reactTransitionalTypeof)) isReactComponent = true;
-		} catch {}
-		return React.createElement("div");
+var originalConsoleError;
+var consoleFilterRefs = 0;
+async function check(Component$1, props, children) {
+	if (typeof Component$1 !== "function") return false;
+	if (Component$1.name === "QwikComponent") return false;
+	if (Component$1.prototype != null && typeof Component$1.prototype.render === "function") return Component.isPrototypeOf(Component$1);
+	useConsoleFilter();
+	try {
+		const { html } = await renderToStaticMarkup.call(this, Component$1, props, children, void 0);
+		if (typeof html !== "string") return false;
+		return html == "" ? false : !html.includes("<undefined>");
+	} catch {
+		return false;
+	} finally {
+		finishUsingConsoleFilter();
 	}
-	await renderToStaticMarkup.call(this, Tester, props, children);
-	return isReactComponent;
 }
-async function getNodeWritable() {
-	let { Writable } = await import(
-		/* @vite-ignore */
-		"node:stream"
-);
-	return Writable;
-}
-function needsHydration(metadata) {
+function shouldHydrate(metadata) {
 	return metadata?.astroStaticSlot ? !!metadata.hydrate : true;
 }
 async function renderToStaticMarkup(Component, props, { default: children, ...slotted }, metadata) {
-	let prefix;
-	if (this && this.result) prefix = incrementId(this.result);
-	const attrs = { prefix };
-	delete props["class"];
+	const ctx = getContext(this.result);
 	const slots = {};
 	for (const [key, value] of Object.entries(slotted)) {
 		const name = slotName(key);
-		slots[name] = React.createElement(static_html_default, {
-			hydrate: needsHydration(metadata),
+		slots[name] = h(static_html_default, {
+			hydrate: shouldHydrate(metadata),
 			value,
 			name
 		});
 	}
+	let propsMap = restoreSignalsOnProps(ctx, props);
 	const newProps = {
 		...props,
 		...slots
 	};
-	const newChildren = children ?? props.children;
-	if (children && _astro_react_opts_default.experimentalReactChildren) {
-		attrs["data-react-children"] = true;
-		newProps.children = (await import("./chunks/vnode-children_B6vVcKTz.mjs").then((mod) => mod.default))(children);
-	} else if (newChildren != null) newProps.children = React.createElement(static_html_default, {
-		hydrate: needsHydration(metadata),
-		value: newChildren
-	});
-	const formState = this ? await getFormState(this) : void 0;
-	if (formState) {
-		attrs["data-action-result"] = JSON.stringify(formState[0]);
-		attrs["data-action-key"] = formState[1];
-		attrs["data-action-name"] = formState[2];
-	}
-	const vnode = React.createElement(Component, newProps);
-	const renderOptions = {
-		identifierPrefix: prefix,
-		formState
-	};
-	let html;
-	if (_astro_react_opts_default.experimentalDisableStreaming) html = ReactDOM.renderToString(vnode);
-	else if ("renderToReadableStream" in ReactDOM) html = await renderToReadableStreamAsync(vnode, renderOptions);
-	else html = await renderToPipeableStreamAsync(vnode, renderOptions);
-	html = html.replace(/<link\s[^>]*rel="(?:preload|modulepreload|stylesheet|preconnect|dns-prefetch)"[^>]*>/g, "");
+	const attrs = {};
+	serializeSignals(ctx, props, attrs, propsMap);
+	const vNode = h(Component, newProps, children != null ? h(static_html_default, {
+		hydrate: shouldHydrate(metadata),
+		value: children
+	}) : children);
 	return {
-		html,
-		attrs
+		attrs,
+		html: await renderToStringAsync(vNode)
 	};
 }
-async function getFormState({ result }) {
-	const { request, actionResult } = result;
-	if (!actionResult) return void 0;
-	if (!isFormRequest(request.headers.get("content-type"))) return void 0;
-	const { searchParams } = new URL(request.url);
-	const actionKey = (await request.clone().formData()).get("$ACTION_KEY")?.toString();
-	const actionName = searchParams.get("_action");
-	if (!actionKey || !actionName) return void 0;
-	return [
-		actionResult,
-		actionKey,
-		actionName
-	];
-}
-async function renderToPipeableStreamAsync(vnode, options) {
-	const Writable = await getNodeWritable();
-	let html = "";
-	return new Promise((resolve, reject) => {
-		let error = void 0;
-		let stream = ReactDOM.renderToPipeableStream(vnode, {
-			...options,
-			onError(err) {
-				error = err;
-				reject(error);
-			},
-			onAllReady() {
-				stream.pipe(new Writable({
-					write(chunk, _encoding, callback) {
-						html += chunk.toString("utf-8");
-						callback();
-					},
-					destroy() {
-						resolve(html);
-					}
-				}));
-			}
-		});
-	});
-}
-async function readResult(stream) {
-	const reader = stream.getReader();
-	let result = "";
-	const decoder = new TextDecoder("utf-8");
-	while (true) {
-		const { done, value } = await reader.read();
-		if (done) {
-			if (value) result += decoder.decode(value);
-			else decoder.decode(/* @__PURE__ */ new Uint8Array());
-			return result;
-		}
-		result += decoder.decode(value, { stream: true });
+function useConsoleFilter() {
+	consoleFilterRefs++;
+	if (!originalConsoleError) {
+		originalConsoleError = console.error;
+		try {
+			console.error = filteredConsoleError;
+		} catch {}
 	}
 }
-async function renderToReadableStreamAsync(vnode, options) {
-	return await readResult(await ReactDOM.renderToReadableStream(vnode, options));
+function finishUsingConsoleFilter() {
+	consoleFilterRefs--;
 }
-var formContentTypes = ["application/x-www-form-urlencoded", "multipart/form-data"];
-function isFormRequest(contentType) {
-	const type = contentType?.split(";")[0].toLowerCase();
-	return formContentTypes.some((t) => type === t);
+function filteredConsoleError(msg, ...rest) {
+	if (consoleFilterRefs > 0 && typeof msg === "string") {
+		if (msg.includes("Warning: Invalid hook call.") && msg.includes("https://reactjs.org/link/invalid-hook-call")) return;
+	}
+	originalConsoleError(msg, ...rest);
 }
 //#endregion
 //#region \0virtual:astro:renderers
 var renderers = [Object.assign({
-	"name": "@astrojs/react",
-	"clientEntrypoint": "@astrojs/react/client.js",
-	"serverEntrypoint": "@astrojs/react/server.js"
+	"name": "@astrojs/preact",
+	"clientEntrypoint": "@astrojs/preact/client.js",
+	"serverEntrypoint": "@astrojs/preact/server.js"
 }, { ssr: {
-	name: "@astrojs/react",
+	name: "@astrojs/preact",
 	check,
 	renderToStaticMarkup,
 	supportsAstroStaticSlot: true
@@ -5355,6 +5288,35 @@ var renderers = [Object.assign({
 			"params": [],
 			"component": "src/pages/admin.astro",
 			"pathname": "/admin",
+			"prerender": false,
+			"fallbackRoutes": [],
+			"distURL": [],
+			"origin": "project",
+			"_meta": { "trailingSlash": "ignore" }
+		}
+	},
+	{
+		"file": "",
+		"links": [],
+		"scripts": [],
+		"styles": [],
+		"routeData": {
+			"route": "/api/revalidate",
+			"isIndex": false,
+			"type": "endpoint",
+			"pattern": "^\\/api\\/revalidate\\/?$",
+			"segments": [[{
+				"content": "api",
+				"dynamic": false,
+				"spread": false
+			}], [{
+				"content": "revalidate",
+				"dynamic": false,
+				"spread": false
+			}]],
+			"params": [],
+			"component": "src/pages/api/revalidate.ts",
+			"pathname": "/api/revalidate",
 			"prerender": false,
 			"fallbackRoutes": [],
 			"distURL": [],
@@ -5514,27 +5476,29 @@ var renderers = [Object.assign({
 ].map(deserializeRouteInfo);
 //#endregion
 //#region \0virtual:astro:pages
-var _page0 = () => import("./chunks/node_B0OlnHnn.mjs");
-var _page1 = () => import("./chunks/admin_Bh9GJv92.mjs");
-var _page2 = () => import("./chunks/blog_D3bvGAeN.mjs");
-var _page3 = () => import("./chunks/_slug__DIfgm5aj.mjs");
-var _page4 = () => import("./chunks/index_ChB_ZejQ.mjs");
-var _page5 = () => import("./chunks/qwetrsdsdvsd_B1P0hnGr.mjs");
-var _page6 = () => import("./chunks/works_l4TuFzHJ.mjs");
-var _page7 = () => import("./chunks/index_BgIa8pD5.mjs");
+var _page0 = () => import("./chunks/node_nnmOFwUm.mjs");
+var _page1 = () => import("./chunks/admin_BqQCxioO.mjs");
+var _page2 = () => import("./chunks/revalidate_BFfEAIAY.mjs");
+var _page3 = () => import("./chunks/blog_zfxDctIr.mjs");
+var _page4 = () => import("./chunks/_slug__B5_klIc4.mjs");
+var _page5 = () => import("./chunks/index_DDhmWoGW.mjs");
+var _page6 = () => import("./chunks/qwetrsdsdvsd_axACDn0h.mjs");
+var _page7 = () => import("./chunks/works_DdoP9a4U.mjs");
+var _page8 = () => import("./chunks/index_iDK1zTFC.mjs");
 var pageMap = /* @__PURE__ */ new Map([
 	["node_modules/astro/dist/assets/endpoint/node.js", _page0],
 	["src/pages/admin.astro", _page1],
-	["src/pages/blog.astro", _page2],
-	["src/pages/blogs/[slug].astro", _page3],
-	["src/pages/blogs/index.astro", _page4],
-	["src/pages/qwetrsdsdvsd.astro", _page5],
-	["src/pages/works.astro", _page6],
-	["src/pages/index.astro", _page7]
+	["src/pages/api/revalidate.ts", _page2],
+	["src/pages/blog.astro", _page3],
+	["src/pages/blogs/[slug].astro", _page4],
+	["src/pages/blogs/index.astro", _page5],
+	["src/pages/qwetrsdsdvsd.astro", _page6],
+	["src/pages/works.astro", _page7],
+	["src/pages/index.astro", _page8]
 ]);
 //#endregion
 //#region \0virtual:astro:manifest
-var _manifest = deserializeManifest({"rootDir":"file:///D:/client/","cacheDir":"file:///D:/client/node_modules/.astro/","outDir":"file:///D:/client/dist/","srcDir":"file:///D:/client/src/","publicDir":"file:///D:/client/public/","buildClientDir":"file:///D:/client/dist/client/","buildServerDir":"file:///D:/client/dist/server/","adapterName":"@astrojs/node","assetsDir":"_astro","routes":[{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"type":"page","component":"_server-islands.astro","params":["name"],"segments":[[{"content":"_server-islands","dynamic":false,"spread":false}],[{"content":"name","dynamic":true,"spread":false}]],"pattern":"^\\/_server-islands\\/([^/]+?)\\/?$","prerender":false,"isIndex":false,"fallbackRoutes":[],"route":"/_server-islands/[name]","origin":"internal","distURL":[],"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/_image","component":"node_modules/astro/dist/assets/endpoint/node.js","params":[],"pathname":"/_image","pattern":"^\\/_image\\/?$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"type":"endpoint","prerender":false,"fallbackRoutes":[],"distURL":[],"isIndex":false,"origin":"internal","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.B69NJ_0L.css"}],"routeData":{"route":"/admin","isIndex":false,"type":"page","pattern":"^\\/admin\\/?$","segments":[[{"content":"admin","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/admin.astro","pathname":"/admin","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/blog","isIndex":false,"type":"page","pattern":"^\\/blog\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blog.astro","pathname":"/blog","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.B69NJ_0L.css"}],"routeData":{"route":"/blogs/[slug]","isIndex":false,"type":"page","pattern":"^\\/blogs\\/([^/]+?)\\/?$","segments":[[{"content":"blogs","dynamic":false,"spread":false}],[{"content":"slug","dynamic":true,"spread":false}]],"params":["slug"],"component":"src/pages/blogs/[slug].astro","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.B69NJ_0L.css"}],"routeData":{"route":"/blogs","isIndex":true,"type":"page","pattern":"^\\/blogs\\/?$","segments":[[{"content":"blogs","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blogs/index.astro","pathname":"/blogs","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.B69NJ_0L.css"}],"routeData":{"route":"/qwetrsdsdvsd","isIndex":false,"type":"page","pattern":"^\\/qwetrsdsdvsd\\/?$","segments":[[{"content":"qwetrsdsdvsd","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/qwetrsdsdvsd.astro","pathname":"/qwetrsdsdvsd","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.B69NJ_0L.css"}],"routeData":{"route":"/works","isIndex":false,"type":"page","pattern":"^\\/works\\/?$","segments":[[{"content":"works","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/works.astro","pathname":"/works","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.B69NJ_0L.css"}],"routeData":{"route":"/","isIndex":true,"type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}}],"serverLike":true,"middlewareMode":"classic","base":"/","trailingSlash":"ignore","compressHTML":"jsx","componentMetadata":[["D:/client/src/pages/admin.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/blogs/[slug].astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/blogs/index.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/index.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/qwetrsdsdvsd.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/works.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value==\"object\"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};\"requestIdleCallback\"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var n=(a,t)=>{let i=async()=>{await(await a())()};if(t.value){let e=matchMedia(t.value);e.matches?i():e.addEventListener(\"change\",i,{once:!0})}};(self.Astro||(self.Astro={})).media=n;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value==\"object\"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"astro/entrypoints/prerender":"prerender-entry.CyMRU2dn.mjs","\u0000noop-middleware":"virtual_astro_middleware.mjs","\u0000virtual:astro:server-island-manifest":"chunks/_virtual_astro_server-island-manifest_C1Q2srgE.mjs","\u0000virtual:astro:session-driver":"chunks/_virtual_astro_session-driver_DS5V7T-N.mjs","\u0000virtual:astro:actions/noop-entrypoint":"chunks/noop-entrypoint_Z3zFhrGC.mjs","D:/client/node_modules/@astrojs/react/dist/vnode-children.js":"chunks/vnode-children_B6vVcKTz.mjs","@astrojs/node/server.js":"entry.mjs","\u0000virtual:astro:page:src/pages/blogs/[slug]@_@astro":"chunks/_slug__DIfgm5aj.mjs","\u0000virtual:astro:page:src/pages/admin@_@astro":"chunks/admin_Bh9GJv92.mjs","\u0000virtual:astro:page:src/pages/blog@_@astro":"chunks/blog_D3bvGAeN.mjs","\u0000virtual:astro:page:src/pages/index@_@astro":"chunks/index_BgIa8pD5.mjs","\u0000virtual:astro:page:src/pages/blogs/index@_@astro":"chunks/index_ChB_ZejQ.mjs","\u0000virtual:astro:page:node_modules/astro/dist/assets/endpoint/node@_@js":"chunks/node_B0OlnHnn.mjs","\u0000virtual:astro:page:src/pages/qwetrsdsdvsd@_@astro":"chunks/qwetrsdsdvsd_B1P0hnGr.mjs","D:/client/node_modules/astro/dist/assets/services/sharp.js":"chunks/sharp_CVzCRqOn.mjs","\u0000virtual:astro:page:src/pages/works@_@astro":"chunks/works_l4TuFzHJ.mjs","D:/client/src/components/islands/Aboutme.tsx":"_astro/Aboutme.oaJXx-HH.js","D:/client/src/components/islands/AdminDashboard.tsx":"_astro/AdminDashboard.BN83SLr-.js","D:/client/src/components/islands/BlogsSection.tsx":"_astro/BlogsSection.BTsVoeiQ.js","D:/client/src/components/islands/Contact.tsx":"_astro/Contact.CkuK14Mv.js","D:/client/src/components/islands/HeaderNav.tsx":"_astro/HeaderNav.D9QLgL8n.js","D:/client/src/components/islands/Hero.tsx":"_astro/Hero.XxlJi7le.js","D:/client/src/components/islands/TechStack.tsx":"_astro/TechStack.DRrM1jdm.js","D:/client/src/components/islands/Work.tsx":"_astro/Work.CTPmp5F5.js","@astrojs/react/client.js":"_astro/client.BZ8vZlbd.js","astro:scripts/before-hydration.js":""},"inlinedScripts":[],"assets":["/favicon.ico","/_astro/Aboutme.oaJXx-HH.js","/_astro/AdminDashboard.BN83SLr-.js","/_astro/arrow-up-right.-_wrMgPq.js","/_astro/BlogsSection.BTsVoeiQ.js","/_astro/client.BZ8vZlbd.js","/_astro/clock.CNx3e1kn.js","/_astro/code.D8g6kbDX.js","/_astro/Contact.CkuK14Mv.js","/_astro/HeaderNav.D9QLgL8n.js","/_astro/Hero.XxlJi7le.js","/_astro/jsx-runtime.B0lce_Fr.js","/_astro/mail.DgvanAsk.js","/_astro/map-pin.pj_mKzbS.js","/_astro/proxy.DWTP2jth.js","/_astro/react.XSevzEK6.js","/_astro/TechStack.DRrM1jdm.js","/_astro/Work.CTPmp5F5.js","/_astro/data.B69NJ_0L.css"],"buildFormat":"directory","checkOrigin":true,"actionBodySizeLimit":1048576,"serverIslandBodySizeLimit":1048576,"allowedDomains":[],"key":"Le3t0l19W8ssZq04z5OUFRa6XZoGJDn6dWu90/dtO3s=","sessionConfig":{"driver":"unstorage/drivers/fs-lite","options":{"base":"D:\\client\\node_modules\\.astro\\sessions"}},"image":{},"devToolbar":{"enabled":false,"debugInfoOutput":""},"logLevel":"info","shouldInjectCspMetaTags":false});
+var _manifest = deserializeManifest({"rootDir":"file:///D:/client/","cacheDir":"file:///D:/client/node_modules/.astro/","outDir":"file:///D:/client/dist/","srcDir":"file:///D:/client/src/","publicDir":"file:///D:/client/public/","buildClientDir":"file:///D:/client/dist/client/","buildServerDir":"file:///D:/client/dist/server/","adapterName":"@astrojs/node","assetsDir":"_astro","routes":[{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"type":"page","component":"_server-islands.astro","params":["name"],"segments":[[{"content":"_server-islands","dynamic":false,"spread":false}],[{"content":"name","dynamic":true,"spread":false}]],"pattern":"^\\/_server-islands\\/([^/]+?)\\/?$","prerender":false,"isIndex":false,"fallbackRoutes":[],"route":"/_server-islands/[name]","origin":"internal","distURL":[],"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/_image","component":"node_modules/astro/dist/assets/endpoint/node.js","params":[],"pathname":"/_image","pattern":"^\\/_image\\/?$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"type":"endpoint","prerender":false,"fallbackRoutes":[],"distURL":[],"isIndex":false,"origin":"internal","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.Dcw57I5P.css"}],"routeData":{"route":"/admin","isIndex":false,"type":"page","pattern":"^\\/admin\\/?$","segments":[[{"content":"admin","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/admin.astro","pathname":"/admin","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/api/revalidate","isIndex":false,"type":"endpoint","pattern":"^\\/api\\/revalidate\\/?$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"revalidate","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/revalidate.ts","pathname":"/api/revalidate","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/blog","isIndex":false,"type":"page","pattern":"^\\/blog\\/?$","segments":[[{"content":"blog","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blog.astro","pathname":"/blog","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.Dcw57I5P.css"}],"routeData":{"route":"/blogs/[slug]","isIndex":false,"type":"page","pattern":"^\\/blogs\\/([^/]+?)\\/?$","segments":[[{"content":"blogs","dynamic":false,"spread":false}],[{"content":"slug","dynamic":true,"spread":false}]],"params":["slug"],"component":"src/pages/blogs/[slug].astro","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.Dcw57I5P.css"}],"routeData":{"route":"/blogs","isIndex":true,"type":"page","pattern":"^\\/blogs\\/?$","segments":[[{"content":"blogs","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/blogs/index.astro","pathname":"/blogs","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.Dcw57I5P.css"}],"routeData":{"route":"/qwetrsdsdvsd","isIndex":false,"type":"page","pattern":"^\\/qwetrsdsdvsd\\/?$","segments":[[{"content":"qwetrsdsdvsd","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/qwetrsdsdvsd.astro","pathname":"/qwetrsdsdvsd","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.Dcw57I5P.css"}],"routeData":{"route":"/works","isIndex":false,"type":"page","pattern":"^\\/works\\/?$","segments":[[{"content":"works","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/works.astro","pathname":"/works","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"_astro/data.Dcw57I5P.css"}],"routeData":{"route":"/","isIndex":true,"type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":false,"fallbackRoutes":[],"distURL":[],"origin":"project","_meta":{"trailingSlash":"ignore"}}}],"serverLike":true,"middlewareMode":"classic","base":"/","trailingSlash":"ignore","compressHTML":"jsx","componentMetadata":[["D:/client/src/pages/admin.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/blogs/[slug].astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/blogs/index.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/index.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/qwetrsdsdvsd.astro",{"propagation":"none","containsHead":true}],["D:/client/src/pages/works.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var l=(n,t)=>{let i=async()=>{await(await n())()},e=typeof t.value==\"object\"?t.value:void 0,s={timeout:e==null?void 0:e.timeout};\"requestIdleCallback\"in window?window.requestIdleCallback(i,s):setTimeout(i,s.timeout||200)};(self.Astro||(self.Astro={})).idle=l;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var n=(a,t)=>{let i=async()=>{await(await a())()};if(t.value){let e=matchMedia(t.value);e.matches?i():e.addEventListener(\"change\",i,{once:!0})}};(self.Astro||(self.Astro={})).media=n;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value==\"object\"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"astro/entrypoints/prerender":"prerender-entry.iVPvMtiq.mjs","\u0000noop-middleware":"virtual_astro_middleware.mjs","\u0000virtual:astro:server-island-manifest":"chunks/_virtual_astro_server-island-manifest_C1Q2srgE.mjs","\u0000virtual:astro:session-driver":"chunks/_virtual_astro_session-driver_DS5V7T-N.mjs","\u0000virtual:astro:actions/noop-entrypoint":"chunks/noop-entrypoint_Z3zFhrGC.mjs","@astrojs/node/server.js":"entry.mjs","\u0000virtual:astro:page:src/pages/blogs/[slug]@_@astro":"chunks/_slug__B5_klIc4.mjs","\u0000virtual:astro:page:src/pages/admin@_@astro":"chunks/admin_BqQCxioO.mjs","\u0000virtual:astro:page:src/pages/blog@_@astro":"chunks/blog_zfxDctIr.mjs","\u0000virtual:astro:page:src/pages/blogs/index@_@astro":"chunks/index_DDhmWoGW.mjs","\u0000virtual:astro:page:src/pages/index@_@astro":"chunks/index_iDK1zTFC.mjs","\u0000virtual:astro:page:node_modules/astro/dist/assets/endpoint/node@_@js":"chunks/node_nnmOFwUm.mjs","\u0000virtual:astro:page:src/pages/qwetrsdsdvsd@_@astro":"chunks/qwetrsdsdvsd_axACDn0h.mjs","\u0000virtual:astro:page:src/pages/api/revalidate@_@ts":"chunks/revalidate_BFfEAIAY.mjs","D:/client/node_modules/astro/dist/assets/services/sharp.js":"chunks/sharp_aIPxRDH-.mjs","\u0000virtual:astro:page:src/pages/works@_@astro":"chunks/works_DdoP9a4U.mjs","D:/client/src/components/islands/Aboutme.tsx":"_astro/Aboutme.CYM2p6jk.js","D:/client/src/components/islands/AdminDashboard.tsx":"_astro/AdminDashboard.CIFghCGB.js","D:/client/src/components/islands/BackgroundEffect.tsx":"_astro/BackgroundEffect._kp6rsji.js","D:/client/src/components/islands/BlogPostDetail.tsx":"_astro/BlogPostDetail.BHTZlbgk.js","D:/client/src/components/islands/BlogsList.tsx":"_astro/BlogsList.D1BqCNG6.js","D:/client/src/components/islands/BlogsSection.tsx":"_astro/BlogsSection.Dx2gVSWb.js","D:/client/node_modules/astro/components/ClientRouter.astro?astro&type=script&index=0&lang.ts":"_astro/ClientRouter.astro_astro_type_script_index_0_lang.jmhnZfFy.js","D:/client/src/components/islands/Contact.tsx":"_astro/Contact.CrnnIZE6.js","D:/client/src/components/islands/HeaderNav.tsx":"_astro/HeaderNav.LDe8K3R5.js","D:/client/src/components/islands/Hero.tsx":"_astro/Hero.CPq5-fn9.js","D:/client/src/components/islands/TechStack.tsx":"_astro/TechStack.DjdRmVhS.js","D:/client/src/components/islands/Work.tsx":"_astro/Work.BlErx633.js","@astrojs/preact/client.js":"_astro/client.B5mqh7CC.js","D:/client/node_modules/@preact/signals/dist/signals.module.js":"_astro/signals.module.CaTDeTqE.js","astro:scripts/before-hydration.js":""},"inlinedScripts":[],"assets":["/favicon.ico","/_astro/Aboutme.CYM2p6jk.js","/_astro/AdminDashboard.CIFghCGB.js","/_astro/arrow-left.BR92YbJB.js","/_astro/BackgroundEffect._kp6rsji.js","/_astro/BlogPostDetail.BHTZlbgk.js","/_astro/BlogsList.D1BqCNG6.js","/_astro/BlogsSection.Dx2gVSWb.js","/_astro/chevron-right.kEbz_9HS.js","/_astro/client.B5mqh7CC.js","/_astro/ClientRouter.astro_astro_type_script_index_0_lang.jmhnZfFy.js","/_astro/clock.1fJ_Jaff.js","/_astro/code.hLKYHd_Y.js","/_astro/Contact.CrnnIZE6.js","/_astro/createLucideIcon.DJkAMRys.js","/_astro/HeaderNav.LDe8K3R5.js","/_astro/Hero.CPq5-fn9.js","/_astro/hooks.module.DSavvgnr.js","/_astro/jsxRuntime.module.CVfPFKCM.js","/_astro/mail.-QHCmky4.js","/_astro/map-pin.BDh7MK8n.js","/_astro/preact.module.C9jO4sh_.js","/_astro/proxy.Dk4UhIg2.js","/_astro/signals.module.CaTDeTqE.js","/_astro/TechStack.DjdRmVhS.js","/_astro/terminal.Bz7IkHQ7.js","/_astro/Work.BlErx633.js","/_astro/data.Dcw57I5P.css"],"buildFormat":"directory","checkOrigin":true,"actionBodySizeLimit":1048576,"serverIslandBodySizeLimit":1048576,"allowedDomains":[],"key":"izQX+gob+2s4x69jp+FIahj2QUCTRjyzqp5rNI7jKzM=","sessionConfig":{"driver":"unstorage/drivers/fs-lite","options":{"base":"D:\\client\\node_modules\\.astro\\sessions"}},"image":{},"devToolbar":{"enabled":false,"debugInfoOutput":""},"logLevel":"info","shouldInjectCspMetaTags":false});
 var manifestRoutes = _manifest.routes;
 var manifest = Object.assign(_manifest, {
 	renderers,
@@ -5561,7 +5525,7 @@ var _virtual_astro_node_config_exports = /* @__PURE__ */ __exportAll({
 	bodySizeLimit: () => bodySizeLimit,
 	client: () => client,
 	experimentalDisableStreaming: () => false,
-	host: () => false,
+	host: () => true,
 	mode: () => mode,
 	port: () => port,
 	server: () => server,
@@ -5793,8 +5757,9 @@ function createAppHandler(app, options) {
 			res.end("Internal Server Error");
 			return;
 		}
-		const routeData = app.match(request, true);
-		if (routeData && !(routeData.type === "page" && routeData.prerender)) await writeResponse(await als.run(request.url, () => app.render(request, {
+		let routeData = app.match(request, true);
+		if (routeData?.type === "page" && routeData.prerender) routeData = app.match(request);
+		if (routeData) await writeResponse(await als.run(request.url, () => app.render(request, {
 			addCookieHeader: true,
 			locals,
 			routeData,
@@ -5885,7 +5850,7 @@ function createStaticHandler(app, options, headersMap) {
 				const request = createRequestFromNodeRequest(req, { port: options.port });
 				const routeData = app.match(request, true);
 				if (routeData && routeData.prerender) {
-					const baselessPathname = prependForwardSlash(app.removeBase(urlPath));
+					const baselessPathname = prependForwardSlash$1(app.removeBase(urlPath));
 					const matchedRoute = headersMap.find((header) => header.pathname.includes(baselessPathname));
 					if (matchedRoute) for (const header of matchedRoute.headers) res.setHeader(header.key, header.value);
 				}
@@ -5910,7 +5875,7 @@ function createStaticHandler(app, options, headersMap) {
 					return res.end();
 				}
 			}
-			pathname = prependForwardSlash(app.removeBase(pathname));
+			pathname = prependForwardSlash$1(app.removeBase(pathname));
 			const normalizedPathname = path.posix.normalize(pathname);
 			const stream = send(req, normalizedPathname, {
 				root: client,
@@ -5938,7 +5903,7 @@ function createStaticHandler(app, options, headersMap) {
 		} else ssr();
 	};
 }
-function prependForwardSlash(pth) {
+function prependForwardSlash$1(pth) {
 	return pth.startsWith("/") ? pth : "/" + pth;
 }
 //#endregion
@@ -6010,4 +5975,4 @@ var handler = createStandaloneHandler(app, _virtual_astro_node_config_exports, h
 var startServer = () => standalone(app, _virtual_astro_node_config_exports, headersMap);
 if (process.env.ASTRO_NODE_AUTOSTART !== "disabled") startServer();
 //#endregion
-export { handler, _virtual_astro_node_config_exports as options, startServer };
+export { handler, _virtual_astro_node_config_exports as options, startServer, path_exports as t };

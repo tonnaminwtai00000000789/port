@@ -78,7 +78,9 @@ export function Hero({ data }: { data: HeroData }) {
             <motion.div
               initial={{ rotate: -1, scale: 0.98 }}
               animate={{ rotate: -1, scale: 1 }}
-              className="sticky-memo-yellow p-4 sm:p-5 text-xs sm:text-sm font-medium leading-relaxed max-w-xl relative"
+              whileHover={{ rotate: 0, scale: 1.015 }}
+              transition={{ duration: 0.2 }}
+              className="sticky-memo-yellow p-4 sm:p-5 text-xs sm:text-sm font-medium leading-relaxed max-w-xl relative cursor-default"
             >
               <div className="paper-tape" />
               <p className="font-bold text-[#854d0e] mb-1.5 flex items-center gap-1.5 font-display">
@@ -94,38 +96,43 @@ export function Hero({ data }: { data: HeroData }) {
 
             {/* Action Buttons & Status */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
+              <motion.a
                 href="#works"
-                className="stamp-btn-blue px-5 py-2.5 text-xs sm:text-sm font-bold inline-flex items-center gap-1.5"
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.97, y: 1 }}
+                className="stamp-btn-blue px-5 py-2.5 text-xs sm:text-sm font-bold inline-flex items-center gap-1.5 group"
               >
-                ดูสิ่งที่ผมเคยทำ <ArrowRight className="w-4 h-4" />
-              </a>
-              <span className="stamp-badge-mint px-3.5 py-2 text-xs font-mono inline-flex items-center gap-1.5">
+                ดูสิ่งที่ผมเคยทำ <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </motion.a>
+              <motion.span
+                whileHover={{ scale: 1.02 }}
+                className="stamp-badge-mint px-3.5 py-2 text-xs font-mono inline-flex items-center gap-1.5 cursor-default"
+              >
                 <span className="w-2 h-2 rounded-full bg-[#166534] animate-pulse" />
                 STATUS: ว่างจ้างได้
-              </span>
+              </motion.span>
             </div>
 
             {/* Spec Counter Notes */}
             <div className="grid grid-cols-3 gap-3 pt-4 border-t border-dashed border-[#cbd5e1]">
-              <div className="p-3 rounded bg-[#f8fafc] border border-[#e2e8f0]">
+              <motion.div whileHover={{ y: -2 }} className="p-3 rounded bg-[#f8fafc] border border-[#e2e8f0] transition-colors hover:border-[#bfdbfe]">
                 <p className="font-mono text-xl sm:text-2xl font-bold text-[#1d4ed8]">
                   {experience}+ ปี
                 </p>
                 <p className="text-[11px] font-semibold text-[#64748b] mt-0.5 font-sans">ประสบการณ์</p>
-              </div>
-              <div className="p-3 rounded bg-[#f8fafc] border border-[#e2e8f0]">
+              </motion.div>
+              <motion.div whileHover={{ y: -2 }} className="p-3 rounded bg-[#f8fafc] border border-[#e2e8f0] transition-colors hover:border-[#cbd5e1]">
                 <p className="font-mono text-xl sm:text-2xl font-bold text-[#0f172a]">
                   {age} ปี
                 </p>
                 <p className="text-[11px] font-semibold text-[#64748b] mt-0.5 font-sans">อายุ</p>
-              </div>
-              <div className="p-3 rounded bg-[#f8fafc] border border-[#e2e8f0]">
+              </motion.div>
+              <motion.div whileHover={{ y: -2 }} className="p-3 rounded bg-[#f8fafc] border border-[#e2e8f0] transition-colors hover:border-[#cbd5e1]">
                 <p className="font-mono text-xl sm:text-2xl font-bold text-[#0f172a]">
                   67%
                 </p>
                 <p className="text-[11px] font-semibold text-[#64748b] mt-0.5 font-sans">ความตั้งใจ</p>
-              </div>
+              </motion.div>
             </div>
           </div>
 
@@ -134,8 +141,9 @@ export function Hero({ data }: { data: HeroData }) {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="relative w-full max-w-xs"
+              whileHover={{ rotate: 1, scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-xs cursor-pointer"
             >
               {/* Polaroid Frame */}
               <div className="p-3.5 pb-4 bg-white border border-[#1e293b] rounded shadow-md relative z-10">
@@ -163,8 +171,9 @@ export function Hero({ data }: { data: HeroData }) {
                   กำลังทำในปัจจุบัน
                 </p>
                 {data.positions.map((pos, idx) => (
-                  <div
+                  <motion.div
                     key={idx}
+                    whileHover={{ x: 2 }}
                     className="flex items-center gap-3 p-2.5 bg-white rounded border border-[#cbd5e1] hover:border-[#1e293b] transition-colors"
                   >
                     <img
@@ -186,7 +195,7 @@ export function Hero({ data }: { data: HeroData }) {
                     <span className="text-[10px] font-mono font-medium px-2 py-0.5 bg-[#f8fafc] border border-[#e2e8f0] rounded">
                       {pos.since}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             )}

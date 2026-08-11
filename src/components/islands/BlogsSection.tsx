@@ -41,10 +41,11 @@ export function BlogsSection({ data }: { data: Blog[] }) {
         {latestBlogs.map((blog, idx) => (
           <motion.a
             key={blog.id}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: 0.08 * idx }}
+            whileHover={{ y: -4 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.35, delay: 0.08 * idx, ease: [0.16, 1, 0.3, 1] }}
             href={`/blogs/${blog.slug}`}
             className="paper-card overflow-hidden bg-white flex flex-col justify-between group"
           >
@@ -67,7 +68,7 @@ export function BlogsSection({ data }: { data: Blog[] }) {
 
               <div className="pt-2 border-t border-[#f1f5f9] flex items-center justify-between text-xs font-bold text-[#1d4ed8]">
                 <span>อ่านต่อ</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
           </motion.a>

@@ -66,10 +66,11 @@ export function Work({ data }: { data: WorkItem[] }) {
             return (
               <motion.div
                 key={work.id}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: 0.08 * idx }}
+                whileHover={{ y: -4 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.35, delay: 0.08 * idx, ease: [0.16, 1, 0.3, 1] }}
                 className="paper-card overflow-hidden bg-white flex flex-col justify-between group"
               >
                 {/* Project Image */}
@@ -115,7 +116,7 @@ export function Work({ data }: { data: WorkItem[] }) {
                           className="hover:text-[#1d4ed8] transition-colors inline-flex items-center gap-1.5"
                         >
                           {work.title}
-                          <ArrowUpRight className="w-4 h-4 text-[#1d4ed8] opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <ArrowUpRight className="w-4 h-4 text-[#1d4ed8] opacity-0 group-hover:opacity-100 transition-all transform translate-y-1 group-hover:translate-y-0" />
                         </a>
                       ) : (
                         work.title
@@ -140,11 +141,13 @@ export function Work({ data }: { data: WorkItem[] }) {
                   <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#f1f5f9]">
                     {work.links && work.links.length > 0 ? (
                       work.links.map((link, linkIdx) => (
-                        <a
+                        <motion.a
                           key={linkIdx}
                           href={link.url}
                           target="_blank"
                           rel="noreferrer"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.96 }}
                           className="stamp-btn-blue px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs"
                         >
                           {link.type === "website" ? (
@@ -156,17 +159,19 @@ export function Work({ data }: { data: WorkItem[] }) {
                               ซอร์สโค้ด <Github className="w-3.5 h-3.5" />
                             </>
                           )}
-                        </a>
+                        </motion.a>
                       ))
                     ) : primaryUrl ? (
-                      <a
+                      <motion.a
                         href={primaryUrl}
                         target="_blank"
                         rel="noreferrer"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.96 }}
                         className="stamp-btn-blue px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs"
                       >
                         เปิดดูเว็บไซต์ <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      </motion.a>
                     ) : null}
                   </div>
                 </div>
@@ -186,15 +191,16 @@ export function Work({ data }: { data: WorkItem[] }) {
                 key={work.id}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -2 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: 0.08 * idx }}
-                className="paper-card-subtle p-3.5 bg-white flex items-center gap-3"
+                className="paper-card-subtle p-3.5 bg-white flex items-center gap-3 group"
               >
                 <div className="w-11 h-11 border border-[#cbd5e1] rounded shrink-0 overflow-hidden bg-[#f8fafc]">
-                  <img src={work.image} alt={work.title} className="w-full h-full object-cover" />
+                  <img src={work.image} alt={work.title} className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-[#0f172a] truncate font-display">
+                  <h4 className="text-xs font-bold text-[#0f172a] truncate font-display group-hover:text-[#1d4ed8] transition-colors">
                     {work.title}
                   </h4>
                   <p className="text-[11px] text-[#64748b] truncate mb-1">{work.description}</p>
@@ -205,7 +211,7 @@ export function Work({ data }: { data: WorkItem[] }) {
                       rel="noreferrer"
                       className="text-[10px] font-bold text-[#1d4ed8] hover:underline inline-flex items-center gap-0.5 font-mono"
                     >
-                      เปิดดู <ArrowUpRight className="w-2.5 h-2.5" />
+                      เปิดดู <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </a>
                   )}
                 </div>

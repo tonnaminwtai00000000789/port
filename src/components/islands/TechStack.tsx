@@ -34,10 +34,11 @@ export function TechStack({ data }: { data: TechStackCategory[] }) {
         {data.map((stack, idx) => (
           <motion.div
             key={stack.id || stack.category}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: 0.08 * idx }}
+            whileHover={{ y: -3 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.35, delay: 0.08 * idx, ease: [0.16, 1, 0.3, 1] }}
             className="paper-card p-5 bg-white"
           >
             <div className="flex items-center gap-2 mb-4 pb-2.5 border-b border-[#cbd5e1]">
@@ -53,11 +54,13 @@ export function TechStack({ data }: { data: TechStackCategory[] }) {
 
             <div className="grid grid-cols-2 gap-2">
               {stack.technologies?.map((tech, techIdx) => (
-                <div
+                <motion.div
                   key={techIdx}
-                  className="flex items-center gap-2 p-2 rounded bg-[#f8fafc] border border-[#e2e8f0] hover:border-[#1d4ed8] hover:bg-[#eff6ff] transition-all"
+                  whileHover={{ scale: 1.03, y: -1 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-2 p-2 rounded bg-[#f8fafc] border border-[#e2e8f0] hover:border-[#1d4ed8] hover:bg-[#eff6ff] transition-colors group cursor-default"
                 >
-                  <div className="w-5 h-5 flex items-center justify-center text-[#1e293b] shrink-0">
+                  <div className="w-5 h-5 flex items-center justify-center text-[#1e293b] shrink-0 group-hover:scale-110 transition-transform">
                     {tech.icon && tech.icon.startsWith("devicon-") ? (
                       <i className={`${tech.icon} text-sm`} />
                     ) : tech.icon ? (
@@ -66,10 +69,10 @@ export function TechStack({ data }: { data: TechStackCategory[] }) {
                       <Code className="w-3.5 h-3.5 text-[#1d4ed8]" />
                     )}
                   </div>
-                  <span className="text-xs font-semibold text-[#0f172a] truncate font-sans">
+                  <span className="text-xs font-semibold text-[#0f172a] truncate font-sans group-hover:text-[#1d4ed8] transition-colors">
                     {tech.name}
                   </span>
-                </div>
+                </motion.div>
               ))}
             </div>
           </motion.div>

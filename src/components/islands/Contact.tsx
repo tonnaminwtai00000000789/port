@@ -79,20 +79,22 @@ export function Contact({ data }: { data: ContactData }) {
           {data.socials && data.socials.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {data.socials.map((social, idx) => (
-                <a
+                <motion.a
                   key={idx}
                   href={social.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 bg-white rounded border border-[#cbd5e1] text-[#0f172a] hover:border-[#1d4ed8] hover:text-[#1d4ed8] hover:bg-[#eff6ff] text-xs font-bold inline-flex items-center gap-2 transition-colors shadow-2xs font-mono"
+                  whileHover={{ y: -2, scale: 1.02 }}
+                  whileTap={{ scale: 0.96 }}
+                  className="px-3.5 py-2 bg-white rounded border border-[#cbd5e1] text-[#0f172a] hover:border-[#1d4ed8] hover:text-[#1d4ed8] hover:bg-[#eff6ff] text-xs font-bold inline-flex items-center gap-2 transition-colors shadow-2xs font-mono group"
                 >
                   {social.icon && social.icon.startsWith("devicon-") ? (
-                    <i className={`${social.icon}`} />
+                    <i className={`${social.icon} group-hover:scale-110 transition-transform`} />
                   ) : (
-                    <Globe className="w-3.5 h-3.5 text-[#1d4ed8]" />
+                    <Globe className="w-3.5 h-3.5 text-[#1d4ed8] group-hover:rotate-12 transition-transform" />
                   )}
                   <span>{social.platform}</span>
-                </a>
+                </motion.a>
               ))}
             </div>
           )}
@@ -100,10 +102,10 @@ export function Contact({ data }: { data: ContactData }) {
 
         {/* Right Column: Direct Channel Form */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35, delay: 0.08 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.35, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
           className="lg:col-span-6"
         >
           <div className="paper-card p-6 bg-white">
@@ -120,7 +122,7 @@ export function Contact({ data }: { data: ContactData }) {
                   placeholder="ชื่อของคุณ / Your Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans"
+                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans transition-colors"
                 />
               </div>
 
@@ -131,7 +133,7 @@ export function Contact({ data }: { data: ContactData }) {
                   placeholder="อีเมลสำหรับตอบกลับ / Email Address"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans"
+                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans transition-colors"
                 />
               </div>
 
@@ -142,13 +144,15 @@ export function Contact({ data }: { data: ContactData }) {
                   placeholder="ข้อความของคุณ..."
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] resize-none min-h-[100px] font-sans"
+                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] resize-none min-h-[100px] font-sans transition-colors"
                 />
               </div>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={status === "sending"}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.97 }}
                 className="stamp-btn-blue w-full py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-50 font-sans"
               >
                 {status === "sending" ? (
@@ -167,7 +171,7 @@ export function Contact({ data }: { data: ContactData }) {
                     <Send className="w-3.5 h-3.5" />
                   </>
                 )}
-              </button>
+              </motion.button>
             </form>
           </div>
         </motion.div>

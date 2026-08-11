@@ -26,14 +26,25 @@
   background: #1d4ed8;
 }
 
+:root {
+  --mouse-x: 50%;
+  --mouse-y: 200px;
+}
+
 body {
   background-color: #f6f5f0;
   color: #0f172a;
   font-family: var(--font-sans);
   overflow-x: hidden;
-  /* Subtle Desk Grid Pattern */
-  background-image: radial-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
+  position: relative;
+  /* Layered Architectural Desk Canvas: Hairline guide lines + Dot matrix + Top ambient vignette */
+  background-image:
+    radial-gradient(600px circle at 50% 120px, rgba(219, 234, 254, 0.4), rgba(254, 249, 195, 0.2) 50%, transparent 80%),
+    linear-gradient(to right, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
+    radial-gradient(rgba(15, 23, 42, 0.07) 1px, transparent 1px);
+  background-size: 100% 100%, 96px 96px, 96px 96px, 24px 24px;
+  background-position: 0 0, 0 0, 0 0, 0 0;
 }
 
 /* Focus Visible Accessibility */
@@ -46,42 +57,43 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .paper-card {
   background-color: #ffffff;
   border: 1px solid #1e293b;
-  border-radius: 8px;
-  box-shadow: 4px 4px 0px 0px rgba(15, 23, 42, 0.08);
+  border-radius: 10px;
+  box-shadow: 4px 4px 0px 0px rgba(15, 23, 42, 0.1);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
 }
 
 .paper-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 5px 6px 0px 0px #1e293b;
+  transform: translateY(-3px);
+  box-shadow: 6px 7px 0px 0px #1e293b;
 }
 
 .paper-card-subtle {
   background-color: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  box-shadow: 2px 2px 0px 0px rgba(15, 23, 42, 0.04);
-  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0px 0px rgba(15, 23, 42, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .paper-card-subtle:hover {
   border-color: #1e293b;
-  box-shadow: 3px 4px 0px 0px #cbd5e1;
+  box-shadow: 4px 5px 0px 0px #1e293b;
+  transform: translateY(-2px);
 }
 
 /* Yellow Sticky Note Memo */
 .sticky-memo-yellow {
   background-color: #fef08a;
   color: #854d0e;
-  border: 1px solid #eab308;
-  border-radius: 6px;
-  box-shadow: 3px 3px 0px 0px rgba(161, 98, 7, 0.2);
+  border: 1.5px solid #eab308;
+  border-radius: 8px;
+  box-shadow: 3px 4px 0px 0px rgba(161, 98, 7, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .sticky-memo-yellow:hover {
-  transform: scale(1.01) rotate(0deg);
-  box-shadow: 4px 4px 0px 0px rgba(161, 98, 7, 0.28);
+  transform: scale(1.015) rotate(0deg);
+  box-shadow: 5px 6px 0px 0px rgba(161, 98, 7, 0.32);
 }
 
 /* Paper Tape Decorative Accent */
@@ -90,11 +102,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   top: -10px;
   left: 50%;
   transform: translateX(-50%) rotate(-1deg);
-  width: 70px;
-  height: 20px;
-  background-color: rgba(254, 249, 195, 0.85);
-  border: 1px solid rgba(234, 179, 8, 0.5);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  width: 72px;
+  height: 22px;
+  background-color: rgba(254, 249, 195, 0.9);
+  border: 1px solid rgba(234, 179, 8, 0.55);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   z-index: 20;
   pointer-events: none;
 }
@@ -104,7 +116,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   background-color: #1d4ed8;
   color: #ffffff;
   border: 1px solid #1e293b;
-  border-radius: 6px;
+  border-radius: 8px;
   box-shadow: 3px 3px 0px 0px #1e293b;
   font-weight: 700;
   transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
@@ -134,14 +146,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .tag-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3px 9px;
-  border-radius: 4px;
+  padding: 3.5px 9.5px;
+  border-radius: 5px;
   border: 1px solid #cbd5e1;
   background-color: #ffffff;
   color: #1e293b;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.15s ease;
 }
 
@@ -149,6 +161,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   border-color: #1d4ed8;
   color: #1d4ed8;
   background-color: #eff6ff;
+}
+
+/* Blueprint Section Header Marker */
+.blueprint-marker {
+  color: #1d4ed8;
 }
 
 /* Custom View Transitions */

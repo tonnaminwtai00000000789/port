@@ -1,19 +1,22 @@
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import cloudflare from '@astrojs/cloudflare';
+import preact from '@astrojs/preact';
+import node from '@astrojs/node';
 import tailwindcss from '@tailwindcss/vite';
-
-const isCloudflare = process.argv.some(arg => arg.includes('build') || arg.includes('preview'));
 
 export default defineConfig({
   output: 'server',
-  adapter: isCloudflare ? cloudflare({ imageService: 'passthrough', platformProxy: { enabled: false } }) : undefined,
-  integrations: [react()],
+  adapter: node({
+    mode: 'standalone',
+  }),
+  integrations: [preact({ compat: true })],
   server: {
     host: true,
     port: 4321,
   },
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ['framer-motion', 'lucide-react', '@radix-ui/react-hover-card', '@radix-ui/react-tooltip'],
+    },
   },
 });

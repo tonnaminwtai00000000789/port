@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import { BackgroundEffect } from '../components/islands/BackgroundEffect';
 
 interface Props {
   title?: string;
@@ -42,7 +43,20 @@ const {
     />
     <ClientRouter />
   </head>
-  <body class="bg-[#F6F5F0] text-[#0F172A] antialiased selection:bg-[#FEF08A] selection:text-[#854D0E] min-h-screen flex flex-col">
-    <slot />
+  <body class="bg-[#F6F5F0] text-[#0F172A] antialiased selection:bg-[#FEF08A] selection:text-[#854D0E] min-h-screen flex flex-col relative">
+    <BackgroundEffect client:load />
+    <div class="flex-1">
+      <slot />
+    </div>
+    <footer class="mt-auto border-t border-[#cbd5e1] bg-white/70 backdrop-blur-xs py-6 px-6 text-xs text-[#64748b] relative z-10">
+      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 font-mono">
+        <p>© {new Date().getFullYear()} Tonnam · Supakron Klinbubpa. Built with Astro & Preact.</p>
+        <p class="flex items-center gap-2">
+          <span class="text-[10px] font-bold text-[#1d4ed8] uppercase tracking-wider">[DESK STUDIO]</span>
+          <span class="text-[#cbd5e1]">|</span>
+          <a href="#" class="text-[#1d4ed8] hover:underline font-bold transition-colors">TOP ↑</a>
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

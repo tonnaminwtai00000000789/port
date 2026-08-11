@@ -39,10 +39,11 @@ export function Aboutme({ data }: { data: AboutMeData }) {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-6">
         {/* Pseudonym Card */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.35 }}
+          whileHover={{ y: -3 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="md:col-span-7 paper-card p-6 bg-white flex flex-col justify-between"
         >
           <div>
@@ -69,9 +70,10 @@ export function Aboutme({ data }: { data: AboutMeData }) {
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ x: 3 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: 0.05 }}
-            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3"
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3 cursor-default"
           >
             <div className="w-9 h-9 rounded bg-[#eff6ff] border border-[#bfdbfe] flex items-center justify-center text-[#1d4ed8] shrink-0">
               <MapPin className="w-4 h-4" />
@@ -85,9 +87,10 @@ export function Aboutme({ data }: { data: AboutMeData }) {
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ x: 3 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: 0.1 }}
-            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3"
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3 cursor-default"
           >
             <div className="w-9 h-9 rounded bg-[#eff6ff] border border-[#bfdbfe] flex items-center justify-center text-[#1d4ed8] shrink-0">
               <Cake className="w-4 h-4" />
@@ -101,9 +104,10 @@ export function Aboutme({ data }: { data: AboutMeData }) {
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ x: 3 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.35, delay: 0.15 }}
-            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3"
+            transition={{ duration: 0.3, delay: 0.15 }}
+            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3 cursor-default"
           >
             <div className="w-9 h-9 rounded bg-[#dcfce7] border border-[#86efac] flex items-center justify-center text-[#166534] shrink-0">
               <Activity className="w-4 h-4" />
@@ -125,18 +129,19 @@ export function Aboutme({ data }: { data: AboutMeData }) {
           {data.facts.map((fact, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: 0.08 * idx }}
-              className="paper-card overflow-hidden bg-white"
+              whileHover={{ y: -4 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.35, delay: 0.08 * idx, ease: [0.16, 1, 0.3, 1] }}
+              className="paper-card overflow-hidden bg-white group cursor-default"
             >
               <div className="h-32 overflow-hidden relative bg-[#f8fafc] border-b border-[#e2e8f0]">
                 {fact.image ? (
                   <img
                     src={fact.image}
                     alt={fact.title}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-103"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
                   />
                 ) : (
@@ -150,7 +155,7 @@ export function Aboutme({ data }: { data: AboutMeData }) {
               </div>
               <div className="p-3">
                 <p className="text-[10px] font-mono text-[#64748b] uppercase">{fact.subtitle}</p>
-                <p className="text-sm font-bold text-[#0f172a] font-display">{fact.title}</p>
+                <p className="text-sm font-bold text-[#0f172a] font-display group-hover:text-[#1d4ed8] transition-colors">{fact.title}</p>
               </div>
             </motion.div>
           ))}

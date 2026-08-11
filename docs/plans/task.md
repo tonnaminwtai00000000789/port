@@ -1,7 +1,11 @@
 | Status | Task |
 | --- | --- |
-| ✅ | Task 1: Gridgeist System Contract & Global CSS Refinement (`global.css`, `Layout.astro`) |
-| ✅ | Task 2: Refine Header & Hero Composition (`HeaderNav.tsx`, `Hero.tsx`) |
-| ✅ | Task 3: Refine Work & Tech Stack Specification Grid (`Work.tsx`, `TechStack.tsx`) |
-| ✅ | Task 4: Refine About Bulletin & Contact Postcard (`Aboutme.tsx`, `Contact.tsx`, `BlogsSection.tsx`) |
-| ✅ | Task 5: Build Verification & Verification Evidence (`bun run build`) |
+| ✅ | Task 1: Refine Global CSS Tokens & UI Classes (`src/styles/global.css`) |
+| ✅ | Task 2: Polish Header Navigation (`HeaderNav.tsx`) |
+| ✅ | Task 3: Polish Hero Section & Stats (`Hero.tsx`) |
+| ✅ | Task 4: Polish Portfolio Works (`Work.tsx`, `works.astro`) |
+| ✅ | Task 5: Polish Tech Stack & Toolkit (`TechStack.tsx`) |
+| ✅ | Task 6: Polish About Me & Facts (`Aboutme.tsx`) |
+| ✅ | Task 7: Polish Blog Components (`BlogsSection.tsx`, `BlogsList.tsx`, `BlogPostDetail.tsx`) |
+| ✅ | Task 8: Polish Contact Section & Add Studio Footer (`Contact.tsx`, `Layout.astro`) |
+| ✅ | Task 9: Build Verification (`bun run build`) |
