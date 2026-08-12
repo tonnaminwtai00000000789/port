@@ -29,11 +29,11 @@ const {
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-    <!-- Google Fonts: Space Grotesk (Display) + DM Sans (Body) + Geist Mono (Code) -->
+    <!-- Google Fonts: Space Grotesk (Display) + Nunito (Body) + Geist Mono (Code) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Geist+Mono:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Geist+Mono:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap"
       rel="stylesheet"
     />
     <!-- Devicon CDN -->
@@ -43,18 +43,21 @@ const {
     />
     <ClientRouter />
   </head>
-  <body class="bg-[#F6F5F0] text-[#0F172A] antialiased selection:bg-[#FEF08A] selection:text-[#854D0E] min-h-screen flex flex-col relative">
+  <body class="antialiased min-h-screen flex flex-col relative" style="background-color: var(--kuro-bg); color: var(--kuro-skull);">
     <BackgroundEffect client:load />
-    <div class="flex-1">
+    <div class="flex-1 flex flex-col">
       <slot />
     </div>
-    <footer class="mt-auto border-t border-[#cbd5e1] bg-white/70 backdrop-blur-xs py-6 px-6 text-xs text-[#64748b] relative z-10">
-      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 font-mono">
-        <p>© {new Date().getFullYear()} Tonnam · Supakron Klinbubpa. Built with Astro & Preact.</p>
+    <footer class="mt-auto border-t py-6 px-6 text-xs relative z-10" style="border-color: var(--kuro-border); background: rgba(13, 0, 16, 0.95); color: var(--kuro-muted);">
+      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4" style="font-family: var(--font-mono);">
+        <div class="flex items-center gap-3">
+          <img src="/kuromi/List-kuromi.webp" alt="Kuromi" class="w-8 h-8 object-contain opacity-75" />
+          <p>© {new Date().getFullYear()} Tonnam · Supakron Klinbubpa</p>
+        </div>
         <p class="flex items-center gap-2">
-          <span class="text-[10px] font-bold text-[#1d4ed8] uppercase tracking-wider">[DESK STUDIO]</span>
-          <span class="text-[#cbd5e1]">|</span>
-          <a href="#" class="text-[#1d4ed8] hover:underline font-bold transition-colors">TOP ↑</a>
+          <span class="text-[10px] font-bold uppercase tracking-wider" style="color: var(--kuro-primary-glow);">✦ KUROMI.DEV ✦</span>
+          <span style="color: var(--kuro-border-bright);">|</span>
+          <a href="#" class="font-bold transition-colors hover:underline" style="color: var(--kuro-pink);">TOP ↑</a>
         </p>
       </div>
     </footer>

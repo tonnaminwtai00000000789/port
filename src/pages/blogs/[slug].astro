@@ -26,14 +26,7 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=600, s
 >
   <HeaderNav client:load />
 
-  <main class="mx-auto max-w-4xl px-6 pt-28 pb-16 flex-1 w-full space-y-8">
+  <main class="mx-auto max-w-7xl px-4 sm:px-8 lg:px-12 pt-28 pb-16 flex-1 w-full space-y-8">
     <BlogPostDetail client:load post={post} />
   </main>
-
-  <footer class="mt-16 border-t-2 border-[#0f172a] bg-white py-6 text-center text-xs font-medium text-[#475569]">
-    <div class="mx-auto max-w-5xl px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p>© {new Date().getFullYear()} Supakron Klinbubpa (Tonnam). All rights reserved.</p>
-      <p class="font-mono text-[11px] text-[#0f172a]">Astro 5 · React Islands · Supabase · Bun</p>
-    </div>
-  </footer>
 </Layout>

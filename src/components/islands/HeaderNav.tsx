@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Magnet } from "../reactbits/Magnet";
+import { CardNav } from "../reactbits/CardNav";
 
 export function HeaderNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -8,15 +10,12 @@ export function HeaderNav() {
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     const updateTime = () => {
-      const now = new Date();
       setCurrentTime(
-        now.toLocaleTimeString("en-GB", {
+        new Date().toLocaleTimeString("en-GB", {
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
@@ -25,7 +24,6 @@ export function HeaderNav() {
         })
       );
     };
-
     updateTime();
     const interval = setInterval(updateTime, 1000);
 
@@ -35,132 +33,139 @@ export function HeaderNav() {
     };
   }, []);
 
+  const navLinks = [
+    { href: "#works", label: "ผลงาน", num: "01" },
+    { href: "#skills", label: "ทักษะ", num: "02" },
+    { href: "#about", label: "เกี่ยวกับ", num: "03" },
+    { href: "/blogs", label: "บล็อก", num: "04" },
+  ];
+
   return (
     <motion.header
-      initial={{ y: -50, opacity: 0 }}
+      initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-200 ${
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-[#1e293b] py-3 shadow-xs"
+          ? "py-3 shadow-lg"
           : "bg-transparent py-4"
       }`}
+      style={
+        scrolled
+          ? {
+              background: "rgba(13,0,16,0.9)",
+              backdropFilter: "blur(16px)",
+              borderBottom: "1px solid var(--kuro-border)",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(155,48,217,0.08)",
+            }
+          : {}
+      }
     >
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-8 lg:px-12">
         {/* Brand Logo */}
-        <motion.a
-          href="/"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="font-display text-2xl font-bold tracking-tight text-[#0f172a] flex items-center gap-1.5 group"
-        >
-          <span className="text-[#1d4ed8] font-black group-hover:text-[#1e40af] transition-colors">
-            Tonnam.dev
-          </span>
-        </motion.a>
+        <Magnet strength={0.2} radius={70}>
+          <motion.a
+            href="/"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            className="flex items-center gap-2 group"
+          >
+            <img
+              src="/kuromi/sanrio-kuromi-cute-512x512.png"
+              alt="Kuromi"
+              className="w-7 h-7 object-contain group-hover:scale-110 transition-transform duration-200"
+            />
+            <span
+              className="font-display text-xl font-black tracking-tight kuro-gradient-text"
+            >
+              Tonnam.dev
+            </span>
+          </motion.a>
+        </Magnet>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-6 md:flex">
-          <a
-            href="#works"
-            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
-          >
-            <span className="font-mono text-[#94a3b8] text-[10px] group-hover:text-[#1d4ed8] transition-colors">01.</span>
-            <span>ผลงาน</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 ease-out group-hover:w-full" />
-          </a>
-          <a
-            href="#skills"
-            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
-          >
-            <span className="font-mono text-[#94a3b8] text-[10px] group-hover:text-[#1d4ed8] transition-colors">02.</span>
-            <span>ทักษะ</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 ease-out group-hover:w-full" />
-          </a>
-          <a
-            href="#about"
-            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
-          >
-            <span className="font-mono text-[#94a3b8] text-[10px] group-hover:text-[#1d4ed8] transition-colors">03.</span>
-            <span>เกี่ยวกับ</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 ease-out group-hover:w-full" />
-          </a>
-          <a
-            href="/blogs"
-            className="text-xs font-semibold text-[#475569] hover:text-[#0f172a] transition-colors relative group py-1 flex items-center gap-1"
-          >
-            <span className="font-mono text-[#94a3b8] text-[10px] group-hover:text-[#1d4ed8] transition-colors">04.</span>
-            <span>บล็อก</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1d4ed8] transition-all duration-200 ease-out group-hover:w-full" />
-          </a>
+        {/* Desktop Navigation with CardNav & Clock */}
+        <div className="hidden items-center gap-3 md:flex">
+          <CardNav items={navLinks} />
 
-          {/* Bangkok Live Timestamp Badge */}
-          <motion.span
-            whileHover={{ scale: 1.03 }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#cbd5e1] bg-white text-[#1e293b] font-mono text-xs font-medium shadow-2xs cursor-default"
-          >
-            <Clock className="w-3.5 h-3.5 text-[#1d4ed8] animate-spin" style={{ animationDuration: "12s" }} />
-            <span>BKK {currentTime || "--:--:--"}</span>
-          </motion.span>
-        </nav>
+          {/* Bangkok Clock */}
+          <Magnet strength={0.15} radius={50}>
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl font-mono text-xs font-bold cursor-default"
+              style={{
+                border: "1px solid var(--kuro-border)",
+                background: "rgba(22,2,30,0.75)",
+                color: "var(--kuro-skull-dim)",
+              }}
+            >
+              <Clock
+                className="w-3.5 h-3.5"
+                style={{ color: "var(--kuro-pink)", animation: "spin 12s linear infinite" }}
+              />
+              <span>BKK {currentTime || "--:--:--"}</span>
+            </motion.div>
+          </Magnet>
+        </div>
 
-        {/* Mobile menu toggle */}
+
+        {/* Mobile toggle */}
         <motion.button
           type="button"
-          whileTap={{ scale: 0.92 }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex h-9 w-9 items-center justify-center border border-[#1e293b] rounded bg-white text-[#0f172a] md:hidden shadow-xs transition-colors hover:bg-slate-50"
+          className="flex h-9 w-9 items-center justify-center rounded-lg md:hidden transition-colors"
+          style={{
+            border: "1px solid var(--kuro-border)",
+            background: "rgba(30,0,40,0.8)",
+            color: "var(--kuro-skull)",
+          }}
           aria-label="เมนู"
         >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileOpen ? <X className="w-5 h-5" style={{ color: "var(--kuro-pink)" }} /> : <Menu className="w-5 h-5" />}
         </motion.button>
       </div>
 
-      {/* Mobile Menu Panel */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden px-6 py-4 bg-white border-b border-[#1e293b] overflow-hidden"
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden px-6 py-4 overflow-hidden"
+            style={{
+              background: "rgba(13,0,16,0.97)",
+              backdropFilter: "blur(20px)",
+              borderBottom: "1px solid var(--kuro-border)",
+            }}
           >
-            <nav className="flex flex-col gap-2">
-              <a
-                href="#works"
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
+            <nav className="flex flex-col gap-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2.5 px-3 py-2.5 text-sm font-bold rounded-lg transition-all duration-150"
+                  style={{ color: "var(--kuro-skull-dim)" }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.background = "rgba(155,48,217,0.12)";
+                    (e.currentTarget as HTMLElement).style.color = "var(--kuro-skull)";
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.background = "";
+                    (e.currentTarget as HTMLElement).style.color = "var(--kuro-skull-dim)";
+                  }}
+                >
+                  <span className="font-mono text-xs" style={{ color: "var(--kuro-muted)" }}>{link.num}.</span>
+                  <span>{link.label}</span>
+                </a>
+              ))}
+              <div
+                className="mt-2 pt-3 flex items-center gap-2 text-xs font-mono"
+                style={{ borderTop: "1px solid var(--kuro-border)", color: "var(--kuro-muted)" }}
               >
-                <span className="font-mono text-xs text-[#94a3b8]">01.</span>
-                <span>ผลงาน</span>
-              </a>
-              <a
-                href="#skills"
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
-              >
-                <span className="font-mono text-xs text-[#94a3b8]">02.</span>
-                <span>ทักษะ</span>
-              </a>
-              <a
-                href="#about"
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
-              >
-                <span className="font-mono text-xs text-[#94a3b8]">03.</span>
-                <span>เกี่ยวกับ</span>
-              </a>
-              <a
-                href="/blogs"
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded transition-colors flex items-center gap-2"
-              >
-                <span className="font-mono text-xs text-[#94a3b8]">04.</span>
-                <span>บล็อก</span>
-              </a>
-              <div className="pt-2 border-t border-[#e2e8f0] flex items-center gap-2 text-xs font-mono text-[#64748b]">
-                <Clock className="w-3.5 h-3.5 text-[#1d4ed8]" />
+                <Clock className="w-3.5 h-3.5" style={{ color: "var(--kuro-pink)" }} />
                 <span>BKK {currentTime || "--:--:--"}</span>
               </div>
             </nav>

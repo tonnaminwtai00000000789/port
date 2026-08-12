@@ -26,7 +26,7 @@ export function AdminLogin({ password, setPassword, loginError, handleLogin }: A
             <input
               type="password"
               required
-              placeholder="กรอกรหัสผ่าน (admin123)"
+              placeholder="กรอกรหัสผ่าน"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3.5 py-3 rounded-lg bg-slate-50 border border-[#0f172a] text-xs font-semibold focus:outline-none focus:bg-white"

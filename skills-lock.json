@@ -12,6 +12,12 @@
       "sourceType": "github",
       "skillPath": "skills/gridgeist/SKILL.md",
       "computedHash": "124e6b5e1adea54f6d5585274980ef20fece0bfc00d9d9aba69bf35ee1f4e400"
+    },
+    "reactbits-ui-skills": {
+      "source": "lumacoder/react-bits-skills",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "f9b6f6e3d3bc10c9bd84dedcf62e9b4c6a72a80ff4d06624f03567765fd6cab2"
     }
   }
 }

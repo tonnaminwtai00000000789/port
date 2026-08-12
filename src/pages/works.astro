@@ -13,69 +13,79 @@ Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=600, s
 <Layout title={`Tonnam · ผลงานทั้งหมด`}>
   <div class="min-h-screen py-12 px-6">
     <div class="max-w-5xl mx-auto">
+
       {/* Header */}
-      <div class="flex items-center gap-4 mb-10">
+      <div class="flex items-center gap-4 mb-10 pt-10">
         <a
           href="/"
-          class="p-2.5 bg-white border border-[#1e293b] rounded-lg shadow-xs hover:border-[#1d4ed8] hover:text-[#1d4ed8] transition-all text-[#0f172a]"
+          class="p-2.5 rounded-xl transition-all flex items-center justify-center"
+          style="border: 1px solid var(--kuro-border); background: rgba(30,0,40,0.6); color: var(--kuro-skull-dim);"
+          onmouseover="this.style.borderColor='var(--kuro-primary-glow)'; this.style.color='var(--kuro-primary-glow)'"
+          onmouseout="this.style.borderColor='var(--kuro-border)'; this.style.color='var(--kuro-skull-dim)'"
         >
           <ArrowLeft className="w-5 h-5" />
         </a>
         <div>
-          <span class="text-xs font-mono font-bold text-[#1d4ed8] uppercase tracking-wider block">WORKS ARCHIVE</span>
-          <h1 class="text-3xl font-bold text-[#0f172a] font-display">ผลงานทั้งหมด</h1>
+          <span class="kuro-section-label">WORKS ARCHIVE</span>
+          <h1 class="text-3xl font-black" style="color: var(--kuro-skull); font-family: var(--font-display);">
+            ผลงานทั้งหมด
+          </h1>
         </div>
+        <img src="/kuromi/List-kuromi.webp" alt="Kuromi" class="w-12 h-12 object-contain ml-auto opacity-70" />
       </div>
 
       {/* Works Grid */}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {works.map((work) => (
-          <div class="paper-card overflow-hidden bg-white flex flex-col justify-between group">
-            <div class="aspect-video overflow-hidden relative border-b border-[#1e293b] bg-[#f8fafc]">
+          <div
+            class="kuro-card overflow-hidden flex flex-col justify-between group"
+          >
+            <div class="aspect-video overflow-hidden relative" style="border-bottom: 1px solid var(--kuro-border);">
               <img
                 src={work.image}
                 alt={work.title}
-                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-103"
+                class="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
               />
-              <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 bg-[#1e293b] text-white text-[10px] font-mono font-bold rounded shadow-2xs">
+              <span
+                class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-md font-mono text-[10px] font-bold kuro-badge-pink"
+              >
                 {work.year}
               </span>
             </div>
 
             <div class="p-5 flex flex-col justify-between flex-1 space-y-4">
               <div class="space-y-2">
-                <h2 class="text-xl font-bold text-[#0f172a] font-display group-hover:text-[#1d4ed8] transition-colors">
+                <h2
+                  class="text-xl font-black transition-colors"
+                  style="color: var(--kuro-skull); font-family: var(--font-display);"
+                  onmouseover="this.style.color='var(--kuro-primary-glow)'"
+                  onmouseout="this.style.color='var(--kuro-skull)'"
+                >
                   {work.title}
                 </h2>
-                <p class="text-[#475569] text-xs leading-relaxed font-sans">{work.description}</p>
+                <p class="text-xs leading-relaxed" style="color: var(--kuro-muted-bright);">{work.description}</p>
 
                 {work.tags && work.tags.length > 0 && (
-                  <div class="flex flex-wrap gap-1 pt-1">
+                  <div class="flex flex-wrap gap-1.5 pt-1">
                     {work.tags.map((tag: any) => (
-                      <span class="tag-badge">
-                        {tag.label}
-                      </span>
+                      <span class="kuro-badge">{tag.label}</span>
                     ))}
                   </div>
                 )}
               </div>
 
-              <div class="flex items-center gap-2 pt-2 border-t border-[#f1f5f9]">
+              <div class="flex items-center gap-2 pt-2" style="border-top: 1px solid var(--kuro-border);">
                 {work.links?.map((link: any) => (
                   <a
                     href={link.url}
                     target="_blank"
                     rel="noreferrer"
-                    class="stamp-btn-blue px-3.5 py-1.5 text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs"
+                    class={link.type === 'website' ? 'kuro-btn px-4 py-2 text-xs inline-flex items-center gap-1.5' : 'kuro-btn-outline px-4 py-2 text-xs inline-flex items-center gap-1.5'}
                   >
                     {link.type === 'website' ? (
-                      <>
-                        เปิดดูเว็บไซต์ <ExternalLink className="w-3.5 h-3.5" />
-                      </>
+                      <>เปิดดูเว็บไซต์ <ExternalLink className="w-3.5 h-3.5" /></>
                     ) : (
-                      <>
-                        ซอร์สโค้ด <Github className="w-3.5 h-3.5" />
-                      </>
+                      <>ซอร์สโค้ด <Github className="w-3.5 h-3.5" /></>
                     )}
                   </a>
                 ))}

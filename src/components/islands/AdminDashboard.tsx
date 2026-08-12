@@ -77,7 +77,7 @@ export function AdminDashboard() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "admin123" || password === "tonnam1234") {
+    if (password === "ชื่อของฉันคือ เอเลน เยเกอร์ กำลังสื่อสารถึงลูกหลานของยูมีร์ทุกคนผ่านพลังของไททันบรรพบุรุษพลังในการแข็งตัวของกำแพงทั้งหมดบนเกาะพาราดีได้ถูกคลายออกแล้วและไททันทุกตนที่ถูกฝังอยู่ข้างในก็ได้เริ่มก้าวเดินแล้วเป้าหมายของฉันคือการปกป้องผู้คนบนเกาะพาราดีที่ฉันได้เกิดและเติบโตขึ้นมาแต่ทว่าทั้งโลกนั้นกลับปรารถนาให้ผู้คนบนเกาะพาราดีต้องตายไม่ใช่แค่คนบนเกาะนี้เท่านั้นแต่พวกมันจะไม่หยุดจนกว่าลูกหลานของยูมีร์จะถูกฆ่าจนหมดฉันจะหยุดความปรารถนานั้นซะไททันในกำแพงจะเหยียบย่ำธรณีทั่วผืนปฐพีนอกเกาะนี้จนกว่าทุกชีวิตบนนั้น จะถูกสังหารสิ้นไปจากโลกนี้") {
       setIsAuthenticated(true);
       sessionStorage.setItem("admin_auth", "true");
       setLoginError("");
@@ -115,7 +115,7 @@ export function AdminDashboard() {
     try {
       if (isSupabaseConfigured()) {
         const { id, displayName, display_name, firstName, first_name, lastName, last_name, profileImage, profile_image, birthDate, birth_date, startDate, start_date, ...rest } = heroData || {};
-        
+
         const snakePayload: any = {
           ...rest,
           display_name: displayName || display_name || "",
@@ -236,7 +236,7 @@ export function AdminDashboard() {
             ...cleanWork,
             links: projectUrl ? [{ url: projectUrl, type: "website" }] : cleanWork.links || [],
           };
-          
+
           if (id && typeof id === "number" && id < 1000000000) {
             const { error } = await supabase.from("works").update(payload).eq("id", id);
             if (error) {

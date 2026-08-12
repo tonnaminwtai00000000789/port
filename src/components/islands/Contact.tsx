@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Mail, Send, Globe, Loader2, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { SpotlightCard } from "../reactbits/SpotlightCard";
+import { DecryptedText } from "../reactbits/DecryptedText";
+import { Magnet } from "../reactbits/Magnet";
 
 export interface ContactData {
   id: number;
@@ -31,149 +37,157 @@ export function Contact({ data }: { data: ContactData }) {
 
   return (
     <section id="contact" className="py-10">
-      {/* Section Title */}
       <div className="mb-6">
-        <span className="font-mono text-xs text-[#1d4ed8] font-bold block mb-1">
-          [DIRECT LINE // 05]
+        <span className="kuro-section-label">
+          <DecryptedText text="✦ [DIRECT LINE // 05]" animateOn="view" speed={45} />
         </span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-display tracking-tight">
-          ติดต่อผม
+        <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: "var(--kuro-skull)", fontFamily: "var(--font-display)" }}>
+          ติดต่อ
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-        {/* Left Column: Email & Socials */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left: Email + Socials (Unboxed) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.35 }}
-          className="lg:col-span-6 space-y-4"
+          transition={{ duration: 0.4 }}
+          className="lg:col-span-5 space-y-6"
         >
-          <div className="paper-card p-6 bg-white space-y-4">
-            <div>
-              <span className="text-xs font-mono font-bold text-[#1d4ed8] uppercase tracking-wider">
-                CONTACT DIRECTLY
-              </span>
-              <h3 className="text-xl font-bold text-[#0f172a] mt-1 mb-2 font-display">
-                ส่งข้อความพูดคุยหรือปรึกษาโปรเจกต์
-              </h3>
-              <p className="text-[#475569] text-xs leading-relaxed font-sans">
-                ยินดีร่วมงาน พัฒนาโปรเจกต์ หรือแลกเปลี่ยนความคิดเห็นทางเทคโนโลยีครับ
-              </p>
-            </div>
-
-            <a
-              href={`mailto:${data.email}`}
-              className="flex items-center gap-3 p-3 bg-[#eff6ff] rounded border border-[#bfdbfe] text-[#0f172a] hover:bg-[#1d4ed8] hover:text-white transition-colors group"
-            >
-              <Mail className="w-5 h-5 text-[#1d4ed8] group-hover:text-white shrink-0" />
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] uppercase font-mono font-bold">อีเมล</p>
-                <p className="text-sm font-bold truncate font-sans">{data.email}</p>
-              </div>
-            </a>
+          <div className="space-y-3">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider" style={{ color: "var(--kuro-pink)" }}>
+              CONTACT
+            </span>
+            <h3 className="text-2xl font-black tracking-tight" style={{ color: "var(--kuro-skull)", fontFamily: "var(--font-display)" }}>
+              ส่งข้อความพูดคุยหรือติดต่องาน
+            </h3>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--kuro-skull-dim)" }}>
+              ถ้าจะคุยเฉยๆทักdiscord,ig มาเด้ออ
+            </p>
           </div>
 
-          {/* Social Badges Grid */}
-          {data.socials && data.socials.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+          <Magnet strength={0.2} radius={70} className="w-full">
+            <motion.a
+              href={`mailto:${data.email}`}
+              whileHover={{ scale: 1.01 }}
+              className="flex items-center gap-3 p-3.5 rounded-xl transition-all group"
+              style={{
+                background: "rgba(255,105,200,0.08)",
+                border: "1px solid rgba(255,105,200,0.25)",
+                color: "var(--kuro-skull)",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(255,105,200,0.15)";
+                (e.currentTarget as HTMLElement).style.borderColor = "var(--kuro-pink)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(255,105,200,0.08)";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,105,200,0.25)";
+              }}
+            >
+              <Mail className="w-5 h-5 shrink-0" style={{ color: "var(--kuro-pink)" }} />
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] uppercase font-mono font-bold" style={{ color: "var(--kuro-muted-bright)" }}>อีเมล</p>
+                <p className="text-sm font-bold truncate" style={{ color: "var(--kuro-skull)" }}>{data.email}</p>
+              </div>
+            </motion.a>
+          </Magnet>
+
+          {/* Social badges (Unboxed Magnet Pills) */}
+          {data.socials?.length > 0 && (
+            <div className="flex flex-wrap gap-2.5 pt-2">
               {data.socials.map((social, idx) => (
-                <motion.a
-                  key={idx}
-                  href={social.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  whileHover={{ y: -2, scale: 1.02 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="px-3.5 py-2 bg-white rounded border border-[#cbd5e1] text-[#0f172a] hover:border-[#1d4ed8] hover:text-[#1d4ed8] hover:bg-[#eff6ff] text-xs font-bold inline-flex items-center gap-2 transition-colors shadow-2xs font-mono group"
-                >
-                  {social.icon && social.icon.startsWith("devicon-") ? (
-                    <i className={`${social.icon} group-hover:scale-110 transition-transform`} />
-                  ) : (
-                    <Globe className="w-3.5 h-3.5 text-[#1d4ed8] group-hover:rotate-12 transition-transform" />
-                  )}
-                  <span>{social.platform}</span>
-                </motion.a>
+                <Magnet key={idx} strength={0.2} radius={50}>
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-4 py-2 rounded-xl text-xs font-bold font-mono inline-flex items-center gap-2 transition-all"
+                    style={{
+                      background: "rgba(25, 2, 35, 0.7)",
+                      border: "1px solid var(--kuro-border)",
+                      color: "var(--kuro-skull-dim)",
+                    }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.borderColor = "var(--kuro-primary-glow)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--kuro-primary-glow)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.borderColor = "var(--kuro-border)";
+                      (e.currentTarget as HTMLElement).style.color = "var(--kuro-skull-dim)";
+                    }}
+                  >
+                    {social.icon?.startsWith("devicon-") ? (
+                      <i className={`${social.icon} text-base`} />
+                    ) : (
+                      <Globe className="w-3.5 h-3.5" style={{ color: "var(--kuro-primary-glow)" }} />
+                    )}
+                    <span>{social.platform}</span>
+                  </a>
+                </Magnet>
               ))}
             </div>
           )}
         </motion.div>
 
-        {/* Right Column: Direct Channel Form */}
+        {/* Right: Contact form (Unboxed) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.35, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6"
+          transition={{ duration: 0.4, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-7 space-y-4"
         >
-          <div className="paper-card p-6 bg-white">
-            <h3 className="text-lg font-bold text-[#0f172a] mb-1 font-display">
-              ส่งข้อความถึงผมโดยตรง
+          <div>
+            <h3 className="text-xl font-black mb-1" style={{ color: "var(--kuro-skull)", fontFamily: "var(--font-display)" }}>
+              ส่งข้อความโดยตรง
             </h3>
-            <p className="text-[#475569] text-xs mb-4 font-sans">กรอกข้อมูลเพื่อส่งข้อความด่วน</p>
+            <p className="text-xs" style={{ color: "var(--kuro-muted-bright)" }}>
+              กรอกข้อมูลเพื่อส่งข้อความ
+            </p>
+          </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <div>
-                <input
-                  type="text"
-                  required
-                  placeholder="ชื่อของคุณ / Your Name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans transition-colors"
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-3.5">
+            <Input
+              type="text"
+              required
+              placeholder="ชื่อของคุณ / Your Name"
+              value={formData.name}
+              onChange={e => setFormData({ ...formData, name: e.target.value })}
+            />
+            <Input
+              type="email"
+              required
+              placeholder="อีเมลสำหรับตอบกลับ / Email Address"
+              value={formData.email}
+              onChange={e => setFormData({ ...formData, email: e.target.value })}
+            />
+            <Textarea
+              required
+              rows={4}
+              placeholder="ข้อความของคุณ..."
+              value={formData.content}
+              onChange={e => setFormData({ ...formData, content: e.target.value })}
+            />
 
-              <div>
-                <input
-                  type="email"
-                  required
-                  placeholder="อีเมลสำหรับตอบกลับ / Email Address"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] font-sans transition-colors"
-                />
-              </div>
-
-              <div>
-                <textarea
-                  required
-                  rows={4}
-                  placeholder="ข้อความของคุณ..."
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-[#f8fafc] rounded border border-[#cbd5e1] text-[#0f172a] text-xs font-medium focus:outline-none focus:border-[#1d4ed8] focus:bg-white placeholder:text-[#94a3b8] resize-none min-h-[100px] font-sans transition-colors"
-                />
-              </div>
-
-              <motion.button
+            <Magnet strength={0.25} radius={80} className="w-full">
+              <Button
                 type="submit"
                 disabled={status === "sending"}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.97 }}
-                className="stamp-btn-blue w-full py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-50 font-sans"
+                variant={status === "sent" ? "outline" : "pink"}
+                className="w-full gap-2 uppercase tracking-wider py-5"
               >
                 {status === "sending" ? (
-                  <>
-                    <span>กำลังส่งข้อความ...</span>
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  </>
+                  <><span>กำลังส่งข้อความ...</span><Loader2 className="w-3.5 h-3.5 animate-spin" /></>
                 ) : status === "sent" ? (
-                  <>
-                    <span>ส่งข้อความสำเร็จ!</span>
-                    <CheckCircle className="w-3.5 h-3.5 text-white" />
-                  </>
+                  <><span>ส่งข้อความสำเร็จ!</span><CheckCircle className="w-3.5 h-3.5" style={{ color: "var(--kuro-green)" }} /></>
                 ) : (
-                  <>
-                    <span>ส่งข้อความ</span>
-                    <Send className="w-3.5 h-3.5" />
-                  </>
+                  <><span>ส่งข้อความ</span><Send className="w-3.5 h-3.5" /></>
                 )}
-              </motion.button>
-            </form>
-          </div>
+              </Button>
+            </Magnet>
+          </form>
         </motion.div>
       </div>
     </section>

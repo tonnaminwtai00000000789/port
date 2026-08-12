@@ -1,6 +1,11 @@
 import React from "react";
 import { MapPin, Cake, Activity } from "lucide-react";
 import { motion } from "framer-motion";
+import { Badge } from "../ui/badge";
+import { DecryptedText } from "../reactbits/DecryptedText";
+import GradientWaves from "../reactbits/GradientWaves";
+import { TiltedCard } from "../reactbits/TiltedCard";
+import { SpotlightCard } from "../reactbits/SpotlightCard";
 
 export interface Fact {
   title: string;
@@ -20,147 +25,177 @@ export interface AboutMeData {
   facts: Fact[];
 }
 
+const infoCards: Array<{
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  key: string;
+  label: string;
+  color: string;
+  pulse?: boolean;
+}> = [
+  { icon: MapPin as React.FC<React.SVGProps<SVGSVGElement>>, key: "location", label: "ที่อยู่ปัจจุบัน", color: "var(--kuro-primary-glow)" },
+  { icon: Cake as React.FC<React.SVGProps<SVGSVGElement>>, key: "birthday", label: "วันเกิด", color: "var(--kuro-pink)" },
+  { icon: Activity as React.FC<React.SVGProps<SVGSVGElement>>, key: "status", label: "สถานะ", color: "var(--kuro-green)", pulse: true },
+];
+
 export function Aboutme({ data }: { data: AboutMeData }) {
   if (!data) return null;
 
+  const infoValues: Record<string, string> = {
+    location: data.location,
+    birthday: data.birthday,
+    status: data.status,
+  };
+
   return (
     <section id="about" className="py-10">
-      {/* Section Title */}
-      <div className="mb-6">
-        <span className="font-mono text-xs text-[#1d4ed8] font-bold block mb-1">
-          [STORY // 03]
-        </span>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#0f172a] font-display tracking-tight">
-          เกี่ยวกับผม
-        </h2>
-      </div>
+      <GradientWaves
+        horizonColor="#130018"
+        waveColor="#9b30d9"
+        crestColor="#ff69c8"
+        speed={0.3}
+        amplitude={2.0}
+        waveScale={0.5}
+        className="rounded-2xl p-6 sm:p-8 border border-[var(--kuro-border)]"
+      >
+        <div className="mb-6">
+          <span className="kuro-section-label">
+            <DecryptedText text="✦ [STORY // 03]" animateOn="view" speed={45} />
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: "var(--kuro-skull)", fontFamily: "var(--font-display)" }}>
+            เกี่ยวกับผม
+          </h2>
+        </div>
 
-      {/* Grid Row 1: Pseudonym Card & Status Info */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-6">
-        {/* Pseudonym Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          whileHover={{ y: -3 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="md:col-span-7 paper-card p-6 bg-white flex flex-col justify-between"
-        >
-          <div>
-            <span className="text-xs font-mono font-bold text-[#1d4ed8] uppercase tracking-wider">
-              มารู้จักผมกัน🤗
-            </span>
-            <h1 className="font-display text-4xl font-bold text-[#0f172a] mt-1 mb-2">
-              {data.nickname}
-            </h1>
-            <p className="text-[#475569] text-sm leading-relaxed font-sans">
-              หวัดดีคับทุกคน ผมต้นน้ำ ชอบเล่นเกม,ดูหนัง,อ่านมังฮวา,นอน,ดูซีรี่ย์,เงิน🤑
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-2 pt-4 border-t border-[#f1f5f9] mt-4">
-            <span className="tag-badge">Fullstack Development</span>
-            <span className="tag-badge">Anime & Manhwa</span>
-            <span className="tag-badge">Gaming</span>
-          </div>
-        </motion.div>
-
-        {/* Identity Details */}
-        <div className="md:col-span-5 grid grid-cols-1 gap-3">
+        {/* Grid Row 1 (Unboxed) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8 items-start">
+          {/* Main bio */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ x: 3 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: 0.05 }}
-            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3 cursor-default"
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="md:col-span-7 space-y-4"
           >
-            <div className="w-9 h-9 rounded bg-[#eff6ff] border border-[#bfdbfe] flex items-center justify-center text-[#1d4ed8] shrink-0">
-              <MapPin className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="text-[10px] font-mono font-bold text-[#64748b] uppercase">ที่อยู่ปัจจุบัน</p>
-              <p className="text-xs font-bold text-[#0f172a] font-sans">{data.location}</p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ x: 3 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3 cursor-default"
-          >
-            <div className="w-9 h-9 rounded bg-[#eff6ff] border border-[#bfdbfe] flex items-center justify-center text-[#1d4ed8] shrink-0">
-              <Cake className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="text-[10px] font-mono font-bold text-[#64748b] uppercase">วันเกิด</p>
-              <p className="text-xs font-bold text-[#0f172a] font-sans">{data.birthday}</p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ x: 3 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: 0.15 }}
-            className="paper-card-subtle p-3.5 bg-white flex items-center gap-3 cursor-default"
-          >
-            <div className="w-9 h-9 rounded bg-[#dcfce7] border border-[#86efac] flex items-center justify-center text-[#166534] shrink-0">
-              <Activity className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="text-[10px] font-mono font-bold text-[#64748b] uppercase">สถานะ</p>
-              <p className="text-xs font-bold text-[#0f172a] flex items-center gap-2 font-sans">
-                {data.status}
-                <span className="w-2 h-2 rounded-full bg-[#166534] animate-pulse inline-block" />
+            <div className="relative">
+              <motion.img
+                src="/kuromi/kuromi-laughing-512x512.png"
+                alt="Kuromi laughing"
+                className="absolute -top-2 -right-2 w-20 h-20 object-contain opacity-70 pointer-events-none"
+                animate={{ rotate: [0, 10, -5, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <span className="text-xs font-mono font-bold uppercase tracking-wider" style={{ color: "var(--kuro-pink)" }}>
+                มารู้จักผมกัน 🤗
+              </span>
+              <h3
+                className="text-4xl font-black mt-1 mb-2 tracking-tight"
+                style={{ color: "var(--kuro-skull)", fontFamily: "var(--font-display)" }}
+              >
+                {data.nickname}
+              </h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--kuro-skull-dim)" }}>
+                หวัดดีคับทุกคน ผมต้นน้ำ ชอบเล่นเกม, ดูหนัง, อ่านมังฮวา, นอน, ดูซีรี่ย์, เงิน 🤑
               </p>
             </div>
-          </motion.div>
-        </div>
-      </div>
 
-      {/* Interests Facts Gallery */}
-      {data.facts && data.facts.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {data.facts.map((fact, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -4 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.35, delay: 0.08 * idx, ease: [0.16, 1, 0.3, 1] }}
-              className="paper-card overflow-hidden bg-white group cursor-default"
-            >
-              <div className="h-32 overflow-hidden relative bg-[#f8fafc] border-b border-[#e2e8f0]">
-                {fact.image ? (
-                  <img
-                    src={fact.image}
-                    alt={fact.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-[#1d4ed8] font-bold text-sm">
-                    {fact.title}
-                  </div>
-                )}
-                <span className="absolute top-2 right-2 text-[10px] font-mono font-semibold text-white bg-[#1e293b] px-2 py-0.5 rounded border border-white">
-                  {fact.subtitle}
-                </span>
-              </div>
-              <div className="p-3">
-                <p className="text-[10px] font-mono text-[#64748b] uppercase">{fact.subtitle}</p>
-                <p className="text-sm font-bold text-[#0f172a] font-display group-hover:text-[#1d4ed8] transition-colors">{fact.title}</p>
-              </div>
-            </motion.div>
-          ))}
+            <div className="flex flex-wrap gap-2 pt-4" style={{ borderTop: "1px solid var(--kuro-border)" }}>
+              <Badge variant="default">Fullstack Development</Badge>
+              <Badge variant="pink">Anime &amp; Manhwa</Badge>
+              <Badge variant="green">Gaming</Badge>
+            </div>
+          </motion.div>
+
+          {/* Info items (Unboxed list) */}
+          <div className="md:col-span-5 space-y-3">
+            {infoCards.map(({ icon: Icon, key, label, color, pulse }, idx) => (
+              <motion.div
+                key={key}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.08 * idx }}
+                className="p-3.5 flex items-center gap-3 cursor-default rounded-xl transition-colors hover:bg-[rgba(155,48,217,0.08)]"
+                style={{ borderBottom: "1px solid var(--kuro-border)" }}
+              >
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                  style={{ background: `${color}18`, border: `1px solid ${color}40` }}
+                >
+                  <Icon className="w-4 h-4" style={{ color }} />
+                </div>
+                <div>
+                  <p className="text-[10px] font-mono font-bold uppercase" style={{ color: "var(--kuro-muted)" }}>
+                    {label}
+                  </p>
+                  <p className="text-xs font-bold flex items-center gap-2" style={{ color: "var(--kuro-skull)" }}>
+                    {infoValues[key]}
+                    {pulse && (
+                      <span
+                        className="w-2 h-2 rounded-full inline-block animate-pulse"
+                        style={{ background: "var(--kuro-green)" }}
+                      />
+                    )}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      )}
+
+        {/* Facts gallery (3D Tilted + Spotlight Cards) */}
+        {data.facts?.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {data.facts.map((fact, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.4, delay: 0.08 * idx, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full"
+              >
+                <TiltedCard maxAngle={10} scaleOnHover={1.03} containerClassName="h-full" className="h-full">
+                  <SpotlightCard className="p-3 rounded-xl border border-[rgba(192,96,255,0.15)] shadow-md group flex flex-col justify-between h-full cursor-pointer overflow-hidden" spotlightColor="rgba(255,105,200,0.15)">
+                    <div className="h-36 overflow-hidden relative rounded-lg mb-2">
+                      {fact.image ? (
+                        <img
+                          src={fact.image}
+                          alt={fact.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div
+                          className="w-full h-full flex items-center justify-center font-bold text-sm"
+                          style={{ color: "var(--kuro-primary-glow)" }}
+                        >
+                          {fact.title}
+                        </div>
+                      )}
+                      <Badge variant="pink" className="absolute top-2.5 right-2.5 text-[9px] shadow-sm">
+                        {fact.subtitle}
+                      </Badge>
+                    </div>
+                    <div className="px-1 py-1">
+                      <p className="text-[10px] font-mono uppercase font-bold" style={{ color: "var(--kuro-pink)" }}>
+                        {fact.subtitle}
+                      </p>
+                      <p
+                        className="text-sm font-black transition-colors"
+                        style={{ color: "var(--kuro-skull)", fontFamily: "var(--font-display)" }}
+                        onMouseEnter={e => (e.currentTarget.style.color = "var(--kuro-primary-glow)")}
+                        onMouseLeave={e => (e.currentTarget.style.color = "var(--kuro-skull)")}
+                      >
+                        {fact.title}
+                      </p>
+                    </div>
+                  </SpotlightCard>
+                </TiltedCard>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </GradientWaves>
     </section>
   );
 }

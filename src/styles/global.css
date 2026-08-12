@@ -3,209 +3,391 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-sans: "Nunito", system-ui, sans-serif;
   --font-display: "Space Grotesk", system-ui, sans-serif;
   --font-mono: "Geist Mono", "JetBrains Mono", monospace;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f6f5f0;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #1d4ed8;
-}
-
+/* ─── Kuromi CSS Variables ─── */
 :root {
+  --kuro-bg: #0d0010;
+  --kuro-surface: #130018;
+  --kuro-surface-2: #1e0028;
+  --kuro-surface-3: #280035;
+  --kuro-border: #3d0f5c;
+  --kuro-border-bright: #7c2ba8;
+  --kuro-primary: #9b30d9;
+  --kuro-primary-glow: #c060ff;
+  --kuro-pink: #ff69c8;
+  --kuro-pink-soft: #ffd6f0;
+  --kuro-pink-dim: #80204c;
+  --kuro-skull: #ede0ff;
+  --kuro-skull-dim: #c4a8e8;
+  --kuro-muted: #7a5c96;
+  --kuro-muted-bright: #a87ec8;
+  --kuro-green: #4dffb4;
+  --kuro-yellow: #ffe04b;
+  --kuro-red: #ff4d7e;
+
+  /* Shadcn-compatible tokens */
+  --background: var(--kuro-bg);
+  --foreground: var(--kuro-skull);
+  --card: var(--kuro-surface);
+  --card-foreground: var(--kuro-skull);
+  --primary: var(--kuro-primary);
+  --primary-foreground: #ffffff;
+  --secondary: var(--kuro-surface-2);
+  --secondary-foreground: var(--kuro-skull-dim);
+  --muted: var(--kuro-surface-2);
+  --muted-foreground: var(--kuro-muted);
+  --accent: var(--kuro-surface-3);
+  --accent-foreground: var(--kuro-skull);
+  --destructive: var(--kuro-red);
+  --border: var(--kuro-border);
+  --input: var(--kuro-surface-2);
+  --ring: var(--kuro-primary-glow);
+  --radius: 0.75rem;
+
   --mouse-x: 50%;
   --mouse-y: 200px;
 }
 
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--kuro-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--kuro-border-bright);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--kuro-primary-glow);
+}
+
+/* ─── Body ─── */
 body {
-  background-color: #f6f5f0;
-  color: #0f172a;
+  background-color: var(--kuro-bg);
+  color: var(--kuro-skull);
   font-family: var(--font-sans);
   overflow-x: hidden;
   position: relative;
-  /* Layered Architectural Desk Canvas: Hairline guide lines + Dot matrix + Top ambient vignette */
+  /* Subtle dot-matrix background */
   background-image:
-    radial-gradient(600px circle at 50% 120px, rgba(219, 234, 254, 0.4), rgba(254, 249, 195, 0.2) 50%, transparent 80%),
-    linear-gradient(to right, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
-    radial-gradient(rgba(15, 23, 42, 0.07) 1px, transparent 1px);
-  background-size: 100% 100%, 96px 96px, 96px 96px, 24px 24px;
-  background-position: 0 0, 0 0, 0 0, 0 0;
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(192, 96, 255, 0.12), transparent 70%),
+    radial-gradient(rgba(192, 96, 255, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 28px 28px;
+  background-position: 0 0, 0 0;
 }
 
-/* Focus Visible Accessibility */
-a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
-  outline: 2px solid #1d4ed8;
+/* ─── Text Selection ─── */
+::selection {
+  background-color: var(--kuro-pink);
+  color: #0d0010;
+}
+
+/* ─── Focus Visible ─── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--kuro-primary-glow);
   outline-offset: 2px;
 }
 
-/* Physical Desk Memo - Paper Cards & Artifacts */
-.paper-card {
-  background-color: #ffffff;
-  border: 1px solid #1e293b;
-  border-radius: 10px;
-  box-shadow: 4px 4px 0px 0px rgba(15, 23, 42, 0.1);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+/* ─── Glassmorphism Card ─── */
+.kuro-card {
+  background: linear-gradient(135deg, rgba(30, 0, 40, 0.85) 0%, rgba(19, 0, 24, 0.9) 100%);
+  border: 1px solid var(--kuro-border);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 0.5px rgba(192, 96, 255, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(192, 96, 255, 0.06);
+  backdrop-filter: blur(12px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.paper-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 6px 7px 0px 0px #1e293b;
-}
-
-.paper-card-subtle {
-  background-color: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  box-shadow: 2px 2px 0px 0px rgba(15, 23, 42, 0.05);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.paper-card-subtle:hover {
-  border-color: #1e293b;
-  box-shadow: 4px 5px 0px 0px #1e293b;
+.kuro-card:hover {
+  border-color: var(--kuro-border-bright);
+  box-shadow:
+    0 0 0 0.5px rgba(192, 96, 255, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(155, 48, 217, 0.12),
+    inset 0 1px 0 rgba(192, 96, 255, 0.1);
   transform: translateY(-2px);
 }
 
-/* Yellow Sticky Note Memo */
-.sticky-memo-yellow {
-  background-color: #fef08a;
-  color: #854d0e;
-  border: 1.5px solid #eab308;
+/* ─── Subtle Card (smaller items) ─── */
+.kuro-card-subtle {
+  background: rgba(30, 0, 40, 0.6);
+  border: 1px solid var(--kuro-border);
   border-radius: 8px;
-  box-shadow: 3px 4px 0px 0px rgba(161, 98, 7, 0.25);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.kuro-card-subtle:hover {
+  border-color: var(--kuro-border-bright);
+  box-shadow: 0 0 14px rgba(155, 48, 217, 0.15);
+  transform: translateY(-1px);
+}
+
+/* ─── Kuromi Note Card (replaces yellow sticky) ─── */
+.kuro-note {
+  background: linear-gradient(135deg, rgba(40, 0, 53, 0.9) 0%, rgba(30, 0, 40, 0.95) 100%);
+  border: 1px solid var(--kuro-pink-dim);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 0.5px rgba(255, 105, 200, 0.1),
+    0 6px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 105, 200, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.sticky-memo-yellow:hover {
-  transform: scale(1.015) rotate(0deg);
-  box-shadow: 5px 6px 0px 0px rgba(161, 98, 7, 0.32);
+.kuro-note:hover {
+  box-shadow:
+    0 0 0 0.5px rgba(255, 105, 200, 0.2),
+    0 8px 28px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(255, 105, 200, 0.1);
 }
 
-/* Paper Tape Decorative Accent */
-.paper-tape {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-1deg);
-  width: 72px;
-  height: 22px;
-  background-color: rgba(254, 249, 195, 0.9);
-  border: 1px solid rgba(234, 179, 8, 0.55);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  z-index: 20;
-  pointer-events: none;
-}
-
-/* Stamp Buttons & Badges */
-.stamp-btn-blue {
-  background-color: #1d4ed8;
-  color: #ffffff;
-  border: 1px solid #1e293b;
+/* ─── Primary Button ─── */
+.kuro-btn {
+  background: linear-gradient(135deg, var(--kuro-primary) 0%, var(--kuro-primary-glow) 100%);
+  color: #fff;
+  border: none;
   border-radius: 8px;
-  box-shadow: 3px 3px 0px 0px #1e293b;
   font-weight: 700;
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 16px rgba(155, 48, 217, 0.35), 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.stamp-btn-blue:hover {
-  background-color: #1e40af;
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px 0px #1e293b;
+.kuro-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: background 0.2s ease;
 }
 
-.stamp-btn-blue:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px 0px #1e293b;
+.kuro-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(192, 96, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-.stamp-badge-mint {
-  background-color: #dcfce7;
-  color: #166534;
-  border: 1px solid #86efac;
-  border-radius: 6px;
-  font-family: var(--font-mono);
-  font-weight: 600;
+.kuro-btn:hover::before {
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.tag-badge {
+.kuro-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 10px rgba(155, 48, 217, 0.3);
+}
+
+/* ─── Pink Button ─── */
+.kuro-btn-pink {
+  background: linear-gradient(135deg, var(--kuro-pink) 0%, #ff99d8 100%);
+  color: #1a0020;
+  border: none;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 16px rgba(255, 105, 200, 0.35), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.kuro-btn-pink:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 28px rgba(255, 105, 200, 0.55), 0 4px 16px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.05);
+}
+
+.kuro-btn-pink:active {
+  transform: translateY(1px);
+}
+
+/* ─── Outline Button ─── */
+.kuro-btn-outline {
+  background: transparent;
+  color: var(--kuro-primary-glow);
+  border: 1.5px solid var(--kuro-border-bright);
+  border-radius: 9px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kuro-btn-outline:hover {
+  background: rgba(155, 48, 217, 0.12);
+  border-color: var(--kuro-primary-glow);
+  box-shadow: 0 0 12px rgba(192, 96, 255, 0.2);
+}
+
+/* ─── Badge ─── */
+.kuro-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3.5px 9.5px;
-  border-radius: 5px;
-  border: 1px solid #cbd5e1;
-  background-color: #ffffff;
-  color: #1e293b;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--kuro-border-bright);
+  background: rgba(155, 48, 217, 0.15);
+  color: var(--kuro-primary-glow);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   transition: all 0.15s ease;
 }
 
-.tag-badge:hover {
-  border-color: #1d4ed8;
-  color: #1d4ed8;
-  background-color: #eff6ff;
+.kuro-badge:hover {
+  background: rgba(155, 48, 217, 0.25);
+  border-color: var(--kuro-primary-glow);
 }
 
-/* Blueprint Section Header Marker */
-.blueprint-marker {
-  color: #1d4ed8;
+.kuro-badge-pink {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--kuro-pink-dim);
+  background: rgba(255, 105, 200, 0.12);
+  color: var(--kuro-pink);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  transition: all 0.15s ease;
 }
 
-/* Custom View Transitions */
-@keyframes page-wipe-out {
+.kuro-badge-pink:hover {
+  background: rgba(255, 105, 200, 0.22);
+  border-color: var(--kuro-pink);
+}
+
+/* ─── Input Fields ─── */
+.kuro-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(19, 0, 24, 0.8);
+  border: 1px solid var(--kuro-border);
+  border-radius: 8px;
+  color: var(--kuro-skull);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  outline: none;
+}
+
+.kuro-input::placeholder {
+  color: var(--kuro-muted);
+}
+
+.kuro-input:focus {
+  border-color: var(--kuro-primary-glow);
+  background: rgba(30, 0, 40, 0.9);
+  box-shadow: 0 0 0 3px rgba(192, 96, 255, 0.15);
+}
+
+/* ─── Section Label (Glitch-style) ─── */
+.kuro-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--kuro-primary-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ─── Glow Text ─── */
+.kuro-glow-text {
+  text-shadow: 0 0 20px rgba(192, 96, 255, 0.6), 0 0 40px rgba(192, 96, 255, 0.3);
+}
+
+.kuro-pink-glow-text {
+  text-shadow: 0 0 16px rgba(255, 105, 200, 0.5);
+}
+
+/* ─── Divider ─── */
+.kuro-divider {
+  border: none;
+  border-top: 1px solid var(--kuro-border);
+}
+
+/* ─── Gradient Text Utilities ─── */
+.kuro-gradient-text {
+  background: linear-gradient(135deg, var(--kuro-primary-glow) 0%, var(--kuro-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.kuro-purple-gradient-text {
+  background: linear-gradient(135deg, #e0b8ff 0%, var(--kuro-primary-glow) 60%, var(--kuro-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Shiny Text Animation ─── */
+@keyframes shiny {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shiny {
+  animation: shiny 4s linear infinite;
+}
+
+@keyframes spin-slow {
   from {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    opacity: 1;
-    transform: scale(1);
+    transform: rotate(0deg);
   }
   to {
-    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-    opacity: 0.92;
-    transform: scale(0.99);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes page-wipe-in {
-  from {
-    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    transform: scale(1.01);
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* ─── Drift Wall Animations ─── */
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0);
   }
-  to {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    transform: scale(1);
+  100% {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-::view-transition-old(root) {
-  animation: 350ms cubic-bezier(0.16, 1, 0.3, 1) both page-wipe-out;
-  mix-blend-mode: normal;
-}
-
-::view-transition-new(root) {
-  animation: 350ms cubic-bezier(0.16, 1, 0.3, 1) both page-wipe-in;
-  mix-blend-mode: normal;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none !important;
+@keyframes drift-reverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
   }
 }
+
+.animate-drift {
+  animation: drift 28s linear infinite;
+}
+
+.animate-drift-reverse {
+  animation: drift-reverse 28s linear infinite;
+}
+
+
+
