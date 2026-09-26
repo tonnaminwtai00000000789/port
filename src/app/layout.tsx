@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { BackgroundEffect } from "@/components/islands/BackgroundEffect";
+import { BackgroundEffect } from "@/components/layout/BackgroundEffect";
 
 const nunito = Nunito({
   subsets: ["latin"],

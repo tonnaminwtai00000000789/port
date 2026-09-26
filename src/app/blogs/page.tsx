@@ -1,5 +1,5 @@
-import { HeaderNav } from "@/components/islands/HeaderNav";
-import { BlogsList } from "@/components/islands/BlogsList";
+import { HeaderNav } from "@/components/layout/HeaderNav";
+import { BlogsList } from "@/components/sections/BlogsList";
 import { getBlogPosts } from "@/lib/data";
 
 export const revalidate = 60;

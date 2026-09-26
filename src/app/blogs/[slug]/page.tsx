@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { HeaderNav } from "@/components/islands/HeaderNav";
-import { BlogPostDetail } from "@/components/islands/BlogPostDetail";
+import { HeaderNav } from "@/components/layout/HeaderNav";
+import { BlogPostDetail } from "@/components/sections/BlogPostDetail";
 import { getBlogPostBySlug, getBlogPosts } from "@/lib/data";
 
 export const revalidate = 60;

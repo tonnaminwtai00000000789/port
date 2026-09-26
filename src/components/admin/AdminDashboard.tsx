@@ -3,15 +3,15 @@
 import React, { useState, useEffect } from "react";
 import { CheckCircle, AlertCircle } from "lucide-react";
 
-import { AdminLogin } from "./admin/AdminLogin";
-import { AdminSidebar, type AdminTab } from "./admin/AdminSidebar";
-import { HeroEditor } from "./admin/HeroEditor";
-import { AboutMeEditor } from "./admin/AboutMeEditor";
-import { TechStackEditor } from "./admin/TechStackEditor";
-import { WorksEditor } from "./admin/WorksEditor";
-import { BlogsEditor } from "./admin/BlogsEditor";
-import { ContactEditor } from "./admin/ContactEditor";
-import { InboxViewer } from "./admin/InboxViewer";
+import { AdminLogin } from "./AdminLogin";
+import { AdminSidebar, type AdminTab } from "./AdminSidebar";
+import { HeroEditor } from "./HeroEditor";
+import { AboutMeEditor } from "./AboutMeEditor";
+import { TechStackEditor } from "./TechStackEditor";
+import { WorksEditor } from "./WorksEditor";
+import { BlogsEditor } from "./BlogsEditor";
+import { ContactEditor } from "./ContactEditor";
+import { InboxViewer } from "./InboxViewer";
 
 export function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

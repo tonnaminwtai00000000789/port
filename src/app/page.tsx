@@ -1,10 +1,10 @@
-import { HeaderNav } from "@/components/islands/HeaderNav";
-import { Hero } from "@/components/islands/Hero";
-import { Work } from "@/components/islands/Work";
-import { TechStack } from "@/components/islands/TechStack";
-import { Aboutme } from "@/components/islands/Aboutme";
-import { BlogsSection } from "@/components/islands/BlogsSection";
-import { Contact } from "@/components/islands/Contact";
+import { HeaderNav } from "@/components/layout/HeaderNav";
+import { Hero } from "@/components/sections/Hero";
+import { Work } from "@/components/sections/Work";
+import { TechStack } from "@/components/sections/TechStack";
+import { Aboutme } from "@/components/sections/Aboutme";
+import { BlogsSection } from "@/components/sections/BlogsSection";
+import { Contact } from "@/components/sections/Contact";
 
 import {
   getHeroData,
