@@ -1,17 +1,34 @@
-import { supabase, isSupabaseConfigured, type HeroRow, type AboutMeRow, type TechStackRow, type WorkRow, type ContactRow, type BlogRow } from './supabase';
-import { getCachedData } from './cache';
+import { cache } from 'react';
+import {
+  getHero,
+  getAboutMe,
+  getTechStack,
+  getWorks,
+  getContact,
+  getBlogPosts as getD1BlogPosts,
+  getBlogPostBySlug as getD1BlogPostBySlug,
+  type HeroRow,
+  type AboutMeRow,
+  type TechStackRow,
+  type WorkRow,
+  type ContactRow,
+  type BlogRow,
+} from './db';
+
+export type { HeroRow, AboutMeRow, TechStackRow, WorkRow, ContactRow, BlogRow };
 
 export const FALLBACK_HERO: HeroRow = {
   id: 3,
   firstName: 'Supakron',
   lastName: 'Klinbubpa',
-  displayName: 'TonnamInwtai00789',
+  displayName: 'Tonnameangja',
   nickname: 'Tonnam',
   birthDate: '2011-03-03',
   startDate: '2021-01-01',
   location: 'Bangbon, Bangkok',
   profileImage: 'https://theijon.online/images/tonnam.png',
   emoji: '😪💤',
+  webringUrl: 'https://webring.wonderful.software#nsys.site',
   positions: [
     { logo: 'https://theijon.online/logo.jpg', since: 'Jan 2025', title: 'The Founder', organization: 'The ijon', organizationUrl: 'https://theijon.online/' },
     { logo: 'https://www.swb.ac.th/swb/images/logo.png', since: 'Grade 9', title: 'Student', organization: 'Sarasas Witaed Bangbon', organizationUrl: 'https://www.swb.ac.th/swb/' }
@@ -76,106 +93,73 @@ export const FALLBACK_CONTACT: ContactRow = {
   ]
 };
 
-export async function getHeroData(): Promise<HeroRow | null> {
-  const result = await getCachedData('hero', async () => {
-    try {
-      const { data, error } = await supabase.from('hero').select('*').limit(1).single();
-      if (data && !error) {
-        return {
-          ...data,
-          displayName: data.displayName || data.display_name || '',
-          firstName: data.firstName || data.first_name || '',
-          lastName: data.lastName || data.last_name || '',
-          profileImage: data.profileImage || data.profile_image || '',
-          birthDate: data.birthDate || data.birth_date || '',
-          startDate: data.startDate || data.start_date || '',
-        } as HeroRow;
-      }
-    } catch (e) {
-      console.error('Supabase getHeroData error:', e);
-    }
-    return null;
-  });
-  return result || FALLBACK_HERO;
-}
+// React.cache for per-request deduplication (server-cache-react rule)
+export const getHeroData = cache(async (): Promise<HeroRow | null> => {
+  try {
+    const data = await getHero();
+    return data || FALLBACK_HERO;
+  } catch (e) {
+    console.error('getHeroData error:', e);
+    return FALLBACK_HERO;
+  }
+});
 
-export async function getAboutMeData(): Promise<AboutMeRow | null> {
-  const result = await getCachedData('about_me', async () => {
-    try {
-      const { data, error } = await supabase.from('about_me').select('*').limit(1).single();
-      if (data && !error) {
-        return {
-          ...data,
-          fullName: data.fullName || data.full_name || '',
-          statusLink: data.statusLink || data.status_link || null,
-        } as AboutMeRow;
-      }
-    } catch (e) {
-      console.error('Supabase getAboutMeData error:', e);
-    }
-    return null;
-  });
-  return result || FALLBACK_ABOUT;
-}
+export const getAboutMeData = cache(async (): Promise<AboutMeRow | null> => {
+  try {
+    const data = await getAboutMe();
+    return data || FALLBACK_ABOUT;
+  } catch (e) {
+    console.error('getAboutMeData error:', e);
+    return FALLBACK_ABOUT;
+  }
+});
 
-export async function getTechStackData(): Promise<TechStackRow[]> {
-  const result = await getCachedData('tech_stack', async () => {
-    try {
-      const { data, error } = await supabase.from('tech_stack').select('*').order('order', { ascending: true });
-      if (data && !error && data.length > 0) return data as TechStackRow[];
-    } catch (e) {
-      console.error('Supabase getTechStackData error:', e);
-    }
+export const getTechStackData = cache(async (): Promise<TechStackRow[]> => {
+  try {
+    const data = await getTechStack();
+    return (data && data.length > 0) ? data : FALLBACK_TECH;
+  } catch (e) {
+    console.error('getTechStackData error:', e);
+    return FALLBACK_TECH;
+  }
+});
+
+export const getWorksData = cache(async (): Promise<WorkRow[]> => {
+  try {
+    const data = await getWorks();
+    return data || [];
+  } catch (e) {
+    console.error('getWorksData error:', e);
     return [];
-  });
-  return (result && result.length > 0) ? result : FALLBACK_TECH;
-}
+  }
+});
 
-export async function getWorksData(): Promise<WorkRow[]> {
-  return getCachedData('works', async () => {
-    try {
-      const { data, error } = await supabase.from('works').select('*').order('order', { ascending: true });
-      if (data && !error) return data as WorkRow[];
-    } catch (e) {
-      console.error('Supabase getWorksData error:', e);
-    }
+export const getContactData = cache(async (): Promise<ContactRow | null> => {
+  try {
+    const data = await getContact();
+    return data || FALLBACK_CONTACT;
+  } catch (e) {
+    console.error('getContactData error:', e);
+    return FALLBACK_CONTACT;
+  }
+});
+
+export const getBlogPosts = cache(async (): Promise<BlogRow[]> => {
+  try {
+    const data = await getD1BlogPosts();
+    return data || [];
+  } catch (e) {
+    console.error('getBlogPosts error:', e);
     return [];
-  });
-}
+  }
+});
 
-export async function getContactData(): Promise<ContactRow | null> {
-  const result = await getCachedData('contact', async () => {
-    try {
-      const { data, error } = await supabase.from('contact').select('*').limit(1).single();
-      if (data && !error) return data as ContactRow;
-    } catch (e) {
-      console.error('Supabase getContactData error:', e);
-    }
+export const getBlogPostBySlug = cache(async (slug: string): Promise<BlogRow | null> => {
+  try {
+    const data = await getD1BlogPostBySlug(slug);
+    return data;
+  } catch (e) {
+    console.error('getBlogPostBySlug error:', e);
     return null;
-  });
-  return result || FALLBACK_CONTACT;
-}
-
-export async function getBlogPosts(): Promise<BlogRow[]> {
-  return getCachedData('blog_posts', async () => {
-    try {
-      const { data, error } = await supabase.from('blog').select('*').eq('published', true);
-      if (data && !error) return data as BlogRow[];
-    } catch (e) {
-      console.error('Supabase getBlogPosts error:', e);
-    }
-    return [];
-  });
-}
-
-export async function getBlogPostBySlug(slug: string): Promise<BlogRow | null> {
-  return getCachedData(`blog_post_${slug}`, async () => {
-    try {
-      const { data, error } = await supabase.from('blog').select('*').eq('slug', slug).single();
-      if (data && !error) return data as BlogRow;
-    } catch (e) {
-      console.error('Supabase getBlogPostBySlug error:', e);
-    }
-    return null;
-  });
-}
+  }
+});

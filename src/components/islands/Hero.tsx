@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { MapPin, ArrowRight, Code, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { KeyRound, AlertCircle, ArrowLeft } from "lucide-react";
 
@@ -17,7 +19,7 @@ export function AdminLogin({ password, setPassword, loginError, handleLogin }: A
             <KeyRound className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-black font-display text-[#0f172a]">Admin Access</h1>
-          <p className="text-xs text-[#475569]">เข้าสู่ระบบจัดการฐานข้อมูล Supabase</p>
+          <p className="text-xs text-[#475569]">เข้าสู่ระบบจัดการฐานข้อมูล Cloudflare D1</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">

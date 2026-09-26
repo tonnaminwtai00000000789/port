@@ -1,9 +1,11 @@
+"use client";
+
 import React, { useState } from "react";
 import { ArrowLeft, Clock, Check, Copy, BookOpen, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { BlogRow } from "../../lib/supabase";
+import type { BlogRow } from "@/lib/db";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 

@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { MapPin, Cake, Activity } from "lucide-react";
+import { MapPin, Cake, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
 import { DecryptedText } from "../reactbits/DecryptedText";
@@ -34,7 +36,7 @@ const infoCards: Array<{
 }> = [
   { icon: MapPin as React.FC<React.SVGProps<SVGSVGElement>>, key: "location", label: "ที่อยู่ปัจจุบัน", color: "var(--kuro-primary-glow)" },
   { icon: Cake as React.FC<React.SVGProps<SVGSVGElement>>, key: "birthday", label: "วันเกิด", color: "var(--kuro-pink)" },
-  { icon: Activity as React.FC<React.SVGProps<SVGSVGElement>>, key: "status", label: "สถานะ", color: "var(--kuro-green)", pulse: true },
+  { icon: Heart as React.FC<React.SVGProps<SVGSVGElement>>, key: "status", label: "สถานะ", color: "var(--kuro-red)", pulse: false },
 ];
 
 export function Aboutme({ data }: { data: AboutMeData }) {

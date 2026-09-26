@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Save, Trash2, Plus } from "lucide-react";
 

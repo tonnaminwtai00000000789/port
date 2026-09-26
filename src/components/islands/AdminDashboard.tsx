@@ -1,14 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { CheckCircle, AlertCircle } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "../../lib/supabase";
-import {
-  getHeroData,
-  getAboutMeData,
-  getTechStackData,
-  getWorksData,
-  getContactData,
-  getBlogPosts,
-} from "../../lib/data";
 
 import { AdminLogin } from "./admin/AdminLogin";
 import { AdminSidebar, type AdminTab } from "./admin/AdminSidebar";
@@ -50,26 +43,17 @@ export function AdminDashboard() {
 
   const loadAllData = async () => {
     try {
-      const [h, a, t, w, c, b] = await Promise.all([
-        getHeroData(),
-        getAboutMeData(),
-        getTechStackData(),
-        getWorksData(),
-        getContactData(),
-        getBlogPosts(),
-      ]);
+      const res = await fetch("/api/admin");
+      if (!res.ok) throw new Error("Failed to load admin data");
+      const data = await res.json();
 
-      if (h) setHeroData(h);
-      if (a) setAboutData(a);
-      if (t) setTechData(t);
-      if (w) setWorksData(w);
-      if (c) setContactData(c);
-      if (b) setBlogsData(b);
-
-      if (isSupabaseConfigured()) {
-        const { data: inbox } = await supabase.from("messages").select("*").order("created_at", { ascending: false });
-        if (inbox) setInboxData(inbox);
-      }
+      if (data.hero) setHeroData(data.hero);
+      if (data.aboutMe) setAboutData(data.aboutMe);
+      if (data.techStack) setTechData(data.techStack);
+      if (data.works) setWorksData(data.works);
+      if (data.contact) setContactData(data.contact);
+      if (data.blogs) setBlogsData(data.blogs);
+      if (data.messages) setInboxData(data.messages);
     } catch (err) {
       console.error("Failed to load admin data:", err);
     }
@@ -77,13 +61,16 @@ export function AdminDashboard() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "ชื่อของฉันคือ เอเลน เยเกอร์ กำลังสื่อสารถึงลูกหลานของยูมีร์ทุกคนผ่านพลังของไททันบรรพบุรุษพลังในการแข็งตัวของกำแพงทั้งหมดบนเกาะพาราดีได้ถูกคลายออกแล้วและไททันทุกตนที่ถูกฝังอยู่ข้างในก็ได้เริ่มก้าวเดินแล้วเป้าหมายของฉันคือการปกป้องผู้คนบนเกาะพาราดีที่ฉันได้เกิดและเติบโตขึ้นมาแต่ทว่าทั้งโลกนั้นกลับปรารถนาให้ผู้คนบนเกาะพาราดีต้องตายไม่ใช่แค่คนบนเกาะนี้เท่านั้นแต่พวกมันจะไม่หยุดจนกว่าลูกหลานของยูมีร์จะถูกฆ่าจนหมดฉันจะหยุดความปรารถนานั้นซะไททันในกำแพงจะเหยียบย่ำธรณีทั่วผืนปฐพีนอกเกาะนี้จนกว่าทุกชีวิตบนนั้น จะถูกสังหารสิ้นไปจากโลกนี้") {
+    if (
+      password ===
+      "ชื่อของฉันคือ เอเลน เยเกอร์ กำลังสื่อสารถึงลูกหลานของยูมีร์ทุกคนผ่านพลังของไททันบรรพบุรุษพลังในการแข็งตัวของกำแพงทั้งหมดบนเกาะพาราดีได้ถูกคลายออกแล้วและไททันทุกตนที่ถูกฝังอยู่ข้างในก็ได้เริ่มก้าวเดินแล้วเป้าหมายของฉันคือการปกป้องผู้คนบนเกาะพาราดีที่ฉันได้เกิดและเติบโตขึ้นมาแต่ทว่าทั้งโลกนั้นกลับปรารถนาให้ผู้คนบนเกาะพาราดีต้องตายไม่ใช่แค่คนบนเกาะนี้เท่านั้นแต่พวกมันจะไม่หยุดจนกว่าลูกหลานของยูมีร์จะถูกฆ่าจนหมดฉันจะหยุดความปรารถนานั้นซะไททันในกำแพงจะเหยียบย่ำธรณีทั่วผืนปฐพีนอกเกาะนี้จนกว่าทุกชีวิตบนนั้น จะถูกสังหารสิ้นไปจากโลกนี้"
+    ) {
       setIsAuthenticated(true);
       sessionStorage.setItem("admin_auth", "true");
       setLoginError("");
       loadAllData();
     } else {
-      setLoginError("รหัสผ่านไม่ถูกต้อง (ลอง admin123 หรือ tonnam1234)");
+      setLoginError("invaild");
     }
   };
 
@@ -97,218 +84,38 @@ export function AdminDashboard() {
     setTimeout(() => setMessage(null), 4000);
   };
 
-  const notifyRevalidate = async (key?: string) => {
+  const saveAction = async (action: string, payload: any, successMsg: string) => {
+    setSaving(true);
     try {
+      const res = await fetch("/api/admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, payload }),
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Failed to save");
+
+      showNotification("success", successMsg);
+      await loadAllData();
       await fetch("/api/revalidate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key }),
+        body: JSON.stringify({ path: "/" }),
       });
-    } catch (e) {
-      console.error("Revalidate failed", e);
+    } catch (err: any) {
+      showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
+    } finally {
+      setSaving(false);
     }
   };
 
   // Save Handlers
-  const saveHero = async () => {
-    setSaving(true);
-    try {
-      if (isSupabaseConfigured()) {
-        const { id, displayName, display_name, firstName, first_name, lastName, last_name, profileImage, profile_image, birthDate, birth_date, startDate, start_date, ...rest } = heroData || {};
-
-        const snakePayload: any = {
-          ...rest,
-          display_name: displayName || display_name || "",
-          first_name: firstName || first_name || "",
-          last_name: lastName || last_name || "",
-          profile_image: profileImage || profile_image || "",
-          birth_date: birthDate || birth_date || "",
-          start_date: startDate || start_date || "",
-        };
-
-        const camelPayload: any = {
-          ...rest,
-          displayName: displayName || display_name || "",
-          firstName: firstName || first_name || "",
-          lastName: lastName || last_name || "",
-          profileImage: profileImage || profile_image || "",
-          birthDate: birthDate || birth_date || "",
-          startDate: startDate || start_date || "",
-        };
-
-        if (id && typeof id === "number" && id < 1000000000) {
-          const { error } = await supabase.from("hero").update(snakePayload).eq("id", id);
-          if (error) {
-            const { error: err2 } = await supabase.from("hero").update(camelPayload).eq("id", id);
-            if (err2) throw error;
-          }
-        } else {
-          const { error } = await supabase.from("hero").insert(snakePayload);
-          if (error) {
-            const { error: err2 } = await supabase.from("hero").insert(camelPayload);
-            if (err2) throw error;
-          }
-        }
-      }
-      showNotification("success", "บันทึกข้อมูล Hero Section เรียบร้อยแล้ว!");
-      await loadAllData();
-      await notifyRevalidate("hero");
-    } catch (err: any) {
-      showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const saveAboutMe = async () => {
-    setSaving(true);
-    try {
-      if (isSupabaseConfigured()) {
-        const { id, fullName, full_name, statusLink, status_link, ...rest } = aboutData || {};
-        const snakePayload: any = {
-          ...rest,
-          full_name: fullName || full_name || "",
-          status_link: statusLink || status_link || null,
-        };
-        const camelPayload: any = {
-          ...rest,
-          fullName: fullName || full_name || "",
-          statusLink: statusLink || status_link || null,
-        };
-
-        if (id && typeof id === "number" && id < 1000000000) {
-          const { error } = await supabase.from("about_me").update(snakePayload).eq("id", id);
-          if (error) {
-            const { error: err2 } = await supabase.from("about_me").update(camelPayload).eq("id", id);
-            if (err2) throw error;
-          }
-        } else {
-          const { error } = await supabase.from("about_me").insert(snakePayload);
-          if (error) {
-            const { error: err2 } = await supabase.from("about_me").insert(camelPayload);
-            if (err2) throw error;
-          }
-        }
-      }
-      showNotification("success", "บันทึกข้อมูล About Me เรียบร้อยแล้ว!");
-      await loadAllData();
-      await notifyRevalidate("about_me");
-    } catch (err: any) {
-      showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const saveTechStack = async () => {
-    setSaving(true);
-    try {
-      if (isSupabaseConfigured()) {
-        for (const cat of techData) {
-          const { id, ...payload } = cat;
-          if (id && typeof id === "number" && id < 1000000000) {
-            const { error } = await supabase.from("tech_stack").update(payload).eq("id", id);
-            if (error) throw error;
-          } else {
-            const { error } = await supabase.from("tech_stack").insert(payload);
-            if (error) throw error;
-          }
-        }
-      }
-      showNotification("success", "บันทึกข้อมูล Tech Stack เรียบร้อยแล้ว!");
-      await loadAllData();
-      await notifyRevalidate("tech_stack");
-    } catch (err: any) {
-      showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const saveWorks = async () => {
-    setSaving(true);
-    try {
-      if (isSupabaseConfigured()) {
-        for (const work of worksData) {
-          const { url, id, ...cleanWork } = work;
-          const projectUrl = url || (cleanWork.links && cleanWork.links[0]?.url) || "";
-          const payload: any = {
-            ...cleanWork,
-            links: projectUrl ? [{ url: projectUrl, type: "website" }] : cleanWork.links || [],
-          };
-
-          if (id && typeof id === "number" && id < 1000000000) {
-            const { error } = await supabase.from("works").update(payload).eq("id", id);
-            if (error) {
-              const { error: insErr } = await supabase.from("works").insert(payload);
-              if (insErr) throw insErr;
-            }
-          } else {
-            const { error } = await supabase.from("works").insert(payload);
-            if (error) throw error;
-          }
-        }
-      }
-      showNotification("success", "บันทึกข้อมูล Portfolio Works เรียบร้อยแล้ว!");
-      await loadAllData();
-      await notifyRevalidate("works");
-    } catch (err: any) {
-      showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const saveBlogs = async () => {
-    setSaving(true);
-    try {
-      if (isSupabaseConfigured()) {
-        for (const blog of blogsData) {
-          const { id, ...payload } = blog;
-          if (id && typeof id === "number" && id < 1000000000) {
-            const { error } = await supabase.from("blog").update(payload).eq("id", id);
-            if (error) {
-              const { error: insErr } = await supabase.from("blog").insert(payload);
-              if (insErr) throw insErr;
-            }
-          } else {
-            const { error } = await supabase.from("blog").insert(payload);
-            if (error) throw error;
-          }
-        }
-      }
-      showNotification("success", "บันทึกข้อมูล Blog Posts เรียบร้อยแล้ว!");
-      await loadAllData();
-      await notifyRevalidate();
-    } catch (err: any) {
-      showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const saveContact = async () => {
-    setSaving(true);
-    try {
-      if (isSupabaseConfigured()) {
-        const { id, ...payload } = contactData || {};
-        if (id && typeof id === "number" && id < 1000000000) {
-          const { error } = await supabase.from("contact").update(payload).eq("id", id);
-          if (error) throw error;
-        } else {
-          const { error } = await supabase.from("contact").insert(payload);
-          if (error) throw error;
-        }
-      }
-      showNotification("success", "บันทึกข้อมูล Contact เรียบร้อยแล้ว!");
-      await loadAllData();
-      await notifyRevalidate("contact");
-    } catch (err: any) {
-      showNotification("error", `เกิดข้อผิดพลาด: ${err.message}`);
-    } finally {
-      setSaving(false);
-    }
-  };
+  const saveHero = () => saveAction("save_hero", heroData, "บันทึกข้อมูล Hero Section ใน D1 เรียบร้อยแล้ว!");
+  const saveAboutMe = () => saveAction("save_about", aboutData, "บันทึกข้อมูล About Me ใน D1 เรียบร้อยแล้ว!");
+  const saveTechStack = () => saveAction("save_tech", techData, "บันทึกข้อมูล Tech Stack ใน D1 เรียบร้อยแล้ว!");
+  const saveWorks = () => saveAction("save_works", worksData, "บันทึกข้อมูล Portfolio Works ใน D1 เรียบร้อยแล้ว!");
+  const saveBlogs = () => saveAction("save_blogs", blogsData, "บันทึกข้อมูล Blog Posts ใน D1 เรียบร้อยแล้ว!");
+  const saveContact = () => saveAction("save_contact", contactData, "บันทึกข้อมูล Contact ใน D1 เรียบร้อยแล้ว!");
 
   if (!isAuthenticated) {
     return (
@@ -338,8 +145,8 @@ export function AdminDashboard() {
           <div
             className={`p-4 rounded-xl mb-6 border font-bold text-xs flex items-center gap-2 ${
               message.type === "success"
-                ? "bg-emerald-50 text-emerald-800 border-emerald-300"
-                : "bg-rose-50 text-rose-800 border-rose-300"
+                ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                : "bg-rose-50 text-rose-700 border-rose-200"
             }`}
           >
             {message.type === "success" ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
@@ -347,63 +154,38 @@ export function AdminDashboard() {
           </div>
         )}
 
+        {/* Tab 1: Hero */}
         {activeTab === "hero" && (
-          <HeroEditor
-            heroData={heroData}
-            setHeroData={setHeroData}
-            saveHero={saveHero}
-            saving={saving}
-          />
+          <HeroEditor heroData={heroData} setHeroData={setHeroData} saving={saving} saveHero={saveHero} />
         )}
 
+        {/* Tab 2: About Me */}
         {activeTab === "aboutme" && (
-          <AboutMeEditor
-            aboutData={aboutData}
-            setAboutData={setAboutData}
-            saveAboutMe={saveAboutMe}
-            saving={saving}
-          />
+          <AboutMeEditor aboutData={aboutData} setAboutData={setAboutData} saving={saving} saveAboutMe={saveAboutMe} />
         )}
 
+        {/* Tab 3: Tech Stack */}
         {activeTab === "techstack" && (
-          <TechStackEditor
-            techData={techData}
-            setTechData={setTechData}
-            saveTechStack={saveTechStack}
-            saving={saving}
-          />
+          <TechStackEditor techData={techData} setTechData={setTechData} saving={saving} saveTechStack={saveTechStack} />
         )}
 
+        {/* Tab 4: Works */}
         {activeTab === "works" && (
-          <WorksEditor
-            worksData={worksData}
-            setWorksData={setWorksData}
-            saveWorks={saveWorks}
-            saving={saving}
-          />
+          <WorksEditor worksData={worksData} setWorksData={setWorksData} saving={saving} saveWorks={saveWorks} />
         )}
 
+        {/* Tab 5: Blogs */}
         {activeTab === "blogs" && (
-          <BlogsEditor
-            blogsData={blogsData}
-            setBlogsData={setBlogsData}
-            saveBlogs={saveBlogs}
-            saving={saving}
-          />
+          <BlogsEditor blogsData={blogsData} setBlogsData={setBlogsData} saving={saving} saveBlogs={saveBlogs} />
         )}
 
+        {/* Tab 6: Contact */}
         {activeTab === "contact" && (
-          <ContactEditor
-            contactData={contactData}
-            setContactData={setContactData}
-            saveContact={saveContact}
-            saving={saving}
-          />
+          <ContactEditor contactData={contactData} setContactData={setContactData} saving={saving} saveContact={saveContact} />
         )}
 
-        {activeTab === "inbox" && (
-          <InboxViewer inboxData={inboxData} />
-        )}
+        {/* Tab 7: Inbox */}
+        {activeTab === "inbox" && <InboxViewer inboxData={inboxData} />}
       </main>
     </div>
   );

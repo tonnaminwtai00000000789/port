@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -129,7 +131,7 @@ export function Work({ data }: { data: WorkItem[] }) {
                               <Magnet key={li} strength={0.2} radius={50}>
                                 <Button asChild size="sm" variant={link.type === "website" ? "default" : "outline"}>
                                   <a href={link.url} target="_blank" rel="noreferrer" className="gap-1.5">
-                                    {link.type === "website" ? (<><span>เปิดเว็บไซต์</span><ExternalLink className="w-3.5 h-3.5" /></>) : (<><span>ซอร์สโค้ด</span><Github className="w-3.5 h-3.5" /></>)}
+                                    {link.type === "website" ? (<><span>เปิดเว็บไซต์</span><ExternalLink className="w-3.5 h-3.5" /></>) : (<><span>ซอร์สโค้ด</span><i className="devicon-github-original text-sm" /></>)}
                                   </a>
                                 </Button>
                               </Magnet>

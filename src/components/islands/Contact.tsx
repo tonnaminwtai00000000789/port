@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Mail, Send, Globe, Loader2, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";

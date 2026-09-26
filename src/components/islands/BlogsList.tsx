@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import { ArrowLeft, Clock, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
-import type { BlogRow } from "../../lib/supabase";
+import type { BlogRow } from "@/lib/db";
 import { SpotlightCard } from "../reactbits/SpotlightCard";
 import { Button } from "../ui/button";
 

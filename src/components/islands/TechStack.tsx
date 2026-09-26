@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Terminal, Code, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
